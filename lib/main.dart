@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'file:///D:/LiveProject/ollapro_partner/lib/screens/login/login_screen.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/screens/login/login_screen.dart';
 
 
 void main()async {

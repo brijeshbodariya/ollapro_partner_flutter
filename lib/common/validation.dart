@@ -32,4 +32,30 @@ class Validation{
         return null;
     }
   }
+    String validateEmail(String value) {
+    Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+    if (value.isEmpty) {
+      return 'Please enter Email';
+    } else {
+      if (!regex.hasMatch(value))
+        return 'Enter valid Email';
+      else
+        return null;
+    }
+  }
+  String validatePhone(String value) {
+    if (value.length != 13)
+      return 'Enter mobile number including +91';
+    else
+      return null;
+  }
+  String validateFullName(String value) {
+    if (value.length <= 2)
+      return 'Enter Full name here';
+    else
+      return null;
+  }
+
 }
