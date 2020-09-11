@@ -45,7 +45,50 @@ class App {
   static const String communicationAddress = "Communication Address";
   static const String exactPlace = "Exact Place";
   static const String pinCode = "Pin Code";
+  static const String state = "State";
+  static const String city = "City";
+  static const String place = "Place";
+  static const String aadhar = "Aadhar Number";
+  static const String pan = "PAN Number";
+  static const String gst = "GSTIN";
+  static const String identifyDetail = "IDENTIFY DETAILS";
+  static const String bankDetail = "BANK DETAILS";
+  static const String referenceDetail = "REFERENCE";
+  static const String reference1 = "References 1";
+  static const String reference2 = "References 2";
+  static const String bankName = "Bank Name";
+  static const String accountNumber = "Account Number";
+  static const String account1Number = "Re-type Account Number";
+  static const String nameOfHolder = "Name of Account Holder";
+  static const String accountType = "Account Type";
+  static const String ifscCode = "IFSC Code";
+  static const String uploadDocument = "UPLOAD DOCUMENTS";
+  static const String name = "Name";
+  static const String photo1 = "Photo 1";
+  static const String photo2 = "Photo 2";
+  static const String chooseFile = "Choose File";
+  static const String aadharFront = "Aadhar Front";
+  static const String aadharback = "Aadhar Back";
+  static const String panCard = "PAN Card";
+  static const String cancelledCheque = "Cancelled Cheque";
+  static const String selfAttested = "Self Attested Declaration";
 
+
+
+
+  //images
+  static const String splashBg = "assets/splashbg.png";
+  static const String splashLogo = "assets/splashlogo.png";
+  static const String loginBg = "assets/loginBg.png";
+  static const String visibility = "assets/view.png";
+  static const String backButtonLogo = "assets/back@2x.png";
+  static const String passwordLogo = "assets/password.png";
+  static const String checkedButtonLogo = "assets/checked.png";
+  static const String mobileLogo = "assets/mobile.png";
+  static const String unCheckedButtonLogo = "assets/uncheck.png";
+  static const String emailLogo = "assets/email.png";
+  static const String personLogo = "assets/user.png";
+  static const String calendarLogo = "assets/calendar.png";
 }
 
 //Colors

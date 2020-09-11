@@ -119,27 +119,16 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
           children: [
             Container(
               alignment: Alignment.topLeft,
-              margin: EdgeInsets.only(left: 15, top: 20),
-              child: ClipOval(
-                child: Material(
-                  color: grey, // button color
-                  child: InkWell(
-                    child: SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: Icon(
-                          Icons.arrow_back_ios,
-                          color: primaryColor,
-                        )),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
+              margin: EdgeInsets.only(left: 12, top: 10),
+              child: InkWell(
+                child: Image.asset(App.backButtonLogo,height: 50,width: 50,),
+                onTap: () {
+                  Navigator.pop(context);
+                },
               ),
             ),
             Container(
-              margin: EdgeInsets.only(left: 10, top: 20),
+              margin: EdgeInsets.only(left: 10, top: 10),
               alignment: Alignment.center,
               child: Text(
                 App.completeYourKyc,
@@ -152,7 +141,7 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
           ],
         ),
         Container(
-          margin: EdgeInsets.only(right: 15, top: 20),
+          margin: EdgeInsets.only(right: 15, top: 10),
           alignment: Alignment.center,
           child: Text(
             App.skip,
@@ -381,10 +370,7 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
             onTap: () {
               openDatePicker();
             },
-            child: Icon(
-              Icons.calendar_today,
-              color: primaryColor,
-            ),
+            child:Image.asset(App.calendarLogo,height: 20,width: 20,)
           ),
         ],
       ),

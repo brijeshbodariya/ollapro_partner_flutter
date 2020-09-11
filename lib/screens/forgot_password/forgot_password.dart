@@ -90,9 +90,10 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               color: secondaryColor,
             ),
           ),
-          prefixIcon: Icon(
-            Icons.phone_android,
-            color: secondaryColor,
+          prefixIcon: Image.asset(
+            App.mobileLogo,
+            height: 25,
+            width: 25,
           ),
           hintText: "Enter Mobile Number",
           hintStyle: TextStyle(

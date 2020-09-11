@@ -52,17 +52,12 @@ class OtpScreenState extends State<OtpScreen> {
   backButton() {
     return Container(
       alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15,top: 20),
-      child: ClipOval(
-        child: Material(
-          color: grey, // button color
-          child: InkWell(
-            child: SizedBox(width: 40, height: 40, child: Icon(Icons.arrow_back_ios,color: primaryColor,)),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
+      margin: EdgeInsets.only(left: 12,top: 10),
+      child: InkWell(
+        child: Image.asset(App.backButtonLogo,height: 50,width: 50,),
+        onTap: () {
+          Navigator.pop(context);
+        },
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/screens/login/login_screen.dart';
+import 'package:ollapro_partner/screens/splash/splashscreen.dart';
 
 
 void main()async {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
      theme: ThemeData(primaryColor: primaryColor, accentColor:secondaryColor),
       debugShowCheckedModeBanner: false,
       title: 'OllaPro Partner',
-      home: LoginScreen(),
+      home: SplashScreen(),
     );
   }
 }

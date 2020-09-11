@@ -4,6 +4,7 @@ import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/screens/login/login_screen.dart';
 import 'package:ollapro_partner/screens/otp/otp_screen.dart';
+import 'package:ollapro_partner/screens/register/register_screen_view_model.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -19,6 +20,7 @@ class RegisterScreenState extends State<RegisterScreen> {
   TextEditingController confirmPasswordController = TextEditingController();
   bool _obscureText1 = true;
   bool _obscureText2 = true;
+  RegisterScreenViewModel model;
 
   void _reRegisterPassword() {
     setState(() {
@@ -34,6 +36,8 @@ class RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("runtimeType -> " + runtimeType.toString());
+    model ?? (model = RegisterScreenViewModel(this));
     return SafeArea(
         child: Scaffold(
       body: Form(
@@ -145,9 +149,10 @@ class RegisterScreenState extends State<RegisterScreen> {
               color: secondaryColor,
             ),
           ),
-          prefixIcon: Icon(
-            Icons.person,
-            color: secondaryColor,
+          prefixIcon: Image.asset(
+            App.personLogo,
+            height: 20,
+            width: 20,
           ),
           hintText: "Enter Full Name",
           hintStyle: TextStyle(
@@ -185,9 +190,10 @@ class RegisterScreenState extends State<RegisterScreen> {
               color: secondaryColor,
             ),
           ),
-          prefixIcon: Icon(
-            Icons.email,
-            color: secondaryColor,
+          prefixIcon: Image.asset(
+            App.emailLogo,
+            height: 20,
+            width: 20,
           ),
           hintText: "Enter Email address",
           hintStyle: TextStyle(
@@ -225,9 +231,10 @@ class RegisterScreenState extends State<RegisterScreen> {
               color: secondaryColor,
             ),
           ),
-          prefixIcon: Icon(
-            Icons.phone_android,
-            color: secondaryColor,
+          prefixIcon: Image.asset(
+            App.mobileLogo,
+            height: 20,
+            width: 20,
           ),
           hintText: "Enter Mobile Number",
           hintStyle: TextStyle(
@@ -266,17 +273,19 @@ class RegisterScreenState extends State<RegisterScreen> {
               color: secondaryColor,
             ),
           ),
-          prefixIcon: Icon(
-            Icons.lock,
-            color: secondaryColor,
+          prefixIcon: Image.asset(
+            App.passwordLogo,
+            height: 20,
+            width: 20,
           ),
           suffixIcon: Container(
-            child: IconButton(
-              icon: Icon(
-                Icons.remove_red_eye,
-                color: secondaryColor,
+            child:GestureDetector(
+              onTap: _registerPassword,
+              child: Image.asset(
+                App.visibility,
+                height: 20,
+                width: 20,
               ),
-              onPressed: _registerPassword,
             ),
           ),
           hintText: "Enter Password ",
@@ -316,17 +325,19 @@ class RegisterScreenState extends State<RegisterScreen> {
               color: secondaryColor,
             ),
           ),
-          prefixIcon: Icon(
-            Icons.lock,
-            color: secondaryColor,
+          prefixIcon: Image.asset(
+            App.passwordLogo,
+            height: 20,
+            width: 20,
           ),
           suffixIcon: Container(
-            child: IconButton(
-              icon: Icon(
-                Icons.remove_red_eye,
-                color: secondaryColor,
+            child:GestureDetector(
+              onTap: _reRegisterPassword,
+              child: Image.asset(
+                App.visibility,
+                height: 20,
+                width: 20,
               ),
-              onPressed: _reRegisterPassword,
             ),
           ),
           hintText: "Enter Confirm Password ",
@@ -342,12 +353,12 @@ class RegisterScreenState extends State<RegisterScreen> {
   }
 
   registerButton() {
-    return  Padding(
-        padding: EdgeInsets.only(bottom: 20,top: 30),
+    return Padding(
+        padding: EdgeInsets.only(bottom: 20, top: 30),
         child: InkWell(
-          onTap: (){
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => OtpScreen()));
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => OtpScreen()));
           },
           child: Container(
             alignment: Alignment.center,
@@ -358,12 +369,12 @@ class RegisterScreenState extends State<RegisterScreen> {
               color: primaryColor,
               borderRadius: BorderRadius.all(
                   Radius.circular(30) //         <--- border radius here
-              ),
+                  ),
             ),
             child: Text(
               App.registerButton,
               style:
-              TextStyle(color: white, fontFamily: App.font, fontSize: 20),
+                  TextStyle(color: white, fontFamily: App.font, fontSize: 20),
             ),
           ),
         ));

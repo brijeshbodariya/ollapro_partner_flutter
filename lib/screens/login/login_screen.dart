@@ -37,34 +37,31 @@ class LoginScreenState extends State<LoginScreen> {
           shrinkWrap: true,
           scrollDirection: Axis.vertical,
           children: [
-            Stack(
-              children: [
-                Column(
-                  children: [
-                    Container(
-                      height: Utils.getDeviceHeight(context) / 1.3,
-                      width: MediaQuery.of(context).size.width,
-                      color: white,
-                      child: Column(
-                        children: [
-                          partnerLogintext(),
-                          credentialsText(),
-                          phoneText(),
-                          phoneField(),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          passwordText(),
-                          passwordField(),
-                          rememberPassword(),
-                          loginButton(),
-                          //bottomRegister()
-                        ],
-                      ),
-                    ),
-                  ],
-                )
-              ],
+            Container(
+              height: Utils.getDeviceHeight(context),
+              width: Utils.getDeviceWidth(context) ,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                      App.loginBg),
+                  fit: BoxFit.fill,
+                ),
+              ),
+              child: Column(
+                children: [
+                  partnerLogintext(),
+                  credentialsText(),
+                  phoneText(),
+                  phoneField(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  passwordText(),
+                  passwordField(),
+                  rememberPassword(),
+                  loginButton(),
+                ],
+              ),
             )
           ],
         ),
@@ -152,9 +149,10 @@ class LoginScreenState extends State<LoginScreen> {
               color: secondaryColor,
             ),
           ),
-          prefixIcon: Icon(
-            Icons.phone_android,
-            color: secondaryColor,
+          prefixIcon: Image.asset(
+            App.mobileLogo,
+            height: 20,
+            width: 20,
           ),
           hintText: "Enter Mobile Number",
           hintStyle: TextStyle(
@@ -193,17 +191,19 @@ class LoginScreenState extends State<LoginScreen> {
               color: secondaryColor,
             ),
           ),
-          prefixIcon: Icon(
-            Icons.lock,
-            color: secondaryColor,
+          prefixIcon: Image.asset(
+            App.passwordLogo,
+            height: 20,
+            width: 20,
           ),
           suffixIcon: Container(
-            child: IconButton(
-              icon: Icon(
-                Icons.remove_red_eye,
-                color: secondaryColor,
+            child:GestureDetector(
+              onTap: _loginPassword,
+              child: Image.asset(
+                App.visibility,
+                height: 20,
+                width: 20,
               ),
-              onPressed: _loginPassword,
             ),
           ),
           hintText: "Enter Password ",
