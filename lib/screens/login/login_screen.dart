@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/utils.dart';
+import 'package:ollapro_partner/screens/dashboard/dashboard_screen.dart';
 import 'package:ollapro_partner/screens/forgot_password/forgot_password.dart';
 import 'package:ollapro_partner/screens/register/register_screen.dart';
 
@@ -257,7 +258,7 @@ class LoginScreenState extends State<LoginScreen> {
         child: InkWell(
           onTap: (){
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => RegisterScreen()));
+                MaterialPageRoute(builder: (context) => DashBoardScreen()));
           },
           child: Container(
             alignment: Alignment.center,

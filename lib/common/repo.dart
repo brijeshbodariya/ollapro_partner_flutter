@@ -1,4 +1,4 @@
-import 'package:ollapro_partner/model/statecity/state_model.dart';
+import 'package:ollapro_partner/model/state_model.dart';
 
 
 class Repository {

@@ -410,7 +410,7 @@ class UploadDocumentState extends State<UploadDocument> {
           Container(
             padding: EdgeInsets.only(left: 10),
             child: RaisedButton(
-              onPressed: _getPhoto3,
+              onPressed: _getPhoto4,
               child: Text(App.chooseFile),
             ),
           ),
@@ -454,7 +454,7 @@ class UploadDocumentState extends State<UploadDocument> {
           Container(
             padding: EdgeInsets.only(left: 10),
             child: RaisedButton(
-              onPressed: _getPhoto3,
+              onPressed: _getPhoto5,
               child: Text(App.chooseFile),
             ),
           ),
@@ -498,7 +498,7 @@ class UploadDocumentState extends State<UploadDocument> {
           Container(
             padding: EdgeInsets.only(left: 10),
             child: RaisedButton(
-              onPressed: _getPhoto3,
+              onPressed: _getPhoto6,
               child: Text(App.chooseFile),
             ),
           ),
@@ -542,7 +542,7 @@ class UploadDocumentState extends State<UploadDocument> {
           Container(
             padding: EdgeInsets.only(left: 10),
             child: RaisedButton(
-              onPressed: _getPhoto3,
+              onPressed: _getPhoto7,
               child: Text(App.chooseFile),
             ),
           ),
@@ -552,30 +552,6 @@ class UploadDocumentState extends State<UploadDocument> {
   }
 
 
-  backButton() {
-    return Padding(
-        padding: EdgeInsets.only(bottom: 30, top: 30),
-        child: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Container(
-            alignment: Alignment.center,
-            height: 50,
-            width: Utils.getDeviceWidth(context) / 2.5,
-            decoration: BoxDecoration(
-              color: secondaryColor,
-              borderRadius: BorderRadius.all(Radius.circular(30) //
-                  ),
-            ),
-            child: Text(
-              App.backButton,
-              style:
-                  TextStyle(color: white, fontFamily: App.font, fontSize: 20),
-            ),
-          ),
-        ));
-  }
 
   submitButton() {
     return Padding(

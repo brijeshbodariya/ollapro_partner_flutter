@@ -72,6 +72,16 @@ class App {
   static const String panCard = "PAN Card";
   static const String cancelledCheque = "Cancelled Cheque";
   static const String selfAttested = "Self Attested Declaration";
+  static const String dashBoardTitle = "My DashBoard";
+  static const String property = "Property";
+  static const String landlord = "Landlord";
+  static const String tenant = "Tenant";
+  static const String rewardBasket = "Reward Basket";
+  static const String seeAll = "See All";
+  static const String newListProperty = "New List Properties";
+  static const String nonVerifiedTenantText = "Non Verified Tenant";
+  static const String addNewLandLord = "ADD NEW LANDLORD";
+  static const String addNewLandLordText = "Add New LandLord";
 
 
 
@@ -89,6 +99,24 @@ class App {
   static const String emailLogo = "assets/email.png";
   static const String personLogo = "assets/user.png";
   static const String calendarLogo = "assets/calendar.png";
+  static const String dashBoardBg = "assets/main-bg@3x.png";
+  static const String bannerDashLogo = "assets/banner@3x.png";
+  static const String landLordDashLogo = "assets/landlord@2x.png";
+  static const String leftArrowLogo = "assets/left-arrow.png";
+  static const String menuDrawerLogo = "assets/menu.png";
+  static const String notificationLogo = "assets/notification@2x.png";
+  static const String tenantUSer = "assets/nv-tenant@2x.png";
+  static const String propertyLogo = "assets/property@2x.png";
+  static const String property1Logo = "assets/property-1@3x.png";
+  static const String rewardBasketLogo = "assets/reward-basket@2x.png";
+  static const String shareLogo = "assets/share@2x.png";
+  static const String tenantLogo = "assets/tenant@2x.png";
+  static const String userImage = "assets/user@2x.png";
+  static const String delete = "assets/delete@2x.png";
+  static const String arrowBack = "assets/arrow.png";
+  static const String report = "assets/report@2x.png";
+  static const String sideMenu = "assets/sidemenu@2x.png";
+  static const String addButton = "assets/add@2x.png";
 }
 
 //Colors

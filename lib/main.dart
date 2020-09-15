@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
-import 'package:ollapro_partner/screens/login/login_screen.dart';
 import 'package:ollapro_partner/screens/splash/splashscreen.dart';
 
 
