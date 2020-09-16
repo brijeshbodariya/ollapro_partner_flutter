@@ -3,20 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/utils.dart';
-import 'package:ollapro_partner/model/customPopUp.dart';
 import 'package:ollapro_partner/model/newlandlord.dart';
-import 'package:ollapro_partner/screens/dashboard/landlord/addlandlord/addlandlord_screen.dart';
+import 'package:ollapro_partner/model/customPopUp.dart';
+import 'package:ollapro_partner/screens/dashboard/tenant/tenant_screen_view_model.dart';
+import 'add_tenant/add_tenant_screen.dart';
 
-import 'landlord_screen_view_model.dart';
-
-class LandLordScreen extends StatefulWidget {
+class TenantScreen extends StatefulWidget {
   @override
-  LandLordScreenState createState() => LandLordScreenState();
+  TenantScreenState createState() => TenantScreenState();
 }
 
-class LandLordScreenState extends State<LandLordScreen> {
-  LandLordScreenViewModel model;
-
+class TenantScreenState extends State<TenantScreen> {
+  TenantScreenViewModel model;
   List<NewLandLord> list = List();
 
   @override
@@ -41,10 +39,11 @@ class LandLordScreenState extends State<LandLordScreen> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
-    model ?? (model = LandLordScreenViewModel(this));
+    model ?? (model = TenantScreenViewModel(this));
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -52,8 +51,9 @@ class LandLordScreenState extends State<LandLordScreen> {
             color: primaryColor,
             child: Column(
               children: [
-                appBarDash(context, App.landlordTitle),
-               listLandLord(),
+                appBarDash(context, App.tenantTitle),
+
+                listTenant(),
               ],
             ),
           ),
@@ -62,13 +62,12 @@ class LandLordScreenState extends State<LandLordScreen> {
       ),
     );
   }
-
   submitButton() {
     return Padding(
         padding: EdgeInsets.only(bottom: 10, top: 10),
         child: InkWell(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> AddLandLordScreen()));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> AddTenantScreen()));
           },
           child: Container(
             margin: EdgeInsets.only(left: 10, right: 10),
@@ -79,7 +78,7 @@ class LandLordScreenState extends State<LandLordScreen> {
               color: primaryColor,
               borderRadius: BorderRadius.all(
                   Radius.circular(30) //         <--- border radius here
-                  ),
+              ),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -94,7 +93,7 @@ class LandLordScreenState extends State<LandLordScreen> {
                   width: 10,
                 ),
                 Text(
-                  App.addNewLandLordButton,
+                  App.addNewTenantButton,
                   style: TextStyle(
                       color: white, fontFamily: App.font, fontSize: 20),
                 ),
@@ -103,7 +102,7 @@ class LandLordScreenState extends State<LandLordScreen> {
           ),
         ));
   }
-  listLandLord() {
+  listTenant() {
     return  Container(
       margin: EdgeInsets.only(top: 20),
       decoration: BoxDecoration(
@@ -150,13 +149,32 @@ class LandLordScreenState extends State<LandLordScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              list[index].name,
-                              style: TextStyle(
-                                  color: primaryColor,
-                                  fontFamily: App.font,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold),
+                            Row(
+                              children: [
+                                Text(
+                                  list[index].name,
+                                  style: TextStyle(
+                                      color: primaryColor,
+                                      fontFamily: App.font,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(left: 10),
+                                  child: Image.asset(App.verifiedLogo, height: 20,width: 20,),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(left: 5),
+                                  child:  Text(
+                                   "Verified",
+                                    style: TextStyle(
+                                        color: green,
+                                        fontFamily: App.font,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                )
+                              ],
                             ),
                             Container(
                               margin: const EdgeInsets.only(top:5.0),
@@ -240,4 +258,4 @@ class LandLordScreenState extends State<LandLordScreen> {
           }),
     );
   }
-}
+  }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/utils.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -23,8 +24,18 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               children: [
                 backButton(),
                 forgotText(),
-                mobileText(),
-                phoneField(),
+                SizedBox(height: 20,),
+                //phone
+                commonTextField(
+                    title: App.mobileNumber,
+                    controller: phoneController,
+                    hintText: "Enter Phone NUmber",
+                    prefixIcon: Image.asset(
+                      App.mobileLogo,
+                      height: 20,
+                      width: 20,
+                    ),
+                    textInputType: TextInputType.phone),
                 submitButton(),
               ],
             ),
@@ -33,6 +44,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ),
     );
   }
+
   backButton() {
     return Container(
       alignment: Alignment.topLeft,
@@ -50,7 +62,6 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ),
     );
   }
-
   forgotText() {
     return Container(
       alignment: Alignment.topLeft,

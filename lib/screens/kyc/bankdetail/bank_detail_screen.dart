@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/dropdown.dart';
 import 'package:ollapro_partner/common/header.dart';
 import 'package:ollapro_partner/common/utils.dart';
@@ -41,85 +42,64 @@ class BankDetailScreenState extends State<BankDetailScreen> {
               alignment: Alignment.topLeft,
               child: Column(
                 children: [
-                  appBar(),
+                  appBarKYC(context,MaterialPageRoute(builder: (context)=> ReferenceScreen())),
                   HeaderLine.headerLineComplete(context, 3, 3, 3, 1, 2, 2),
                   bankDetailText(),
-                  bankText(),
-                  bankField(),
-                  accountText(),
-                  accountField(),
-                  account1Text(),
-                  account1Field(),
-                  nameText(),
-                  nameField(),
-                  accountTypeText(),
+                  //bank name
+                  commonTextField(
+                      title: App.bankName,
+                      controller: bankNameController,
+                      hintText: "Enter Bank name",
+                      textInputType: TextInputType.text
+                  ),SizedBox(height: 10),
+                  //account number
+                  commonTextField(
+                      title: App.accountNumber,
+                      controller: accountController,
+                      hintText: "Enter Account Number",
+                      textInputType: TextInputType.phone
+                  ),SizedBox(height: 10),
+                  //account number
+                  commonTextField(
+                      title: App.account1Number,
+                      controller: account1Controller,
+                      hintText: "Re enter Account Number",
+                      textInputType: TextInputType.phone
+                  ),SizedBox(height: 10),
+                  //account holder name
+                  commonTextField(
+                      title: App.nameOfHolder,
+                      controller: nameController,
+                      hintText: "Account holder name",
+                      textInputType: TextInputType.text
+                  ),SizedBox(height: 10),
                   accountTypeField(),
-                  ifscText(),
-                  ifscField(),
+                  //ifsc code
+                  commonTextField(
+                      title: App.ifscCode,
+                      controller: ifscController,
+                      hintText: "Enter IFSC code",
+                      textInputType: TextInputType.text
+                  )
                 ],
               ),
             ),
           ),
         ),
-        bottomNavigationBar: bottomButton(),
+        bottomNavigationBar:  Container(
+          width: Utils.getDeviceWidth(context),
+          margin: EdgeInsets.only(left: 20, right: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              backButton(),
+              nextButton(),
+            ],
+          ),
+        ),
       ),
     );
   }
-
-  bottomButton() {
-    return Container(
-      width: Utils.getDeviceWidth(context),
-      margin: EdgeInsets.only(left: 20, right: 20),
-      child: submitButton(),
-    );
-  }
-
-  appBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Container(
-              alignment: Alignment.topLeft,
-              margin: EdgeInsets.only(left: 12, top: 10),
-              child: InkWell(
-                child: Image.asset(
-                  App.backButtonLogo,
-                  height: 50,
-                  width: 50,
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 10, top: 10),
-              alignment: Alignment.center,
-              child: Text(
-                App.completeYourKyc,
-                style: TextStyle(
-                    color: primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20),
-              ),
-            )
-          ],
-        ),
-        Container(
-          margin: EdgeInsets.only(right: 15, top: 10),
-          alignment: Alignment.center,
-          child: Text(
-            App.skip,
-            style: TextStyle(
-                color: primaryColor, fontWeight: FontWeight.bold, fontSize: 15),
-          ),
-        )
-      ],
-    );
-  }
-
   bankDetailText() {
     return Container(
       alignment: Alignment.topLeft,
@@ -134,47 +114,6 @@ class BankDetailScreenState extends State<BankDetailScreen> {
       ),
     );
   }
-
-  bankText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 20),
-      child: Text(
-        App.bankName,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  bankField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        style: TextStyle(
-            color: primaryColor,
-            fontWeight: FontWeight.bold,
-            fontFamily: App.font),
-        controller: bankNameController,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Enter Bank Name",
-          hintStyle: TextStyle(
-            color: grey1,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-
   accountText() {
     return Container(
       alignment: Alignment.topLeft,
@@ -186,130 +125,18 @@ class BankDetailScreenState extends State<BankDetailScreen> {
       ),
     );
   }
-
-  accountField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        style: TextStyle(
-            color: primaryColor,
-            fontWeight: FontWeight.bold,
-            fontFamily: App.font),
-        controller: accountController,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Enter Account Number",
-          hintStyle: TextStyle(
-            color: grey1,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.phone,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-
-  account1Text() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 20),
-      child: Text(
-        App.account1Number,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  account1Field() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        style: TextStyle(
-            color: primaryColor,
-            fontWeight: FontWeight.bold,
-            fontFamily: App.font),
-        controller: account1Controller,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Re enter Account Number",
-          hintStyle: TextStyle(
-            color: grey1,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.phone,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-
-  nameText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 20),
-      child: Text(
-        App.nameOfHolder,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  nameField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        style: TextStyle(
-            color: primaryColor,
-            fontWeight: FontWeight.bold,
-            fontFamily: App.font),
-        controller: nameController,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Enter Account Holder Name",
-          hintStyle: TextStyle(
-            color: grey1,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-
-  accountTypeText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15),
-      child: Text(
-        App.accountType,
-        style: TextStyle(
-            fontSize: 17, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
   accountTypeField() {
     return Column(
       children: [
+        Container(
+          alignment: Alignment.topLeft,
+          margin: EdgeInsets.only(left: 15, top: 15),
+          child: Text(
+            App.accountType,
+            style: TextStyle(
+                fontSize: 17, color: secondaryColor, fontFamily: App.font),
+          ),
+        ),
         Container(
           margin: EdgeInsets.only(left: 15, right: 15),
           child: DropDownFormField(
@@ -346,48 +173,6 @@ class BankDetailScreenState extends State<BankDetailScreen> {
       ],
     );
   }
-
-  ifscText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 10),
-      child: Text(
-        App.ifscCode,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  ifscField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        textCapitalization: TextCapitalization.characters,
-        style: TextStyle(
-            color: primaryColor,
-            fontWeight: FontWeight.bold,
-            fontFamily: App.font),
-        controller: ifscController,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Enter IFSC code here",
-          hintStyle: TextStyle(
-            color: grey1,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-
   backButton() {
     return Padding(
         padding: EdgeInsets.only(bottom: 30, top: 30),
@@ -413,14 +198,15 @@ class BankDetailScreenState extends State<BankDetailScreen> {
           ),
         ));
   }
-
-  submitButton() {
+  nextButton() {
     return Padding(
-        padding: EdgeInsets.only(bottom: 20, top: 10),
+        padding: EdgeInsets.only(bottom: 30, top: 30),
         child: InkWell(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ReferenceScreen()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ReferenceScreen()));
           },
           child: Container(
             alignment: Alignment.center,
@@ -430,12 +216,12 @@ class BankDetailScreenState extends State<BankDetailScreen> {
               color: primaryColor,
               borderRadius: BorderRadius.all(
                   Radius.circular(30) //         <--- border radius here
-                  ),
+              ),
             ),
             child: Text(
               App.nextButton,
               style:
-                  TextStyle(color: white, fontFamily: App.font, fontSize: 20),
+              TextStyle(color: white, fontFamily: App.font, fontSize: 20),
             ),
           ),
         ));

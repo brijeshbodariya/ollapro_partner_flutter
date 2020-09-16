@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/header.dart';
 import 'package:ollapro_partner/common/utils.dart';
+import 'package:ollapro_partner/screens/dashboard/dashboard_screen.dart';
 import 'package:ollapro_partner/screens/kyc/reference/reference_screen.dart';
 import 'package:ollapro_partner/screens/kyc/upload_document/upload_document_view_model.dart';
 
@@ -136,7 +138,7 @@ class UploadDocumentState extends State<UploadDocument> {
             alignment: Alignment.topLeft,
             child: Column(
               children: [
-                appBar(),
+                appBarKYC(context,MaterialPageRoute(builder: (context)=> DashBoardScreen())),
                 HeaderLine.headerLineComplete(context, 3, 3, 3, 3, 3, 1),
                 uploadDocumentText(),
                 Container(
@@ -144,19 +146,17 @@ class UploadDocumentState extends State<UploadDocument> {
                   child: ListView(
                     scrollDirection: Axis.vertical,
                     children: [
-                      photo1Text(),
                       photo1Field(),
-                      photo2Text(),
+
                       photo2Field(),
-                      aadharFrontText(),
+
                       aadharFrontField(),
-                      aadharBackText(),
+
                       aadharBackField(),
-                      panText(),
+
                       panField(),
-                      chequeText(),
+
                       chequeField(),
-                      selfText(),
                       selfField(),
                     ],
                   ),
@@ -166,65 +166,14 @@ class UploadDocumentState extends State<UploadDocument> {
             ),
           ),
         ),
-        bottomNavigationBar: bottomButton(),
+        bottomNavigationBar: Container(
+          width: Utils.getDeviceWidth(context),
+          margin: EdgeInsets.only(left: 20, right: 20),
+          child: submitButton(),
+        ),
       ),
     );
   }
-
-  bottomButton() {
-    return Container(
-      width: Utils.getDeviceWidth(context),
-      margin: EdgeInsets.only(left: 20, right: 20),
-      child: submitButton(),
-    );
-  }
-
-  appBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Container(
-              alignment: Alignment.topLeft,
-              margin: EdgeInsets.only(left: 12, top: 10),
-              child: InkWell(
-                child: Image.asset(
-                  App.backButtonLogo,
-                  height: 50,
-                  width: 50,
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 10, top: 10),
-              alignment: Alignment.center,
-              child: Text(
-                App.completeYourKyc,
-                style: TextStyle(
-                    color: primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20),
-              ),
-            )
-          ],
-        ),
-        Container(
-          margin: EdgeInsets.only(right: 15, top: 10),
-          alignment: Alignment.center,
-          child: Text(
-            App.skip,
-            style: TextStyle(
-                color: primaryColor, fontWeight: FontWeight.bold, fontSize: 15),
-          ),
-        )
-      ],
-    );
-  }
-
   uploadDocumentText() {
     return Container(
       alignment: Alignment.topLeft,
@@ -239,327 +188,327 @@ class UploadDocumentState extends State<UploadDocument> {
       ),
     );
   }
-
-  photo1Text() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15, right: 15),
-      child: Text(
-        App.photo1,
-        style: TextStyle(
-            fontSize: 17, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
   photo1Field() {
-    return Container(
-      padding: EdgeInsets.all(8.0),
-      height: 55,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: secondaryColor),
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.topLeft,
+          margin: EdgeInsets.only(left: 15, top: 15, right: 15),
+          child: Text(
+            App.photo1,
+            style: TextStyle(
+                fontSize: 17, color: secondaryColor, fontFamily: App.font),
+          ),
         ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          image1 != null
-              ? Flexible(
-                  child: Text(
-                  file1,
-                  maxLines: 2,
-                  style: TextStyle(color: primaryColor, fontFamily: App.font),
-                ))
-              : Container(),
-          Container(
-            padding: EdgeInsets.only(left: 10),
-            child: RaisedButton(
-              onPressed: _getPhoto1,
-              child: Text(App.chooseFile),
+        Container(
+          padding: EdgeInsets.all(8.0),
+          height: 55,
+          margin: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: secondaryColor),
             ),
           ),
-        ],
-      ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              image1 != null
+                  ? Flexible(
+                      child: Text(
+                      file1,
+                      maxLines: 2,
+                      style: TextStyle(color: primaryColor, fontFamily: App.font),
+                    ))
+                  : Container(),
+              Container(
+                padding: EdgeInsets.only(left: 10),
+                child: RaisedButton(
+                  onPressed: _getPhoto1,
+                  child: Text(App.chooseFile),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
-
-  photo2Text() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15, right: 15),
-      child: Text(
-        App.photo2,
-        style: TextStyle(
-            fontSize: 17, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
   photo2Field() {
-    return Container(
-      padding: EdgeInsets.all(8.0),
-      height: 55,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: secondaryColor),
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.topLeft,
+          margin: EdgeInsets.only(left: 15, top: 15, right: 15),
+          child: Text(
+            App.photo2,
+            style: TextStyle(
+                fontSize: 17, color: secondaryColor, fontFamily: App.font),
+          ),
         ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          image2 != null
-              ? Flexible(
-                  child: Text(
-                  file2,
-                  maxLines: 2,
-                  style: TextStyle(color: primaryColor, fontFamily: App.font),
-                ))
-              : Container(),
-          Container(
-            padding: EdgeInsets.only(left: 10),
-            child: RaisedButton(
-              onPressed: _getPhoto2,
-              child: Text(App.chooseFile),
+        Container(
+          padding: EdgeInsets.all(8.0),
+          height: 55,
+          margin: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: secondaryColor),
             ),
           ),
-        ],
-      ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              image2 != null
+                  ? Flexible(
+                      child: Text(
+                      file2,
+                      maxLines: 2,
+                      style: TextStyle(color: primaryColor, fontFamily: App.font),
+                    ))
+                  : Container(),
+              Container(
+                padding: EdgeInsets.only(left: 10),
+                child: RaisedButton(
+                  onPressed: _getPhoto2,
+                  child: Text(App.chooseFile),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
-
-  aadharFrontText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15, right: 15),
-      child: Text(
-        App.aadharFront,
-        style: TextStyle(
-            fontSize: 17, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
   aadharFrontField() {
-    return Container(
-      padding: EdgeInsets.all(8.0),
-      height: 55,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: secondaryColor),
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.topLeft,
+          margin: EdgeInsets.only(left: 15, top: 15, right: 15),
+          child: Text(
+            App.aadharFront,
+            style: TextStyle(
+                fontSize: 17, color: secondaryColor, fontFamily: App.font),
+          ),
         ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          image3 != null
-              ? Flexible(
-              child: Text(
-                file3,
-                maxLines: 2,
-                style: TextStyle(color: primaryColor, fontFamily: App.font),
-              ))
-              : Container(),
-          Container(
-            padding: EdgeInsets.only(left: 10),
-            child: RaisedButton(
-              onPressed: _getPhoto3,
-              child: Text(App.chooseFile),
+        Container(
+          padding: EdgeInsets.all(8.0),
+          height: 55,
+          margin: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: secondaryColor),
             ),
           ),
-        ],
-      ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              image3 != null
+                  ? Flexible(
+                  child: Text(
+                    file3,
+                    maxLines: 2,
+                    style: TextStyle(color: primaryColor, fontFamily: App.font),
+                  ))
+                  : Container(),
+              Container(
+                padding: EdgeInsets.only(left: 10),
+                child: RaisedButton(
+                  onPressed: _getPhoto3,
+                  child: Text(App.chooseFile),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
-  aadharBackText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15, right: 15),
-      child: Text(
-        App.aadharback,
-        style: TextStyle(
-            fontSize: 17, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
   aadharBackField() {
-    return Container(
-      padding: EdgeInsets.all(8.0),
-      height: 55,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: secondaryColor),
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.topLeft,
+          margin: EdgeInsets.only(left: 15, top: 15, right: 15),
+          child: Text(
+            App.aadharback,
+            style: TextStyle(
+                fontSize: 17, color: secondaryColor, fontFamily: App.font),
+          ),
         ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          image4 != null
-              ? Flexible(
-              child: Text(
-                file4,
-                maxLines: 2,
-                style: TextStyle(color: primaryColor, fontFamily: App.font),
-              ))
-              : Container(),
-          Container(
-            padding: EdgeInsets.only(left: 10),
-            child: RaisedButton(
-              onPressed: _getPhoto4,
-              child: Text(App.chooseFile),
+        Container(
+          padding: EdgeInsets.all(8.0),
+          height: 55,
+          margin: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: secondaryColor),
             ),
           ),
-        ],
-      ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              image4 != null
+                  ? Flexible(
+                  child: Text(
+                    file4,
+                    maxLines: 2,
+                    style: TextStyle(color: primaryColor, fontFamily: App.font),
+                  ))
+                  : Container(),
+              Container(
+                padding: EdgeInsets.only(left: 10),
+                child: RaisedButton(
+                  onPressed: _getPhoto4,
+                  child: Text(App.chooseFile),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
-  panText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15, right: 15),
-      child: Text(
-        App.panCard,
-        style: TextStyle(
-            fontSize: 17, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
   panField() {
-    return Container(
-      padding: EdgeInsets.all(8.0),
-      height: 55,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: secondaryColor),
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.topLeft,
+          margin: EdgeInsets.only(left: 15, top: 15, right: 15),
+          child: Text(
+            App.panCard,
+            style: TextStyle(
+                fontSize: 17, color: secondaryColor, fontFamily: App.font),
+          ),
         ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          image5 != null
-              ? Flexible(
-              child: Text(
-                file5,
-                maxLines: 2,
-                style: TextStyle(color: primaryColor, fontFamily: App.font),
-              ))
-              : Container(),
-          Container(
-            padding: EdgeInsets.only(left: 10),
-            child: RaisedButton(
-              onPressed: _getPhoto5,
-              child: Text(App.chooseFile),
+        Container(
+          padding: EdgeInsets.all(8.0),
+          height: 55,
+          margin: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: secondaryColor),
             ),
           ),
-        ],
-      ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              image5 != null
+                  ? Flexible(
+                  child: Text(
+                    file5,
+                    maxLines: 2,
+                    style: TextStyle(color: primaryColor, fontFamily: App.font),
+                  ))
+                  : Container(),
+              Container(
+                padding: EdgeInsets.only(left: 10),
+                child: RaisedButton(
+                  onPressed: _getPhoto5,
+                  child: Text(App.chooseFile),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
-  chequeText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15, right: 15),
-      child: Text(
-        App.cancelledCheque,
-        style: TextStyle(
-            fontSize: 17, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
   chequeField() {
-    return Container(
-      padding: EdgeInsets.all(8.0),
-      height: 55,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: secondaryColor),
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.topLeft,
+          margin: EdgeInsets.only(left: 15, top: 15, right: 15),
+          child: Text(
+            App.cancelledCheque,
+            style: TextStyle(
+                fontSize: 17, color: secondaryColor, fontFamily: App.font),
+          ),
         ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          image6 != null
-              ? Flexible(
-              child: Text(
-                file6,
-                maxLines: 2,
-                style: TextStyle(color: primaryColor, fontFamily: App.font),
-              ))
-              : Container(),
-          Container(
-            padding: EdgeInsets.only(left: 10),
-            child: RaisedButton(
-              onPressed: _getPhoto6,
-              child: Text(App.chooseFile),
+        Container(
+          padding: EdgeInsets.all(8.0),
+          height: 55,
+          margin: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: secondaryColor),
             ),
           ),
-        ],
-      ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              image6 != null
+                  ? Flexible(
+                  child: Text(
+                    file6,
+                    maxLines: 2,
+                    style: TextStyle(color: primaryColor, fontFamily: App.font),
+                  ))
+                  : Container(),
+              Container(
+                padding: EdgeInsets.only(left: 10),
+                child: RaisedButton(
+                  onPressed: _getPhoto6,
+                  child: Text(App.chooseFile),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
-  selfText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15, right: 15),
-      child: Text(
-        App.selfAttested,
-        style: TextStyle(
-            fontSize: 17, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
   selfField() {
-    return Container(
-      padding: EdgeInsets.all(8.0),
-      height: 55,
-      margin: EdgeInsets.only(left: 15, right: 15,bottom: 20),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: secondaryColor),
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.topLeft,
+          margin: EdgeInsets.only(left: 15, top: 15, right: 15),
+          child: Text(
+            App.selfAttested,
+            style: TextStyle(
+                fontSize: 17, color: secondaryColor, fontFamily: App.font),
+          ),
         ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          image7 != null
-              ? Flexible(
-              child: Text(
-                file7,
-                maxLines: 2,
-                style: TextStyle(color: primaryColor, fontFamily: App.font),
-              ))
-              : Container(),
-          Container(
-            padding: EdgeInsets.only(left: 10),
-            child: RaisedButton(
-              onPressed: _getPhoto7,
-              child: Text(App.chooseFile),
+        Container(
+          padding: EdgeInsets.all(8.0),
+          height: 55,
+          margin: EdgeInsets.only(left: 15, right: 15,bottom: 20),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: secondaryColor),
             ),
           ),
-        ],
-      ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              image7 != null
+                  ? Flexible(
+                  child: Text(
+                    file7,
+                    maxLines: 2,
+                    style: TextStyle(color: primaryColor, fontFamily: App.font),
+                  ))
+                  : Container(),
+              Container(
+                padding: EdgeInsets.only(left: 10),
+                child: RaisedButton(
+                  onPressed: _getPhoto7,
+                  child: Text(App.chooseFile),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
-
-
-
   submitButton() {
     return Padding(
         padding: EdgeInsets.only(bottom: 20, top: 20),
         child: InkWell(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ReferenceScreen()));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> DashBoardScreen()));
           },
           child: Container(
             alignment: Alignment.center,

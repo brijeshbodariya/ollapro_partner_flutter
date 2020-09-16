@@ -27,7 +27,7 @@ class HeaderLine {
             child: Container(
               height: 5,
               width: 20,
-              color: textChanges(firstPage),
+              color: lineChanges(firstPage),
             ),
           ),
           Container(

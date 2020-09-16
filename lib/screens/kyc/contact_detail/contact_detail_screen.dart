@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/header.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'file:///D:/LiveProject/ollapro_partner_flutter/lib/common/repo.dart';
@@ -48,17 +49,45 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
               alignment: Alignment.topLeft,
               child: Column(
                 children: [
-                  appBar(),
+                  appBarKYC(context,MaterialPageRoute(builder: (context)=> IdentifyDetailScreen())),
                   HeaderLine.headerLineComplete(context, 3, 1, 2, 2, 2, 2),
                   contactDetailText(),
-                  phoneText(),
-                  phoneField(),
-                  altPhoneText(),
-                  altPhoneField(),
-                  emailText(),
-                  emailField(),
-                  commText(),
-                  add1Field(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  //phone
+                  commonTextField(
+                      title: App.mobileNumber,
+                      controller: phoneController,
+                      hintText: "Enter Phone NUmber",
+                      textInputType: TextInputType.phone),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  //alternate phone
+                  commonTextField(
+                      title: App.altMobileNumber,
+                      controller: altPhoneController,
+                      hintText: "Enter Alternate Phone NUmber",
+                      textInputType: TextInputType.phone),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  //email
+                  commonTextField(
+                      title: App.emailAddress,
+                      controller: emailController,
+                      hintText: "Enter Email",
+                      textInputType: TextInputType.emailAddress),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  //communication address
+                  commonTextField(
+                      title: App.communicationAddress,
+                      controller: add1Controller,
+                      hintText: "Enter Address 1",
+                      textInputType: TextInputType.text),
                   add2Field(),
                   add3Field(),
                   Container(
@@ -73,75 +102,51 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 15),
+                    margin: EdgeInsets.only(top: 10),
                     width: Utils.getDeviceWidth(context),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        exactPlace(),
-                        pinCode(),
+                        //middle name
+                        Expanded(
+                          flex: 1,
+                          child: commonTextField(
+                              title: App.exactPlace,
+                              controller: placeController,
+                              hintText: "Enter Exact place",
+                              textInputType: TextInputType.text),
+                        ),
+                        //lastname
+                        Expanded(
+                          flex: 1,
+                          child: commonTextField(
+                              title: App.pinCode,
+                              controller: pinCodeController,
+                              hintText: "Enter pincode",
+                              textInputType: TextInputType.text),
+                        ),
+
                       ],
                     ),
                   ),
-                  Container(
-                    width: Utils.getDeviceWidth(context),
-                    margin: EdgeInsets.only(left: 20, right: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        backButton(),
-                        nextButton(),
-                      ],
-                    ),
-                  ),
+                  SizedBox(height: 20,)
                 ],
               ),
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  appBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Container(
-              alignment: Alignment.topLeft,
-              margin: EdgeInsets.only(left: 12, top: 10),
-              child: InkWell(
-                child: Image.asset(App.backButtonLogo,height: 50,width: 50,),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 10, top: 10),
-              alignment: Alignment.center,
-              child: Text(
-                App.completeYourKyc,
-                style: TextStyle(
-                    color: primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20),
-              ),
-            )
-          ],
-        ),
-        Container(
-          margin: EdgeInsets.only(right: 15, top: 10),
-          alignment: Alignment.center,
-          child: Text(
-            App.skip,
-            style: TextStyle(
-                color: primaryColor, fontWeight: FontWeight.bold, fontSize: 15),
+        bottomNavigationBar: Container(
+          width: Utils.getDeviceWidth(context),
+          margin: EdgeInsets.only(left: 20, right: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              backButton(),
+              nextButton(),
+            ],
           ),
-        )
-      ],
+        ),
+      ),
     );
   }
 
@@ -160,160 +165,12 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
     );
   }
 
-  phoneText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 20),
-      child: Text(
-        App.mobileNumber,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  phoneField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        style: TextStyle(color: primaryColor,fontWeight: FontWeight.bold,fontFamily: App.font),
-        controller: phoneController,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Enter Mobile Number",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.phone,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-
-  altPhoneText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15),
-      child: Text(
-        App.altMobileNumber,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  altPhoneField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        controller: phoneController,
-        style: TextStyle(color: primaryColor,fontWeight: FontWeight.bold,fontFamily: App.font),
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Enter Mobile Number",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.phone,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-
-  emailText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15),
-      child: Text(
-        App.emailAddress,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  emailField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        style: TextStyle(color: primaryColor,fontWeight: FontWeight.bold,fontFamily: App.font),
-        controller: emailController,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Enter Email address",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.emailAddress,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-
-  commText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15),
-      child: Text(
-        App.communicationAddress,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  add1Field() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        controller: add1Controller,
-        style: TextStyle(color: primaryColor,fontWeight: FontWeight.bold,fontFamily: App.font),
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Enter Address1",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-
   add2Field() {
     return Container(
       alignment: Alignment.topLeft,
       margin: EdgeInsets.only(left: 15, right: 15),
       child: TextFormField(
-        style: TextStyle(color: primaryColor,fontWeight: FontWeight.bold,fontFamily: App.font),
+        style: TextStyle(color: primaryColor, fontFamily: App.font),
         controller: add2Controller,
         decoration: InputDecoration(
           disabledBorder: OutlineInputBorder(
@@ -338,7 +195,7 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
       alignment: Alignment.topLeft,
       margin: EdgeInsets.only(left: 15, right: 15),
       child: TextFormField(
-        style: TextStyle(color: primaryColor,fontWeight: FontWeight.bold,fontFamily: App.font),
+        style: TextStyle(color: primaryColor, fontFamily: App.font),
         controller: add3Controller,
         decoration: InputDecoration(
           disabledBorder: OutlineInputBorder(
@@ -358,50 +215,9 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
     );
   }
 
-  pinCode() {
-    return Container(
-      width: Utils.getDeviceWidth(context) / 2,
-      child: Column(
-        children: [
-          Container(
-            alignment: Alignment.topLeft,
-            margin: EdgeInsets.only(left: 15, top: 10),
-            child: Text(
-              App.pinCode,
-              style: TextStyle(
-                  fontSize: 17, color: secondaryColor, fontFamily: App.font),
-            ),
-          ),
-          Container(
-            alignment: Alignment.topLeft,
-            margin: EdgeInsets.only(left: 15, right: 15),
-            child: TextFormField(
-              controller: pinCodeController,
-              style: TextStyle(color: primaryColor,fontWeight: FontWeight.bold,fontFamily: App.font),
-              decoration: InputDecoration(
-                disabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: secondaryColor,
-                  ),
-                ),
-                hintText: "Enter Pincode here",
-                hintStyle: TextStyle(
-                  color: secondaryColor,
-                  fontFamily: App.font,
-                ),
-              ),
-              keyboardType: TextInputType.phone,
-              textInputAction: TextInputAction.next,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   stateSelect() {
-    return Container(
-      width: Utils.getDeviceWidth(context) / 2,
+    return Expanded(
+      flex: 1,
       child: Column(
         children: [
           Container(
@@ -421,7 +237,10 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
               items: _states.map((String dropDownStringItem) {
                 return DropdownMenuItem<String>(
                   value: dropDownStringItem,
-                  child: Text(dropDownStringItem, style: TextStyle(color: primaryColor,fontWeight: FontWeight.bold,fontFamily: App.font),),
+                  child: Text(
+                    dropDownStringItem,
+                    style: TextStyle(color: primaryColor, fontFamily: App.font),
+                  ),
                 );
               }).toList(),
               onChanged: (value) => _onSelectedState(value),
@@ -434,8 +253,8 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
   }
 
   citySelect() {
-    return Container(
-      width: Utils.getDeviceWidth(context) / 2,
+    return Expanded(
+      flex: 1,
       child: Column(
         children: [
           Container(
@@ -455,53 +274,15 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
               items: _city.map((String dropDownStringItem) {
                 return DropdownMenuItem<String>(
                   value: dropDownStringItem,
-                  child: Text(dropDownStringItem, style: TextStyle(color: primaryColor,fontWeight: FontWeight.bold,fontFamily: App.font),),
+                  child: Text(
+                    dropDownStringItem,
+                    style: TextStyle(color: primaryColor, fontFamily: App.font),
+                  ),
                 );
               }).toList(),
               // onChanged: (value) => print(value),
-              onChanged: (value) => _onSelectedLGA(value),
+              onChanged: (value) => _onSelectedCity(value),
               value: _selectedCity,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  exactPlace() {
-    return Container(
-      width: Utils.getDeviceWidth(context) / 2,
-      child: Column(
-        children: [
-          Container(
-            alignment: Alignment.topLeft,
-            margin: EdgeInsets.only(left: 15, top: 10),
-            child: Text(
-              App.exactPlace,
-              style: TextStyle(
-                  fontSize: 17, color: secondaryColor, fontFamily: App.font),
-            ),
-          ),
-          Container(
-            alignment: Alignment.topLeft,
-            margin: EdgeInsets.only(left: 15, right: 15),
-            child: TextFormField(
-              controller: placeController,
-              style: TextStyle(color: primaryColor,fontWeight: FontWeight.bold,fontFamily: App.font),
-              decoration: InputDecoration(
-                disabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: secondaryColor,
-                  ),
-                ),
-                hintText: "Enter Exact place here",
-                hintStyle: TextStyle(
-                  color: secondaryColor,
-                  fontFamily: App.font,
-                ),
-              ),
-              keyboardType: TextInputType.text,
-              textInputAction: TextInputAction.next,
             ),
           ),
         ],
@@ -573,7 +354,7 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
     });
   }
 
-  void _onSelectedLGA(String value) {
+  void _onSelectedCity(String value) {
     setState(() => _selectedCity = value);
   }
 }

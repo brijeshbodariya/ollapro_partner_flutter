@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/header.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/screens/kyc/reference/reference_view_model.dart';
@@ -33,7 +34,7 @@ class ReferenceScreenState extends State<ReferenceScreen> {
               alignment: Alignment.topLeft,
               child: Column(
                 children: [
-                  appBar(),
+                  appBarKYC(context,MaterialPageRoute(builder: (context)=> UploadDocument())),
                   HeaderLine.headerLineComplete(context, 3, 3, 3, 3, 1, 2),
                   referenceDetailText(),
                   reference1Text(),
@@ -41,12 +42,27 @@ class ReferenceScreenState extends State<ReferenceScreen> {
                     color: white,
                     child: Column(
                       children: [
-                        nameText(),
-                        nameField(),
-                        placeText(),
-                        placeField(),
-                        phoneText(),
-                        phoneField(),
+                        // reference1 name
+                        commonTextField(
+                            title: App.name,
+                            controller: nameController,
+                            hintText: "Enter Name",
+                            textInputType: TextInputType.text
+                        ),SizedBox(height: 10),
+                        // reference1 place
+                        commonTextField(
+                            title: App.place,
+                            controller: placeController,
+                            hintText: "Enter Place",
+                            textInputType: TextInputType.text
+                        ),SizedBox(height: 10),
+                        // reference1 mobile number
+                        commonTextField(
+                            title: App.mobileNumber,
+                            controller: phoneController,
+                            hintText: "Enter Mobile Number",
+                            textInputType: TextInputType.phone
+                        ),SizedBox(height: 10),
                       ],
                     ),
                   ),
@@ -55,12 +71,27 @@ class ReferenceScreenState extends State<ReferenceScreen> {
                     color: white,
                     child: Column(
                       children: [
-                        name1Text(),
-                        name1Field(),
-                        place1Text(),
-                        place1Field(),
-                        phone1Text(),
-                        phone1Field(),
+                        // reference2 name
+                        commonTextField(
+                            title: App.name,
+                            controller: name1Controller,
+                            hintText: "Enter Name",
+                            textInputType: TextInputType.text
+                        ),SizedBox(height: 10),
+                        // reference2 place
+                        commonTextField(
+                            title: App.place,
+                            controller: place1Controller,
+                            hintText: "Enter Place",
+                            textInputType: TextInputType.text
+                        ),SizedBox(height: 10),
+                        // reference2 mobile number
+                        commonTextField(
+                            title: App.mobileNumber,
+                            controller: phone1Controller,
+                            hintText: "Enter Mobile Number",
+                            textInputType: TextInputType.phone
+                        ),SizedBox(height: 10),
                       ],
                     ),
                   ),
@@ -69,71 +100,20 @@ class ReferenceScreenState extends State<ReferenceScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: bottomButton(),
-      ),
-    );
-  }
-
-  bottomButton() {
-    return Container(
-      width: Utils.getDeviceWidth(context),
-      margin: EdgeInsets.only(left: 20, right: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          backButton(),
-          nextButton(),
-        ],
-      ),
-    );
-  }
-
-  appBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Container(
-              alignment: Alignment.topLeft,
-              margin: EdgeInsets.only(left: 12, top: 10),
-              child: InkWell(
-                child: Image.asset(
-                  App.backButtonLogo,
-                  height: 50,
-                  width: 50,
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 10, top: 10),
-              alignment: Alignment.center,
-              child: Text(
-                App.completeYourKyc,
-                style: TextStyle(
-                    color: primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20),
-              ),
-            )
-          ],
-        ),
-        Container(
-          margin: EdgeInsets.only(right: 15, top: 10),
-          alignment: Alignment.center,
-          child: Text(
-            App.skip,
-            style: TextStyle(
-                color: primaryColor, fontWeight: FontWeight.bold, fontSize: 15),
+        bottomNavigationBar: Container(
+          width: Utils.getDeviceWidth(context),
+          margin: EdgeInsets.only(left: 20, right: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              backButton(),
+              nextButton(),
+            ],
           ),
-        )
-      ],
+        ),
+      ),
     );
   }
-
   referenceDetailText() {
     return Container(
       alignment: Alignment.topLeft,
@@ -176,240 +156,6 @@ class ReferenceScreenState extends State<ReferenceScreen> {
       ),
     );
   }
-  nameText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 5),
-      child: Text(
-        App.name,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  nameField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        style: TextStyle(
-            color: primaryColor,
-            fontWeight: FontWeight.bold,
-            fontFamily: App.font),
-        controller: nameController,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Enter Name",
-          hintStyle: TextStyle(
-            color: grey,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-  placeText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 20),
-      child: Text(
-        App.place,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  placeField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        style: TextStyle(
-            color: primaryColor,
-            fontWeight: FontWeight.bold,
-            fontFamily: App.font),
-        controller: placeController,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Enter place here",
-          hintStyle: TextStyle(
-            color: grey,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-  phoneText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15),
-      child: Text(
-        App.mobileNumber,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  phoneField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15,bottom: 15),
-      child: TextFormField(
-        controller: phoneController,
-        style: TextStyle(
-            color: primaryColor,
-            fontWeight: FontWeight.bold,
-            fontFamily: App.font),
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Enter Mobile Number",
-          hintStyle: TextStyle(
-            color: grey,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.phone,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-  name1Text() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 5),
-      child: Text(
-        App.name,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  name1Field() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        style: TextStyle(
-            color: primaryColor,
-            fontWeight: FontWeight.bold,
-            fontFamily: App.font),
-        controller: name1Controller,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Enter Name",
-          hintStyle: TextStyle(
-            color: grey,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-  place1Text() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 20),
-      child: Text(
-        App.place,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  place1Field() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        style: TextStyle(
-            color: primaryColor,
-            fontWeight: FontWeight.bold,
-            fontFamily: App.font),
-        controller: place1Controller,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Enter place here",
-          hintStyle: TextStyle(
-            color: grey,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-  phone1Text() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15),
-      child: Text(
-        App.mobileNumber,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  phone1Field() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15,bottom: 15),
-      child: TextFormField(
-        controller: phone1Controller,
-        style: TextStyle(
-            color: primaryColor,
-            fontWeight: FontWeight.bold,
-            fontFamily: App.font),
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Enter Mobile Number",
-          hintStyle: TextStyle(
-            color: grey,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.phone,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
   backButton() {
     return Padding(
         padding: EdgeInsets.only(bottom: 30, top: 30),
@@ -435,7 +181,6 @@ class ReferenceScreenState extends State<ReferenceScreen> {
           ),
         ));
   }
-
   nextButton() {
     return Padding(
         padding: EdgeInsets.only(bottom: 30, top: 30),

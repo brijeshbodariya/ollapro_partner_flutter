@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/screens/login/login_screen.dart';
 import 'package:ollapro_partner/screens/otp/otp_screen.dart';
@@ -49,16 +50,86 @@ class RegisterScreenState extends State<RegisterScreen> {
               children: [
                 createAccountText(),
                 enterYourDetailtext(),
-                fullNametext(),
-                fullNameField(),
-                emailText(),
-                emailField(),
-                phoneText(),
-                phoneField(),
-                passwordText(),
-                passwordField(),
-                rePasswordText(),
-                rePasswordField(),
+               //firstName
+                commonTextField(
+                    title: App.fullName,
+                    controller: fullNameController,
+                    hintText: "Enter Full Name",
+                    prefixIcon: Image.asset(
+                      App.personLogo,
+                      height: 20,
+                      width: 20,
+                    ),
+                    textInputType: TextInputType.text
+                ),
+                //email
+                commonTextField(
+                  title: App.emailAddress,
+                  controller: emailController,
+                  hintText: "Enter Email",
+                  prefixIcon: Image.asset(
+                    App.emailLogo,
+                    height: 20,
+                    width: 20,
+                  ),
+                  textInputType: TextInputType.emailAddress
+                ),
+                //phone
+                commonTextField(
+                    title: App.mobileNumber,
+                    controller: phoneController,
+                    hintText: "Enter Phone NUmber",
+                    prefixIcon: Image.asset(
+                      App.mobileLogo,
+                      height: 20,
+                      width: 20,
+                    ),
+                    textInputType: TextInputType.phone
+                ),
+                //password
+                commonTextField(
+                    title: App.password,
+                    controller: passwordController,
+                    hintText: "Enter Password",
+                    prefixIcon: Image.asset(
+                      App.passwordLogo,
+                      height: 20,
+                      width: 20,
+                    ),
+                    textInputType: TextInputType.text,
+                  suffixIcon: Container(
+                    child:GestureDetector(
+                      onTap: _registerPassword,
+                      child: Image.asset(
+                        App.visibility,
+                        height: 20,
+                        width: 20,
+                      ),
+                    ),
+                  ),
+                ),
+                //confirm password
+                commonTextField(
+                  title: App.password,
+                  controller: confirmPasswordController,
+                  hintText: "Enter Confirm Password",
+                  prefixIcon: Image.asset(
+                    App.passwordLogo,
+                    height: 20,
+                    width: 20,
+                  ),
+                  textInputType: TextInputType.text,
+                  suffixIcon: Container(
+                    child:GestureDetector(
+                      onTap: _reRegisterPassword,
+                      child: Image.asset(
+                        App.visibility,
+                        height: 20,
+                        width: 20,
+                      ),
+                    ),
+                  ),
+                ),
                 registerButton(),
               ],
             )
@@ -68,7 +139,6 @@ class RegisterScreenState extends State<RegisterScreen> {
       bottomNavigationBar: bottomLogin(),
     ));
   }
-
   bottomLogin() {
     return Padding(
       padding: EdgeInsets.only(bottom: 15),
@@ -97,7 +167,6 @@ class RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
-
   createAccountText() {
     return Container(
       alignment: Alignment.topLeft,
@@ -112,7 +181,6 @@ class RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
-
   enterYourDetailtext() {
     return Container(
       alignment: Alignment.topLeft,
@@ -124,234 +192,6 @@ class RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
-
-  fullNametext() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 45),
-      child: Text(
-        App.fullName,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  fullNameField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        controller: fullNameController,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          prefixIcon: Image.asset(
-            App.personLogo,
-            height: 20,
-            width: 20,
-          ),
-          hintText: "Enter Full Name",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-
-  emailText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15),
-      child: Text(
-        App.emailAddress,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  emailField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        controller: emailController,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          prefixIcon: Image.asset(
-            App.emailLogo,
-            height: 20,
-            width: 20,
-          ),
-          hintText: "Enter Email address",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.emailAddress,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-
-  phoneText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15),
-      child: Text(
-        App.mobileNumber,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  phoneField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        controller: phoneController,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          prefixIcon: Image.asset(
-            App.mobileLogo,
-            height: 20,
-            width: 20,
-          ),
-          hintText: "Enter Mobile Number",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.phone,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-
-  passwordText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15),
-      child: Text(
-        App.password,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  passwordField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        controller: passwordController,
-        obscureText: _obscureText2,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          prefixIcon: Image.asset(
-            App.passwordLogo,
-            height: 20,
-            width: 20,
-          ),
-          suffixIcon: Container(
-            child:GestureDetector(
-              onTap: _registerPassword,
-              child: Image.asset(
-                App.visibility,
-                height: 20,
-                width: 20,
-              ),
-            ),
-          ),
-          hintText: "Enter Password ",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.done,
-      ),
-    );
-  }
-
-  rePasswordText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15),
-      child: Text(
-        App.confirmPassword,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  rePasswordField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        controller: confirmPasswordController,
-        obscureText: _obscureText1,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          prefixIcon: Image.asset(
-            App.passwordLogo,
-            height: 20,
-            width: 20,
-          ),
-          suffixIcon: Container(
-            child:GestureDetector(
-              onTap: _reRegisterPassword,
-              child: Image.asset(
-                App.visibility,
-                height: 20,
-                width: 20,
-              ),
-            ),
-          ),
-          hintText: "Enter Confirm Password ",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.done,
-      ),
-    );
-  }
-
   registerButton() {
     return Padding(
         padding: EdgeInsets.only(bottom: 20, top: 30),

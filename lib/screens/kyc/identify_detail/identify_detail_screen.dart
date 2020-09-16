@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/header.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/screens/kyc/bankdetail/bank_detail_screen.dart';
@@ -30,80 +31,47 @@ class IdentifyDetailScreenState extends State<IdentifyDetailScreen> {
               alignment: Alignment.topLeft,
               child: Column(
                 children: [
-                  appBar(),
+                  appBarKYC(context,MaterialPageRoute(builder: (context)=> BankDetailScreen())),
                   HeaderLine.headerLineComplete(context, 3, 3, 1, 2, 2, 2),
                   identifyDetailText(),
-                  aadharText(),
-                  aadharField(),
-                  panText(),
-                  panField(),
-                  gstText(),
-                  gstField(),
+                  //aadhar card
+                  commonTextField(
+                      title: App.aadhar,
+                      controller: aadharController,
+                      hintText: "Enter Aadhar NUmber",
+                      textInputType: TextInputType.phone
+                  ),SizedBox(height: 10,),
+                  //pan card
+                  commonTextField(
+                      title: App.pan,
+                      controller: panController,
+                      hintText: "Enter PAN NUmber",
+                      textInputType: TextInputType.text
+                  ),SizedBox(height: 10,),
+                  //gstin
+                  commonTextField(
+                      title: App.gst,
+                      controller: gstController,
+                      hintText: "Enter GSTIN NUmber",
+                      textInputType: TextInputType.text
+                  ),
                 ],
               ),
             ),
           ),
         ),
-        bottomNavigationBar: bottomButton(),
-      ),
-    );
-  }
-bottomButton(){
-    return  Container(
-      width: Utils.getDeviceWidth(context),
-      margin: EdgeInsets.only(left: 20, right: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          backButton(),
-          nextButton(),
-        ],
-      ),
-    );
-}
-  appBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Container(
-              alignment: Alignment.topLeft,
-              margin: EdgeInsets.only(left: 12, top: 10),
-              child: InkWell(
-                child: Image.asset(
-                  App.backButtonLogo,
-                  height: 50,
-                  width: 50,
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 10, top: 10),
-              alignment: Alignment.center,
-              child: Text(
-                App.completeYourKyc,
-                style: TextStyle(
-                    color: primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20),
-              ),
-            )
-          ],
-        ),
-        Container(
-          margin: EdgeInsets.only(right: 15, top: 10),
-          alignment: Alignment.center,
-          child: Text(
-            App.skip,
-            style: TextStyle(
-                color: primaryColor, fontWeight: FontWeight.bold, fontSize: 15),
+        bottomNavigationBar: Container(
+          width: Utils.getDeviceWidth(context),
+          margin: EdgeInsets.only(left: 20, right: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              backButton(),
+              nextButton(),
+            ],
           ),
-        )
-      ],
+        ),
+      ),
     );
   }
 
@@ -118,118 +86,6 @@ bottomButton(){
             color: primaryColor,
             fontWeight: FontWeight.bold,
             fontFamily: App.font),
-      ),
-    );
-  }
-
-  aadharText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 20),
-      child: Text(
-        App.aadhar,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  aadharField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        style: TextStyle(color: primaryColor,fontWeight: FontWeight.bold,fontFamily: App.font),
-        controller: aadharController,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Enter Aadhar Number",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.phone,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-
-  panText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 20),
-      child: Text(
-        App.pan,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  panField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        controller: panController,
-        style: TextStyle(color: primaryColor,fontWeight: FontWeight.bold,fontFamily: App.font),
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Enter PAN Number",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.phone,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-
-  gstText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 20),
-      child: Text(
-        App.gst,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  gstField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        style: TextStyle(color: primaryColor,fontWeight: FontWeight.bold,fontFamily: App.font),
-        controller: gstController,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          suffix: Text('Optional',style: TextStyle(color: grey1,fontFamily: App.font),),
-          hintText: "Enter GSTIN Number",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.phone,
-        textInputAction: TextInputAction.next,
       ),
     );
   }

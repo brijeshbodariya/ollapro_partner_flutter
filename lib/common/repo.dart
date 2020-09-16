@@ -34,5 +34,14 @@ class Repository {
 
       ]
     },
+    {
+      "state": "Maharastra",
+      "alias": "Maharastra",
+      "lgas": [
+        "Mumbai",
+        "Pune"
+
+      ]
+    },
   ];
 }

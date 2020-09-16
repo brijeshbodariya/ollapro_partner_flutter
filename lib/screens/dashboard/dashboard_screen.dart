@@ -7,7 +7,9 @@ import 'package:ollapro_partner/model/newPropertiesList.dart';
 import 'package:ollapro_partner/model/nonVerifiedTenant.dart';
 import 'package:ollapro_partner/screens/dashboard/dashboard_screen_view_model.dart';
 import 'package:ollapro_partner/screens/dashboard/landlord/landlord_screen.dart';
-import 'package:ollapro_partner/screens/dashboard/property/property_screen.dart';
+import 'package:ollapro_partner/screens/dashboard/property/tab_property_screen.dart';
+import 'package:ollapro_partner/screens/dashboard/reward_basket/reward_basket_screen.dart';
+import 'package:ollapro_partner/screens/dashboard/tenant/tenant_screen.dart';
 
 class DashBoardScreen extends StatefulWidget {
   @override
@@ -180,7 +182,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                       ),
                     ],
                   ),
-                  Padding(padding: EdgeInsets.only(top: 100), child: userImage())
+                  Padding(padding: EdgeInsets.only(top: 130), child: userImage())
 
 
                   //userImage(),
@@ -330,7 +332,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
         children: [
           GestureDetector(
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> PropertyScreen()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> TabProperty()));
 
             },
             child: Container(
@@ -373,7 +375,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                               fit: BoxFit.fill,
                               image: AssetImage(App.landLordDashLogo)))),
                   Text(
-                    App.landlord,
+                    App.landlordTitle,
                     style: TextStyle(
                         fontSize: 12, fontFamily: App.font, color: primaryColor),
                   )
@@ -382,7 +384,9 @@ class DashBoardScreenState extends State<DashBoardScreen> {
             ),
           ),
           GestureDetector(
-            onTap: (){},
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> TenantScreen()));
+            },
             child: Container(
               margin: EdgeInsets.only(top: 20, bottom: 20, left: 10),
               child: Column(
@@ -397,7 +401,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                               fit: BoxFit.fill,
                               image: AssetImage(App.tenantLogo)))),
                   Text(
-                    App.tenant,
+                    App.tenantTitle,
                     style: TextStyle(
                         fontSize: 12, fontFamily: App.font, color: primaryColor),
                   )
@@ -406,7 +410,9 @@ class DashBoardScreenState extends State<DashBoardScreen> {
             ),
           ),
           GestureDetector(
-            onTap: (){},
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> RewardBasketScreen()));
+            },
             child: Container(
               margin: EdgeInsets.only(top: 20, bottom: 20, left: 10),
               child: Column(
@@ -437,7 +443,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
 
   listPropertyColumn() {
     return Container(
-      height: 200,
+      height: 240,
       width: Utils.getDeviceWidth(context),
       color: white,
       child: Column(
@@ -473,71 +479,77 @@ class DashBoardScreenState extends State<DashBoardScreen> {
               ],
             ),
           ),
-          Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Container(
-                height: 170,
-                width: Utils.getDeviceWidth(context),
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: list.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: EdgeInsets.only(
-                            top: 20, bottom: 10, left: 10, right: 10),
-                        decoration: new BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(list[index].image),
-                            fit: BoxFit.fitWidth,
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 10, bottom: 15),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    list[index].name,
-                                    style: TextStyle(
-                                        color: white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15,
-                                        fontFamily: App.font),
-                                  ),
-                                  Text(
-                                    list[index].name1,
-                                    style: TextStyle(
-                                        color: white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15,
-                                        fontFamily: App.font),
-                                  ),
-                                ],
-                              ),
+          Container(
+            height: 200,
+            width: Utils.getDeviceWidth(context),
+            child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: list.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    width: Utils.getDeviceWidth(context) / 1.5,
+                    margin: EdgeInsets.only(
+                        top: 20, bottom: 10, left: 10, right: 10),
+                    decoration: new BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                        image: AssetImage(list[index].image),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    child: Container(
+                      color: Colors.black.withOpacity(0.20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(left: 10, bottom: 0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  list[index].name,
+                                  style: TextStyle(
+                                      color: white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                      fontFamily: App.font),
+                                ),
+                                Text(
+                                  list[index].name1,
+                                  style: TextStyle(
+                                      color: white,
+                                      fontSize: 15,
+                                      fontFamily: App.font),
+                                ),
+                              ],
                             ),
-                            Container(
-                              margin: EdgeInsets.only(right: 10, bottom: 15),
-                              child: RaisedButton(
-                                  color: yellow,
-                                  child: Text(
-                                    list[index].buttonName,
-                                    style: TextStyle(
-                                        color: white,
-                                        fontSize: 12,
-                                        fontFamily: App.font),
-                                  )),
-                            )
-                          ],
-                        ),
-                      );
-                    }),
-              ),
-            ],
+                          ),
+                          Container(
+                            height: 25,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: yellow,
+                            ),
+                            margin: EdgeInsets.only(right: 10, bottom: 10),
+                            child: FlatButton(
+                                color: Colors.transparent,
+                                child: Text(
+                                  list[index].buttonName,
+                                  style: TextStyle(
+                                      color: white,
+                                      fontSize: 12,
+                                      fontFamily: App.font),
+                                )),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                }),
           ),
         ],
       ),

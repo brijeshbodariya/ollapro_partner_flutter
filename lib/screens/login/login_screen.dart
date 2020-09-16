@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/screens/dashboard/dashboard_screen.dart';
 import 'package:ollapro_partner/screens/forgot_password/forgot_password.dart';
@@ -28,7 +29,7 @@ class LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-      print("runtimeType -> " + runtimeType.toString());
+    print("runtimeType -> " + runtimeType.toString());
     model ?? (model = LoginScreenViewModel(this));
 
     return Scaffold(
@@ -40,11 +41,10 @@ class LoginScreenState extends State<LoginScreen> {
           children: [
             Container(
               height: Utils.getDeviceHeight(context),
-              width: Utils.getDeviceWidth(context) ,
+              width: Utils.getDeviceWidth(context),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(
-                      App.loginBg),
+                  image: AssetImage(App.loginBg),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -52,13 +52,45 @@ class LoginScreenState extends State<LoginScreen> {
                 children: [
                   partnerLogintext(),
                   credentialsText(),
-                  phoneText(),
-                  phoneField(),
                   SizedBox(
                     height: 20,
                   ),
-                  passwordText(),
-                  passwordField(),
+                  //phone
+                  commonTextField(
+                      title: App.mobileNumber,
+                      controller: phoneController,
+                      hintText: "Enter Phone NUmber",
+                      prefixIcon: Image.asset(
+                        App.mobileLogo,
+                        height: 20,
+                        width: 20,
+                      ),
+                      textInputType: TextInputType.phone),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  //password
+                  commonTextField(
+                    title: App.password,
+                    controller: passwordController,
+                    hintText: "Enter Password",
+                    prefixIcon: Image.asset(
+                      App.passwordLogo,
+                      height: 20,
+                      width: 20,
+                    ),
+                    textInputType: TextInputType.text,
+                    suffixIcon: Container(
+                      child: GestureDetector(
+                        onTap: _loginPassword,
+                        child: Image.asset(
+                          App.visibility,
+                          height: 20,
+                          width: 20,
+                        ),
+                      ),
+                    ),
+                  ),
                   rememberPassword(),
                   loginButton(),
                 ],
@@ -75,7 +107,7 @@ class LoginScreenState extends State<LoginScreen> {
     return Padding(
         padding: EdgeInsets.only(bottom: 15),
         child: InkWell(
-          onTap: (){
+          onTap: () {
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => RegisterScreen()));
           },
@@ -92,8 +124,8 @@ class LoginScreenState extends State<LoginScreen> {
             ),
             child: Text(
               App.loginToRegisterButton,
-              style:
-              TextStyle(color: primaryColor, fontFamily: App.font, fontSize: 15),
+              style: TextStyle(
+                  color: primaryColor, fontFamily: App.font, fontSize: 15),
             ),
           ),
         ));
@@ -126,99 +158,6 @@ class LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  phoneText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 45),
-      child: Text(
-        App.mobileNumber,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  phoneField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        controller: phoneController,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          prefixIcon: Image.asset(
-            App.mobileLogo,
-            height: 20,
-            width: 20,
-          ),
-          hintText: "Enter Mobile Number",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.phone,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-
-  passwordText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 10),
-      child: Text(
-        App.password,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  passwordField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        controller: passwordController,
-        obscureText: _obscureText,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          prefixIcon: Image.asset(
-            App.passwordLogo,
-            height: 20,
-            width: 20,
-          ),
-          suffixIcon: Container(
-            child:GestureDetector(
-              onTap: _loginPassword,
-              child: Image.asset(
-                App.visibility,
-                height: 20,
-                width: 20,
-              ),
-            ),
-          ),
-          hintText: "Enter Password ",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.done,
-      ),
-    );
-  }
-
   rememberPassword() {
     return Container(
       margin: EdgeInsets.only(left: 15, right: 15, top: 18, bottom: 20),
@@ -236,9 +175,11 @@ class LoginScreenState extends State<LoginScreen> {
           Container(
             alignment: Alignment.topLeft,
             child: InkWell(
-              onTap: (){
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ForgotPasswordScreen()));
               },
               child: Text(
                 App.forgotPassword,
@@ -256,7 +197,7 @@ class LoginScreenState extends State<LoginScreen> {
     return Padding(
         padding: EdgeInsets.only(bottom: 15),
         child: InkWell(
-          onTap: (){
+          onTap: () {
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => DashBoardScreen()));
           },
@@ -269,12 +210,12 @@ class LoginScreenState extends State<LoginScreen> {
               color: primaryColor,
               borderRadius: BorderRadius.all(
                   Radius.circular(30) //         <--- border radius here
-              ),
+                  ),
             ),
             child: Text(
               App.loginButton,
               style:
-              TextStyle(color: white, fontFamily: App.font, fontSize: 15),
+                  TextStyle(color: white, fontFamily: App.font, fontSize: 15),
             ),
           ),
         ));

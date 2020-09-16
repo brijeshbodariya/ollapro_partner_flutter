@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/dropdown.dart';
 import 'package:ollapro_partner/common/header.dart';
 import 'package:ollapro_partner/common/utils.dart';
@@ -11,6 +12,7 @@ class PersonalDetailScreen extends StatefulWidget {
   final bool editScreen;
 
   const PersonalDetailScreen({Key key, this.editScreen}) : super(key: key);
+
   @override
   PersonalDetailScreenState createState() => PersonalDetailScreenState();
 }
@@ -36,8 +38,8 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
     title = '';
     genderActivity = '';
     gender = '';
-    languageActivity= '';
-    language= '';
+    languageActivity = '';
+    language = '';
   }
 
   openDatePicker() {
@@ -75,81 +77,65 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
               alignment: Alignment.topLeft,
               child: Column(
                 children: [
-                  appBar(),
-                  HeaderLine.headerLineComplete(context, 1,2,2,2,2,2),
+                  appBarKYC(context,MaterialPageRoute(builder: (context)=> ContactDetailScreen())),
+                  HeaderLine.headerLineComplete(context, 1, 2, 2, 2, 2, 2),
                   personalDetailText(),
-                  titleText(),
                   titleField(),
-                  firstNameText(),
-                  firstNameFeild(),
+                  //firstName
+                  commonTextField(
+                      title: App.fName,
+                      controller: fNameController,
+                      hintText: "Enter First Name",
+                      textInputType: TextInputType.text),
                   Container(
-                    margin: EdgeInsets.only(top: 15),
+                    margin: EdgeInsets.only(top: 10),
                     width: Utils.getDeviceWidth(context),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        middleName(),
-                        lastName(),
+                        //middle name
+                        Expanded(
+                          flex: 1,
+                          child: commonTextField(
+                              title: App.mName,
+                              controller: mNameController,
+                              hintText: "Enter Middle Name",
+                              textInputType: TextInputType.text),
+                        ),
+                        //lastname
+                        Expanded(
+                          flex: 1,
+                          child: commonTextField(
+                              title: App.lName,
+                              controller: lNameController,
+                              hintText: "Enter last Name",
+                              textInputType: TextInputType.text),
+                        ),
                       ],
                     ),
                   ),
-                  dobText(),
                   dateField(),
-                  genderText(),
+                  SizedBox(
+                    height: 10,
+                  ),
                   genderField(),
-                  languageText(),
                   languageField(),
-                  fatherNameText(),
-                  fatherNameFeild(),
-                  nextButton()
+                  //fathers name
+                  commonTextField(
+                      title: App.fatherName,
+                      controller: fatherNameController,
+                      hintText: "Enter father's Name",
+                      textInputType: TextInputType.text),
+                  SizedBox(
+                    height: 20,
+                  ),
                 ],
               ),
             ),
           ),
         ),
+        bottomNavigationBar: nextButton(),
       ),
-    );
-  }
-
-  appBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Container(
-              alignment: Alignment.topLeft,
-              margin: EdgeInsets.only(left: 12, top: 10),
-              child: InkWell(
-                child: Image.asset(App.backButtonLogo,height: 50,width: 50,),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 10, top: 10),
-              alignment: Alignment.center,
-              child: Text(
-                App.completeYourKyc,
-                style: TextStyle(
-                    color: primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20),
-              ),
-            )
-          ],
-        ),
-        Container(
-          margin: EdgeInsets.only(right: 15, top: 10),
-          alignment: Alignment.center,
-          child: Text(
-            App.skip,
-            style: TextStyle(
-                color: primaryColor, fontWeight: FontWeight.bold, fontSize: 15),
-          ),
-        )
-      ],
     );
   }
 
@@ -167,22 +153,18 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
       ),
     );
   }
-
-  titleText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15),
-      child: Text(
-        App.title,
-        style: TextStyle(
-            fontSize: 17, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
   titleField() {
     return Column(
       children: [
+        Container(
+          alignment: Alignment.topLeft,
+          margin: EdgeInsets.only(left: 15, top: 15),
+          child: Text(
+            App.title,
+            style: TextStyle(
+                fontSize: 17, color: secondaryColor, fontFamily: App.font),
+          ),
+        ),
         Container(
           margin: EdgeInsets.only(left: 15, right: 15),
           child: DropDownFormField(
@@ -219,179 +201,62 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
       ],
     );
   }
-
-  firstNameText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 10),
-      child: Text(
-        App.fName,
-        style: TextStyle(
-            fontSize: 17, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  firstNameFeild() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        controller: fNameController,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Enter First Name here",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-
-  middleName() {
-    return Container(
-      width: Utils.getDeviceWidth(context) / 2,
-      child: Column(
-        children: [
-          Container(
-            alignment: Alignment.topLeft,
-            margin: EdgeInsets.only(left: 15, top: 10),
-            child: Text(
-              App.mName,
-              style: TextStyle(
-                  fontSize: 17, color: secondaryColor, fontFamily: App.font),
-            ),
-          ),
-          Container(
-            alignment: Alignment.topLeft,
-            margin: EdgeInsets.only(left: 15, right: 15),
-            child: TextFormField(
-              controller: mNameController,
-              decoration: InputDecoration(
-                disabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: secondaryColor,
-                  ),
-                ),
-                hintText: "Enter Middle Name here",
-                hintStyle: TextStyle(
-                  color: secondaryColor,
-                  fontFamily: App.font,
-                ),
-              ),
-              keyboardType: TextInputType.text,
-              textInputAction: TextInputAction.next,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  lastName() {
-    return Container(
-      width: Utils.getDeviceWidth(context) / 2,
-      child: Column(
-        children: [
-          Container(
-            alignment: Alignment.topLeft,
-            margin: EdgeInsets.only(left: 15, top: 10),
-            child: Text(
-              App.lName,
-              style: TextStyle(
-                  fontSize: 17, color: secondaryColor, fontFamily: App.font),
-            ),
-          ),
-          Container(
-            alignment: Alignment.topLeft,
-            margin: EdgeInsets.only(left: 15, right: 15),
-            child: TextFormField(
-              controller: lNameController,
-              decoration: InputDecoration(
-                disabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: secondaryColor,
-                  ),
-                ),
-                hintText: "Enter Last Name here",
-                hintStyle: TextStyle(
-                  color: secondaryColor,
-                  fontFamily: App.font,
-                ),
-              ),
-              keyboardType: TextInputType.text,
-              textInputAction: TextInputAction.next,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  dobText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15,right: 115),
-      child: Text(
-        App.dob,
-        style: TextStyle(
-            fontSize: 17, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
   dateField() {
-    return Container(
-      padding: EdgeInsets.all(8.0),
-      height: 55,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: secondaryColor),
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-              child: Text(
-            dateCheck,
-            style: TextStyle(color: primaryColor, fontFamily: App.font),
-          )),
-          GestureDetector(
-            onTap: () {
-              openDatePicker();
-            },
-            child:Image.asset(App.calendarLogo,height: 20,width: 20,)
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.topLeft,
+          margin: EdgeInsets.only(left: 15, top: 15, right: 115),
+          child: Text(
+            App.dob,
+            style: TextStyle(
+                fontSize: 17, color: secondaryColor, fontFamily: App.font),
           ),
-        ],
-      ),
+        ),
+        Container(
+          padding: EdgeInsets.all(8.0),
+          height: 55,
+          margin: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: secondaryColor),
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                  child: Text(
+                dateCheck,
+                style: TextStyle(color: primaryColor, fontFamily: App.font),
+              )),
+              GestureDetector(
+                  onTap: () {
+                    openDatePicker();
+                  },
+                  child: Image.asset(
+                    App.calendarLogo,
+                    height: 20,
+                    width: 20,
+                  )),
+            ],
+          ),
+        ),
+      ],
     );
   }
-
-  genderText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15),
-      child: Text(
-        App.gender,
-        style: TextStyle(
-            fontSize: 17, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
   genderField() {
     return Column(
       children: [
+        Container(
+          alignment: Alignment.topLeft,
+          margin: EdgeInsets.only(left: 15, top: 15),
+          child: Text(
+            App.gender,
+            style: TextStyle(
+                fontSize: 17, color: secondaryColor, fontFamily: App.font),
+          ),
+        ),
         Container(
           margin: EdgeInsets.only(left: 15, right: 15),
           child: DropDownFormField(
@@ -428,21 +293,18 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
       ],
     );
   }
-  languageText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15),
-      child: Text(
-        App.language,
-        style: TextStyle(
-            fontSize: 17, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
   languageField() {
     return Column(
       children: [
+        Container(
+          alignment: Alignment.topLeft,
+          margin: EdgeInsets.only(left: 15, top: 15),
+          child: Text(
+            App.language,
+            style: TextStyle(
+                fontSize: 17, color: secondaryColor, fontFamily: App.font),
+          ),
+        ),
         Container(
           margin: EdgeInsets.only(left: 15, right: 15),
           child: DropDownFormField(
@@ -487,46 +349,11 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
       ],
     );
   }
-  fatherNameText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 10),
-      child: Text(
-        App.fatherName,
-        style: TextStyle(
-            fontSize: 17, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  fatherNameFeild() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        controller: fatherNameController,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Enter Father's Name here",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
   nextButton() {
-    return  Padding(
-        padding: EdgeInsets.only(bottom: 30,top: 30),
+    return Padding(
+        padding: EdgeInsets.only(bottom: 30, top: 30),
         child: InkWell(
-          onTap: (){
+          onTap: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => ContactDetailScreen()));
           },
@@ -539,12 +366,12 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
               color: primaryColor,
               borderRadius: BorderRadius.all(
                   Radius.circular(30) //         <--- border radius here
-              ),
+                  ),
             ),
             child: Text(
               App.nextButton,
               style:
-              TextStyle(color: white, fontFamily: App.font, fontSize: 20),
+                  TextStyle(color: white, fontFamily: App.font, fontSize: 20),
             ),
           ),
         ));
