@@ -107,6 +107,13 @@ class App {
   static const history = "History";
   static const claim = "Claim";
   static const tranHistory = "Transactions History";
+  static const landLordID = "Landlord ID";
+  static const amount = "Amount-";
+  static const debitAmount = "DEBIT AMOUNT";
+  static const rewardCatalog = "REWARD CATALOG";
+  static const claimRedeemTitle = "CLAIM/REDEEM";
+  static const offerDetailTitle = "Offer Details";
+  static const claimNowButton = "CLAIM NOW";
 
 
 
@@ -149,6 +156,15 @@ class App {
   static const blackCard = "assets/black-bg@3x.png";
   static const yellowCard = "assets/orange-bg@3x.png";
   static const transactionLogo = "assets/transaction@2x.png";
+  static const failedLogo = "assets/failed@2x.png";
+  static const processLogo = "assets/process@2x.png";
+  static const successLogo = "assets/success@2x.png";
+  static const laptopLogo = "assets/laptop@2x.png";
+  static const giftLogo = "assets/gift@2x.png";
+  static const dotLogo = "assets/dot@2x.png";
+  static const laptopWinnerLogo = "assets/laptop@3x.png";
+  static const phoneLogo = "assets/mobile@2x.png";
+  static const scratchLogo = "assets/bg@2x.png";
 }
 
 //Colors

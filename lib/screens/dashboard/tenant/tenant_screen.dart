@@ -32,13 +32,12 @@ class TenantScreenState extends State<TenantScreen> {
   }
 
   void choiceAction(String choice) {
-    if (choice == customPopUp.report) {
+    if (choice == CustomPopUp.report) {
       print('Settings');
-    } else if (choice == customPopUp.delete) {
+    } else if (choice == CustomPopUp.delete) {
       print('Subscribe');
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -46,28 +45,43 @@ class TenantScreenState extends State<TenantScreen> {
     model ?? (model = TenantScreenViewModel(this));
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Container(
-            color: primaryColor,
-            child: Column(
-              children: [
-                appBarDash(context, App.tenantTitle),
-
-                listTenant(),
-              ],
-            ),
+        body: Container(
+          color: primaryColor,
+          child: Stack(
+            children: [
+              appBarDash(context, App.tenantTitle),
+              Container(
+                height: Utils.getDeviceHeight(context),
+                width: Utils.getDeviceWidth(context),
+                margin: EdgeInsets.only(top: 60),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25)),
+                    color: white),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      listTenant(),
+                    ],
+                  ),
+                ),
+              )
+            ],
           ),
         ),
         bottomNavigationBar: submitButton(),
       ),
     );
   }
+
   submitButton() {
     return Padding(
         padding: EdgeInsets.only(bottom: 10, top: 10),
         child: InkWell(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> AddTenantScreen()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AddTenantScreen()));
           },
           child: Container(
             margin: EdgeInsets.only(left: 10, right: 10),
@@ -78,7 +92,7 @@ class TenantScreenState extends State<TenantScreen> {
               color: primaryColor,
               borderRadius: BorderRadius.all(
                   Radius.circular(30) //         <--- border radius here
-              ),
+                  ),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -102,13 +116,13 @@ class TenantScreenState extends State<TenantScreen> {
           ),
         ));
   }
+
   listTenant() {
-    return  Container(
-      margin: EdgeInsets.only(top: 20),
+    return Container(
+      margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25),
-              topRight: Radius.circular(25)),
+              topLeft: Radius.circular(25), topRight: Radius.circular(25)),
           color: white),
       child: ListView.builder(
           shrinkWrap: true,
@@ -121,14 +135,14 @@ class TenantScreenState extends State<TenantScreen> {
                 borderRadius: BorderRadius.circular(5),
                 color: grey1,
               ),
-              margin: EdgeInsets.only(left: 10,right: 10,top: 10),
+              margin: EdgeInsets.only(left: 10, right: 10, top: 10),
               height: 140,
               width: Utils.getDeviceWidth(context),
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Align(
                         alignment: Alignment.topLeft,
@@ -145,60 +159,67 @@ class TenantScreenState extends State<TenantScreen> {
                       ),
                       SizedBox(width: 10),
                       Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  list[index].name,
-                                  style: TextStyle(
-                                      color: primaryColor,
-                                      fontFamily: App.font,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(left: 10),
-                                  child: Image.asset(App.verifiedLogo, height: 20,width: 20,),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(left: 5),
-                                  child:  Text(
-                                   "Verified",
+                        child: Container(
+                          margin: EdgeInsets.only(top: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    list[index].name,
                                     style: TextStyle(
-                                        color: green,
+                                        color: primaryColor,
                                         fontFamily: App.font,
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                )
-                              ],
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(top:5.0),
-                              child: Text(
-                                list[index].category,
-                                style: TextStyle(
-                                    color: secondaryColor,
-                                    fontFamily: App.font,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 10),
+                                    child: Image.asset(
+                                      App.verifiedLogo,
+                                      height: 20,
+                                      width: 20,
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 5),
+                                    child: Text(
+                                      "Verified",
+                                      style: TextStyle(
+                                          color: green,
+                                          fontFamily: App.font,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )
+                                ],
                               ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(top:5.0),
-                              child: Text(
-                                list[index].phone,
-                                style: TextStyle(
-                                    color: secondaryColor,
-                                    fontFamily: App.font,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15),
+                              Container(
+                                margin: const EdgeInsets.only(top: 5.0),
+                                child: Text(
+                                  list[index].category,
+                                  style: TextStyle(
+                                      color: secondaryColor,
+                                      fontFamily: App.font,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15),
+                                ),
                               ),
-                            )
-                          ],
+                              Container(
+                                margin: const EdgeInsets.only(top: 5.0),
+                                child: Text(
+                                  list[index].phone,
+                                  style: TextStyle(
+                                      color: secondaryColor,
+                                      fontFamily: App.font,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                       Align(
@@ -206,7 +227,7 @@ class TenantScreenState extends State<TenantScreen> {
                         child: PopupMenuButton<String>(
                           onSelected: choiceAction,
                           itemBuilder: (BuildContext context) {
-                            return customPopUp.choices.map((String choice) {
+                            return CustomPopUp.choices.map((String choice) {
                               return PopupMenuItem<String>(
                                 value: choice,
                                 child: Text(choice),
@@ -233,7 +254,9 @@ class TenantScreenState extends State<TenantScreen> {
                           child: Text(
                             'Edit Profile',
                             style: TextStyle(
-                                color: secondaryColor, fontFamily: App.font,fontWeight: FontWeight.bold),
+                                color: secondaryColor,
+                                fontFamily: App.font,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                         Container(
@@ -246,7 +269,9 @@ class TenantScreenState extends State<TenantScreen> {
                           child: Text(
                             'View Profile',
                             style: TextStyle(
-                                color: secondaryColor, fontFamily: App.font,fontWeight: FontWeight.bold),
+                                color: secondaryColor,
+                                fontFamily: App.font,
+                                fontWeight: FontWeight.bold),
                           ),
                         )
                       ],
@@ -258,4 +283,4 @@ class TenantScreenState extends State<TenantScreen> {
           }),
     );
   }
-  }
+}

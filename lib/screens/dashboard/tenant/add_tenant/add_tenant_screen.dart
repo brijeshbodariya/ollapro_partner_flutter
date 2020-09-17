@@ -25,19 +25,21 @@ class AddTenantScreenState extends State<AddTenantScreen> {
     model ?? (model = AddTenantScreenViewModel(this));
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            color: primaryColor,
-            child: Column(
-              children: [
-                appBarDash(context, App.addTenantTitle),
-                Container(
-                  margin: EdgeInsets.only(top: 20),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(25),
-                          topRight: Radius.circular(25)),
-                      color: white),
+        child: Container(
+          color: primaryColor,
+          child: Stack(
+            children: [
+              appBarDash(context, App.addTenantTitle),
+              Container(
+                height: Utils.getDeviceHeight(context),
+                width: Utils.getDeviceWidth(context),
+                margin: EdgeInsets.only(top: 55),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25)),
+                    color: white),
+                child: SingleChildScrollView(
                   child: Column(
                     children: [
                       SizedBox(height: 10,),
@@ -107,9 +109,9 @@ class AddTenantScreenState extends State<AddTenantScreen> {
                       add2Field(),
                     ],
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
         ),
       ),

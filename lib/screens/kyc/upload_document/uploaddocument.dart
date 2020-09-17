@@ -7,7 +7,6 @@ import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/header.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/screens/dashboard/dashboard_screen.dart';
-import 'package:ollapro_partner/screens/kyc/reference/reference_screen.dart';
 import 'package:ollapro_partner/screens/kyc/upload_document/upload_document_view_model.dart';
 
 class UploadDocument extends StatefulWidget {

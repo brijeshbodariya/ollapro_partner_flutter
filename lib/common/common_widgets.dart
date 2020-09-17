@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ollapro_partner/screens/dashboard/dashboard_screen.dart';
 import 'app.dart';
 
 Widget commonTextField({TextEditingController controller,String title,String hintText,TextInputType textInputType,prefixIcon,suffixIcon,obscureText}){
@@ -100,7 +99,6 @@ appBarDash(context,String title) {
           children: [
             InkWell(
               onTap: () {
-                print("meet");
                 Navigator.pop(context);
               },
               child: Image.asset(

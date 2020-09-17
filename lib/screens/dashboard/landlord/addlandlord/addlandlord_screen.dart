@@ -27,19 +27,21 @@ class AddLandLordScreenState extends State<AddLandLordScreen> {
     model ?? (model = AddLandLordScreenViewModel(this));
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            color: primaryColor,
-            child: Column(
-              children: [
-                appBarDash(context, App.addNewLandLordTitle),
-                Container(
-                  margin: EdgeInsets.only(top: 20),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(25),
-                          topRight: Radius.circular(25)),
-                      color: white),
+        child: Container(
+          color: primaryColor,
+          child: Stack(
+            children: [
+              appBarDash(context, App.addNewLandLordTitle),
+              Container(
+                height: Utils.getDeviceHeight(context),
+                width: Utils.getDeviceWidth(context),
+                margin: EdgeInsets.only(top: 55),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25)),
+                    color: white),
+                child: SingleChildScrollView(
                   child: Column(
                     children: [
                       SizedBox(height: 10,),
@@ -109,9 +111,9 @@ class AddLandLordScreenState extends State<AddLandLordScreen> {
                       add2Field(),
                     ],
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
         ),
       ),

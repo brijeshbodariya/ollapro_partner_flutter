@@ -19,7 +19,7 @@ class DashBoardScreen extends StatefulWidget {
 class DashBoardScreenState extends State<DashBoardScreen> {
   DashBoardScreenViewModel model;
   List<NewPropertyList> list = List();
-  List<NonVerifiedTenant> list1 =List();
+  List<NonVerifiedTenant> list1 = List();
 
   @override
   void initState() {
@@ -36,16 +36,16 @@ class DashBoardScreenState extends State<DashBoardScreen> {
         "Green Heights", App.property1Logo, "Jaipur", "Appartment"));
 
     //non verified tenant
-    list1.add(NonVerifiedTenant(App.userImage,"Ankit"));
-    list1.add(NonVerifiedTenant(App.userImage,"Hitesh"));
-    list1.add(NonVerifiedTenant(App.userImage,"Vijay"));
-    list1.add(NonVerifiedTenant(App.userImage,"Vijay"));
-    list1.add(NonVerifiedTenant(App.userImage,"Vijay"));
-    list1.add(NonVerifiedTenant(App.userImage,"Vijay"));
-    list1.add(NonVerifiedTenant(App.userImage,"Vijay"));
-    list1.add(NonVerifiedTenant(App.userImage,"Vijay"));
-    list1.add(NonVerifiedTenant(App.userImage,"Vijay"));
-    list1.add(NonVerifiedTenant(App.userImage,"Vijay"));
+    list1.add(NonVerifiedTenant(App.userImage, "Ankit"));
+    list1.add(NonVerifiedTenant(App.userImage, "Hitesh"));
+    list1.add(NonVerifiedTenant(App.userImage, "Vijay"));
+    list1.add(NonVerifiedTenant(App.userImage, "Vijay"));
+    list1.add(NonVerifiedTenant(App.userImage, "Vijay"));
+    list1.add(NonVerifiedTenant(App.userImage, "Vijay"));
+    list1.add(NonVerifiedTenant(App.userImage, "Vijay"));
+    list1.add(NonVerifiedTenant(App.userImage, "Vijay"));
+    list1.add(NonVerifiedTenant(App.userImage, "Vijay"));
+    list1.add(NonVerifiedTenant(App.userImage, "Vijay"));
     super.initState();
   }
 
@@ -153,9 +153,8 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                           ],
                         ),
                       ),
-
                       Container(
-                       // height: Utils.getDeviceHeight(context),
+                        // height: Utils.getDeviceHeight(context),
                         width: MediaQuery.of(context).size.width,
                         color: grey1,
                         child: Column(
@@ -182,10 +181,8 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                       ),
                     ],
                   ),
-                  Padding(padding: EdgeInsets.only(top: 130), child: userImage())
-
-
-                  //userImage(),
+                  Padding(
+                      padding: EdgeInsets.only(top: 100), child: userImage())
                 ],
               )
             ],
@@ -331,9 +328,9 @@ class DashBoardScreenState extends State<DashBoardScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           GestureDetector(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> TabProperty()));
-
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => TabProperty()));
             },
             child: Container(
               margin: EdgeInsets.only(top: 20, bottom: 20, left: 10),
@@ -351,15 +348,18 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                   Text(
                     App.property,
                     style: TextStyle(
-                        fontSize: 12, fontFamily: App.font, color: primaryColor),
+                        fontSize: 12,
+                        fontFamily: App.font,
+                        color: primaryColor),
                   )
                 ],
               ),
             ),
           ),
           GestureDetector(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> LandLordScreen()));
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LandLordScreen()));
             },
             child: Container(
               margin: EdgeInsets.only(top: 20, bottom: 20, left: 10),
@@ -377,15 +377,18 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                   Text(
                     App.landlordTitle,
                     style: TextStyle(
-                        fontSize: 12, fontFamily: App.font, color: primaryColor),
+                        fontSize: 12,
+                        fontFamily: App.font,
+                        color: primaryColor),
                   )
                 ],
               ),
             ),
           ),
           GestureDetector(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> TenantScreen()));
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => TenantScreen()));
             },
             child: Container(
               margin: EdgeInsets.only(top: 20, bottom: 20, left: 10),
@@ -403,15 +406,20 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                   Text(
                     App.tenantTitle,
                     style: TextStyle(
-                        fontSize: 12, fontFamily: App.font, color: primaryColor),
+                        fontSize: 12,
+                        fontFamily: App.font,
+                        color: primaryColor),
                   )
                 ],
               ),
             ),
           ),
           GestureDetector(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> RewardBasketScreen()));
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => RewardBasketScreen()));
             },
             child: Container(
               margin: EdgeInsets.only(top: 20, bottom: 20, left: 10),
@@ -430,7 +438,9 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                   Text(
                     App.rewardBasket,
                     style: TextStyle(
-                        fontSize: 12, fontFamily: App.font, color: primaryColor),
+                        fontSize: 12,
+                        fontFamily: App.font,
+                        color: primaryColor),
                   )
                 ],
               ),
@@ -530,20 +540,20 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                           ),
                           Container(
                             height: 25,
+                            width: 70,
+                            alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: yellow,
                             ),
                             margin: EdgeInsets.only(right: 10, bottom: 10),
-                            child: FlatButton(
-                                color: Colors.transparent,
-                                child: Text(
-                                  list[index].buttonName,
-                                  style: TextStyle(
-                                      color: white,
-                                      fontSize: 12,
-                                      fontFamily: App.font),
-                                )),
+                            child: Text(
+                              list[index].buttonName,
+                              style: TextStyle(
+                                  color: white,
+                                  fontSize: 12,
+                                  fontFamily: App.font),
+                            ),
                           )
                         ],
                       ),
@@ -596,27 +606,32 @@ class DashBoardScreenState extends State<DashBoardScreen> {
             height: 80,
             margin: EdgeInsets.only(top: 10),
             width: Utils.getDeviceWidth(context),
-            child: ListView.builder( shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemCount: list1.length,
-            itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  Container(
-                      alignment: Alignment.center,
-                      height: 60,
-                      width: 60,
-                      decoration: new BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: new DecorationImage(
-                              fit: BoxFit.fill, image: AssetImage(list1[index].image)))),
-                  Container(
-                    child: Text(list1[index].name,style: TextStyle(color: primaryColor,fontFamily: App.font,fontSize: 10)),
-                  )
-                ],
-
-              );
-            }),
+            child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: list1.length,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      Container(
+                          alignment: Alignment.center,
+                          height: 60,
+                          width: 60,
+                          decoration: new BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: new DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: AssetImage(list1[index].image)))),
+                      Container(
+                        child: Text(list1[index].name,
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontFamily: App.font,
+                                fontSize: 10)),
+                      )
+                    ],
+                  );
+                }),
           ),
         ],
       ),
@@ -625,10 +640,12 @@ class DashBoardScreenState extends State<DashBoardScreen> {
 
   rewardBasketImage() {
     return Container(
-      child: Image.asset(App.bannerDashLogo,
+      child: Image.asset(
+        App.bannerDashLogo,
         height: 150,
         width: Utils.getDeviceWidth(context),
-        fit: BoxFit.fitWidth,),
+        fit: BoxFit.fitWidth,
+      ),
     );
   }
 }

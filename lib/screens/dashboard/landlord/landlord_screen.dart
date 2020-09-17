@@ -16,7 +16,7 @@ class LandLordScreen extends StatefulWidget {
 
 class LandLordScreenState extends State<LandLordScreen> {
   LandLordScreenViewModel model;
-
+String _selection;
   List<NewLandLord> list = List();
 
   @override
@@ -34,9 +34,9 @@ class LandLordScreenState extends State<LandLordScreen> {
   }
 
   void choiceAction(String choice) {
-    if (choice == customPopUp.report) {
+    if (choice == CustomPopUp.report) {
       print('Settings');
-    } else if (choice == customPopUp.delete) {
+    } else if (choice == CustomPopUp.delete) {
       print('Subscribe');
     }
   }
@@ -47,15 +47,30 @@ class LandLordScreenState extends State<LandLordScreen> {
     model ?? (model = LandLordScreenViewModel(this));
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          child: Container(
-            color: primaryColor,
-            child: Column(
-              children: [
-                appBarDash(context, App.landlordTitle),
-               listLandLord(),
-              ],
-            ),
+        body: Container(
+          color: primaryColor,
+          child: Stack(
+            children: [
+              appBarDash(context, App.landlordTitle),
+             Container(
+               height: Utils.getDeviceHeight(context),
+               width: Utils.getDeviceWidth(context),
+               margin: EdgeInsets.only(top: 60),
+               decoration: BoxDecoration(
+                   borderRadius: BorderRadius.only(
+                       topLeft: Radius.circular(25),
+                       topRight: Radius.circular(25)),
+                   color: white),
+               child: SingleChildScrollView(
+                 child: Column(
+                   children: [
+                     listLandLord(),
+                   ],
+                 ),
+               ),
+             )
+
+            ],
           ),
         ),
         bottomNavigationBar: submitButton(),
@@ -105,7 +120,7 @@ class LandLordScreenState extends State<LandLordScreen> {
   }
   listLandLord() {
     return  Container(
-      margin: EdgeInsets.only(top: 20),
+      margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(25),
@@ -129,7 +144,7 @@ class LandLordScreenState extends State<LandLordScreen> {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Align(
                         alignment: Alignment.topLeft,
@@ -146,56 +161,64 @@ class LandLordScreenState extends State<LandLordScreen> {
                       ),
                       SizedBox(width: 10),
                       Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              list[index].name,
-                              style: TextStyle(
-                                  color: primaryColor,
-                                  fontFamily: App.font,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(top:5.0),
-                              child: Text(
-                                list[index].category,
+                        child: Container(
+                          margin: EdgeInsets.only(top: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                list[index].name,
                                 style: TextStyle(
-                                    color: secondaryColor,
+                                    color: primaryColor,
                                     fontFamily: App.font,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15),
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold),
                               ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(top:5.0),
-                              child: Text(
-                                list[index].phone,
-                                style: TextStyle(
-                                    color: secondaryColor,
-                                    fontFamily: App.font,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15),
+                              Container(
+                                margin: const EdgeInsets.only(top:5.0),
+                                child: Text(
+                                  list[index].category,
+                                  style: TextStyle(
+                                      color: secondaryColor,
+                                      fontFamily: App.font,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15),
+                                ),
                               ),
-                            )
-                          ],
+                              Container(
+                                margin: const EdgeInsets.only(top:5.0),
+                                child: Text(
+                                  list[index].phone,
+                                  style: TextStyle(
+                                      color: secondaryColor,
+                                      fontFamily: App.font,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: PopupMenuButton<String>(
-                          onSelected: choiceAction,
-                          itemBuilder: (BuildContext context) {
-                            return customPopUp.choices.map((String choice) {
-                              return PopupMenuItem<String>(
-                                value: choice,
-                                child: Text(choice),
-                              );
-                            }).toList();
-                          },
-                        ),
+                      Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.topRight,
+                            child:
+                            PopupMenuButton<String>(
+                              onSelected: choiceAction,
+                              itemBuilder: (BuildContext context) {
+                                return CustomPopUp.choices.map((String choice) {
+                                  return PopupMenuItem<String>(
+                                    value: choice,
+                                    child: Text(choice),
+                                  );
+                                }).toList();
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -241,3 +264,4 @@ class LandLordScreenState extends State<LandLordScreen> {
     );
   }
 }
+

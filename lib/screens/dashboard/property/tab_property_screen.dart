@@ -42,19 +42,25 @@ class TabPropertyState extends State<TabProperty> {
                       Tab(
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text("Top Property", style: TextStyle(color: primaryColor,fontSize: 17)),
+                          child: Text("Top Property",
+                              textAlign: TextAlign.center,
+                              maxLines:2,style: TextStyle(color: primaryColor,fontSize: 17)),
                         ),
                       ),
                       Tab(
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text("New Property", style: TextStyle(color: primaryColor,fontSize: 17)),
+                          child: Text("New Property",
+                              textAlign: TextAlign.center,
+                              maxLines:2,style: TextStyle(color: primaryColor,fontSize: 17)),
                         ),
                       ),
                       Tab(
                         child: Align(
                           alignment: Alignment.center,
-                          child: Text("Near You", style: TextStyle(color: primaryColor,fontSize: 17)),
+                          child: Text("Near You",
+                              textAlign: TextAlign.center,
+                              maxLines:2,style: TextStyle(color: primaryColor,fontSize: 17)),
                         ),
                       ),
                     ],
