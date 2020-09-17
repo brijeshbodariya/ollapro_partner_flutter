@@ -70,68 +70,91 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Form(
-            child: Container(
-              alignment: Alignment.topLeft,
-              child: Column(
-                children: [
-                  appBarKYC(context,MaterialPageRoute(builder: (context)=> ContactDetailScreen())),
-                  HeaderLine.headerLineComplete(context, 1, 2, 2, 2, 2, 2),
-                  personalDetailText(),
-                  titleField(),
-                  //firstName
-                  commonTextField(
-                      title: App.fName,
-                      controller: fNameController,
-                      hintText: "Enter First Name",
-                      textInputType: TextInputType.text),
-                  Container(
-                    margin: EdgeInsets.only(top: 10),
+        body: Container(
+          alignment: Alignment.topLeft,
+          child: Stack(
+            children: [
+
+              SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Form(
+                  child: Container(
+                    height: Utils.getDeviceHeight(context),
                     width: Utils.getDeviceWidth(context),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    margin: EdgeInsets.only(top: 170),
+                    //height: Utils.getDeviceHeight(context) / 1.8,
+                    child: Column(
                       children: [
-                        //middle name
-                        Expanded(
-                          flex: 1,
-                          child: commonTextField(
-                              title: App.mName,
-                              controller: mNameController,
-                              hintText: "Enter Middle Name",
-                              textInputType: TextInputType.text),
+                        titleField(),
+                        //firstName
+                        commonTextField(
+                            title: App.fName,
+                            controller: fNameController,
+                            hintText: "Enter First Name",
+                            textInputType: TextInputType.text),
+                        Container(
+                          margin: EdgeInsets.only(top: 10),
+                          width: Utils.getDeviceWidth(context),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              //middle name
+                              Expanded(
+                                flex: 1,
+                                child: commonTextField(
+                                    title: App.mName,
+                                    controller: mNameController,
+                                    hintText: "Enter Middle Name",
+                                    textInputType: TextInputType.text),
+                              ),
+                              //lastname
+                              Expanded(
+                                flex: 1,
+                                child: commonTextField(
+                                    title: App.lName,
+                                    controller: lNameController,
+                                    hintText: "Enter last Name",
+                                    textInputType: TextInputType.text),
+                              ),
+                            ],
+                          ),
                         ),
-                        //lastname
-                        Expanded(
-                          flex: 1,
-                          child: commonTextField(
-                              title: App.lName,
-                              controller: lNameController,
-                              hintText: "Enter last Name",
-                              textInputType: TextInputType.text),
+                        dateField(),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        genderField(),
+                        languageField(),
+                        //fathers name
+                        commonTextField(
+                            title: App.fatherName,
+                            controller: fatherNameController,
+                            hintText: "Enter father's Name",
+                            textInputType: TextInputType.text),
+                        SizedBox(
+                          height: 20,
                         ),
                       ],
                     ),
                   ),
-                  dateField(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  genderField(),
-                  languageField(),
-                  //fathers name
-                  commonTextField(
-                      title: App.fatherName,
-                      controller: fatherNameController,
-                      hintText: "Enter father's Name",
-                      textInputType: TextInputType.text),
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
+                ),
               ),
-            ),
+              Container(
+                height: 170,
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    appBarKYC(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ContactDetailScreen())),
+                    HeaderLine.headerLineComplete(context, 1, 2, 2, 2, 2, 2),
+
+                    personalDetailText(),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
         bottomNavigationBar: nextButton(),
@@ -153,6 +176,7 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
       ),
     );
   }
+
   titleField() {
     return Column(
       children: [
@@ -201,6 +225,7 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
       ],
     );
   }
+
   dateField() {
     return Column(
       children: [
@@ -245,6 +270,7 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
       ],
     );
   }
+
   genderField() {
     return Column(
       children: [
@@ -293,6 +319,7 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
       ],
     );
   }
+
   languageField() {
     return Column(
       children: [
@@ -349,6 +376,7 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
       ],
     );
   }
+
   nextButton() {
     return Padding(
         padding: EdgeInsets.only(bottom: 30, top: 30),

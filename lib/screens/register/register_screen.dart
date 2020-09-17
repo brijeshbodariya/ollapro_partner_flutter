@@ -7,6 +7,8 @@ import 'package:ollapro_partner/screens/login/login_screen.dart';
 import 'package:ollapro_partner/screens/otp/otp_screen.dart';
 import 'package:ollapro_partner/screens/register/register_screen_view_model.dart';
 
+import '../../common/app.dart';
+
 class RegisterScreen extends StatefulWidget {
   @override
   RegisterScreenState createState() => RegisterScreenState();
@@ -45,93 +47,97 @@ class RegisterScreenState extends State<RegisterScreen> {
         key: _formKey,
         child: ListView(
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                createAccountText(),
-                enterYourDetailtext(),
-               //firstName
-                commonTextField(
-                    title: App.fullName,
-                    controller: fullNameController,
-                    hintText: "Enter Full Name",
-                    prefixIcon: Image.asset(
-                      App.personLogo,
-                      height: 20,
-                      width: 20,
-                    ),
-                    textInputType: TextInputType.text
-                ),
-                //email
-                commonTextField(
-                  title: App.emailAddress,
-                  controller: emailController,
-                  hintText: "Enter Email",
-                  prefixIcon: Image.asset(
-                    App.emailLogo,
-                    height: 20,
-                    width: 20,
+            Container(
+              color: white,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  createAccountText(),
+                  enterYourDetailtext(),
+                 //firstName
+                  SizedBox(height: 30,),
+                  commonTextField(
+                      title: App.fullName,
+                      controller: fullNameController,
+                      hintText: "Enter Full Name",
+                      prefixIcon: Image.asset(
+                        App.personLogo,
+                        height: 20,
+                        width: 20,
+                      ),
+                      textInputType: TextInputType.text
                   ),
-                  textInputType: TextInputType.emailAddress
-                ),
-                //phone
-                commonTextField(
-                    title: App.mobileNumber,
-                    controller: phoneController,
-                    hintText: "Enter Phone NUmber",
+                  //email
+                  commonTextField(
+                    title: App.emailAddress,
+                    controller: emailController,
+                    hintText: "Enter Email",
                     prefixIcon: Image.asset(
-                      App.mobileLogo,
+                      App.emailLogo,
                       height: 20,
                       width: 20,
                     ),
-                    textInputType: TextInputType.phone
-                ),
-                //password
-                commonTextField(
+                    textInputType: TextInputType.emailAddress
+                  ),
+                  //phone
+                  commonTextField(
+                      title: App.mobileNumber,
+                      controller: phoneController,
+                      hintText: "Enter Phone NUmber",
+                      prefixIcon: Image.asset(
+                        App.mobileLogo,
+                        height: 20,
+                        width: 20,
+                      ),
+                      textInputType: TextInputType.phone
+                  ),
+                  //password
+                  commonTextField(
+                      title: App.password,
+                      controller: passwordController,
+                      hintText: "Enter Password",
+                      prefixIcon: Image.asset(
+                        App.passwordLogo,
+                        height: 20,
+                        width: 20,
+                      ),
+                      textInputType: TextInputType.text,
+                    suffixIcon: Container(
+                      child:GestureDetector(
+                        onTap: _registerPassword,
+                        child: Image.asset(
+                          App.visibility,
+                          height: 20,
+                          width: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                  //confirm password
+                  commonTextField(
                     title: App.password,
-                    controller: passwordController,
-                    hintText: "Enter Password",
+                    controller: confirmPasswordController,
+                    hintText: "Enter Confirm Password",
                     prefixIcon: Image.asset(
                       App.passwordLogo,
                       height: 20,
                       width: 20,
                     ),
                     textInputType: TextInputType.text,
-                  suffixIcon: Container(
-                    child:GestureDetector(
-                      onTap: _registerPassword,
-                      child: Image.asset(
-                        App.visibility,
-                        height: 20,
-                        width: 20,
+                    suffixIcon: Container(
+                      child:GestureDetector(
+                        onTap: _reRegisterPassword,
+                        child: Image.asset(
+                          App.visibility,
+                          height: 20,
+                          width: 20,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                //confirm password
-                commonTextField(
-                  title: App.password,
-                  controller: confirmPasswordController,
-                  hintText: "Enter Confirm Password",
-                  prefixIcon: Image.asset(
-                    App.passwordLogo,
-                    height: 20,
-                    width: 20,
-                  ),
-                  textInputType: TextInputType.text,
-                  suffixIcon: Container(
-                    child:GestureDetector(
-                      onTap: _reRegisterPassword,
-                      child: Image.asset(
-                        App.visibility,
-                        height: 20,
-                        width: 20,
-                      ),
-                    ),
-                  ),
-                ),
-                registerButton(),
-              ],
+                  registerButton(),
+                ],
+              ),
             )
           ],
         ),

@@ -53,7 +53,7 @@ class LoginScreenState extends State<LoginScreen> {
                   partnerLogintext(),
                   credentialsText(),
                   SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   //phone
                   commonTextField(

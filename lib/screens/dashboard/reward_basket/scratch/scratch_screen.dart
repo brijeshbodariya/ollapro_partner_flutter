@@ -30,9 +30,7 @@ class ScratchScreenState extends State<ScratchScreen> {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = ScratchScreenViewModel(this));
 
-    final double itemHeight =
-        (Utils.getDeviceHeight(context) - kToolbarHeight - 24) / 2.5;
-    final double itemWidth = Utils.getDeviceWidth(context) / 2;
+
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -69,7 +67,7 @@ class ScratchScreenState extends State<ScratchScreen> {
                         child: GridView.count(
                           scrollDirection: Axis.vertical,
                           physics: NeverScrollableScrollPhysics(),
-                          childAspectRatio: (itemWidth / itemHeight),
+                          childAspectRatio: 9.5/10,
                           controller:
                               new ScrollController(keepScrollOffset: false),
                           crossAxisCount: 2,

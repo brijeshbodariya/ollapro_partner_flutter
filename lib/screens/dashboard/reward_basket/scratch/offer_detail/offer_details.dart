@@ -37,6 +37,7 @@ class OfferDetailsScreenState extends State<OfferDetailsScreen> {
                   child: Column(
                     children: [
                       ClipRRect(
+
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(20),
                             topRight: Radius.circular(20)),

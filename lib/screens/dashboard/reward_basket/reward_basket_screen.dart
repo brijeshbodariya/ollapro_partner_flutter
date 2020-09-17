@@ -46,7 +46,7 @@ class RewardBasketScreenState extends State<RewardBasketScreen> {
               Container(
                 height: Utils.getDeviceHeight(context),
                 width: Utils.getDeviceWidth(context),
-                margin: EdgeInsets.only(top: 55),
+                margin: EdgeInsets.only(top: 60),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(25),
@@ -251,10 +251,10 @@ class RewardBasketScreenState extends State<RewardBasketScreen> {
                       border: Border.all(color: white)),
                   child: FlatButton(
                     onPressed: () {
-                      Navigator.push(
+                     /* Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => OfferDetailsScreen()));
+                              builder: (context) => OfferDetailsScreen()));*/
                     },
                     child: Text(
                       App.history,
@@ -301,7 +301,7 @@ class RewardBasketScreenState extends State<RewardBasketScreen> {
           return Container(
             margin: EdgeInsets.only(top: 10),
             padding: EdgeInsets.only(top: 10),
-            height: Utils.getDeviceHeight(context) / 4.8,
+            height: 160,
             color: grey,
             child: Column(
               children: [
@@ -327,7 +327,7 @@ class RewardBasketScreenState extends State<RewardBasketScreen> {
                         ),
                         SizedBox(width: 10),
                         Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(

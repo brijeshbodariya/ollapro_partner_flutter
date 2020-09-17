@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/utils.dart';
-import 'file:///D:/LiveProject/ollapro_partner_flutter/lib/common/repo.dart';
+import '../../../../common/repo.dart';
 import 'add_property_screen_view_model.dart';
 
 //model are name and image

@@ -40,8 +40,8 @@ class TopPropertyScreenState extends State<TopPropertyScreen> {
               itemCount: list.length,
               itemBuilder: (context, index) {
                 return Container(
-                  // height: 150,
-                  height: Utils.getDeviceHeight(context) / 3,
+                  height: 200,
+
                   width: Utils.getDeviceWidth(context),
                   margin: EdgeInsets.only(
                       top: 20, bottom: 10, left: 10, right: 10),

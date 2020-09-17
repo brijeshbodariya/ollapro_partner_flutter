@@ -6,6 +6,8 @@ import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/screens/kyc/reference/reference_view_model.dart';
 import 'package:ollapro_partner/screens/kyc/upload_document/uploaddocument.dart';
 
+import '../../../common/app.dart';
+
 class ReferenceScreen extends StatefulWidget {
   @override
   ReferenceScreenState createState() => ReferenceScreenState();
@@ -27,77 +29,83 @@ class ReferenceScreenState extends State<ReferenceScreen> {
 
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Form(
-            child: Container(
-              alignment: Alignment.topLeft,
-              child: Column(
-                children: [
-                  appBarKYC(context,MaterialPageRoute(builder: (context)=> UploadDocument())),
-                  HeaderLine.headerLineComplete(context, 3, 3, 3, 3, 1, 2),
-                  referenceDetailText(),
-                  reference1Text(),
-                  Container(
-                    color: white,
-                    child: Column(
-                      children: [
-                        // reference1 name
-                        commonTextField(
-                            title: App.name,
-                            controller: nameController,
-                            hintText: "Enter Name",
-                            textInputType: TextInputType.text
-                        ),SizedBox(height: 10),
-                        // reference1 place
-                        commonTextField(
-                            title: App.place,
-                            controller: placeController,
-                            hintText: "Enter Place",
-                            textInputType: TextInputType.text
-                        ),SizedBox(height: 10),
-                        // reference1 mobile number
-                        commonTextField(
-                            title: App.mobileNumber,
-                            controller: phoneController,
-                            hintText: "Enter Mobile Number",
-                            textInputType: TextInputType.phone
-                        ),SizedBox(height: 10),
-                      ],
-                    ),
+        body: Container(
+          alignment: Alignment.topLeft,
+          child: Column(
+            children: [
+              appBarKYC(context,MaterialPageRoute(builder: (context)=> UploadDocument())),
+              HeaderLine.headerLineComplete(context, 3, 3, 3, 3, 1, 2),
+              referenceDetailText(),
+              Form(
+                child: Container(
+                  height: Utils.getDeviceHeight(context) / 1.8,
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: [ reference1Text(),
+                      // reference1 name
+                      Container(
+                        color: white,
+                        child: Column(
+                          children: [
+                            commonTextField(
+                                title: App.name,
+                                controller: nameController,
+                                hintText: "Enter Name",
+                                textInputType: TextInputType.text
+                            ),
+                            SizedBox(height: 10),
+                            // reference1 place
+                            commonTextField(
+                                title: App.place,
+                                controller: placeController,
+                                hintText: "Enter Place",
+                                textInputType: TextInputType.text
+                            ),SizedBox(height: 10),
+                            // reference1 mobile number
+                            commonTextField(
+                                title: App.mobileNumber,
+                                controller: phoneController,
+                                hintText: "Enter Mobile Number",
+                                textInputType: TextInputType.phone
+                            ),SizedBox(height: 10),
+                          ],
+                        ),
+                      ),
+                      reference2Text(),
+                      Container(
+                        color: white,
+                        child: Column(
+                          children: [
+                            // reference2 name
+                            commonTextField(
+                                title: App.name,
+                                controller: name1Controller,
+                                hintText: "Enter Name",
+                                textInputType: TextInputType.text
+                            ),SizedBox(height: 10),
+                            // reference2 place
+                            commonTextField(
+                                title: App.place,
+                                controller: place1Controller,
+                                hintText: "Enter Place",
+                                textInputType: TextInputType.text
+                            ),SizedBox(height: 10),
+                            // reference2 mobile number
+                            commonTextField(
+                                title: App.mobileNumber,
+                                controller: phone1Controller,
+                                hintText: "Enter Mobile Number",
+                                textInputType: TextInputType.phone
+                            ),SizedBox(height: 10),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  reference2Text(),
-                  Container(
-                    color: white,
-                    child: Column(
-                      children: [
-                        // reference2 name
-                        commonTextField(
-                            title: App.name,
-                            controller: name1Controller,
-                            hintText: "Enter Name",
-                            textInputType: TextInputType.text
-                        ),SizedBox(height: 10),
-                        // reference2 place
-                        commonTextField(
-                            title: App.place,
-                            controller: place1Controller,
-                            hintText: "Enter Place",
-                            textInputType: TextInputType.text
-                        ),SizedBox(height: 10),
-                        // reference2 mobile number
-                        commonTextField(
-                            title: App.mobileNumber,
-                            controller: phone1Controller,
-                            hintText: "Enter Mobile Number",
-                            textInputType: TextInputType.phone
-                        ),SizedBox(height: 10),
-                      ],
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
+
+            ],
           ),
         ),
         bottomNavigationBar: Container(

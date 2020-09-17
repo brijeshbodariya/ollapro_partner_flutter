@@ -195,8 +195,8 @@ class DashBoardScreenState extends State<DashBoardScreen> {
   userImage() {
     return Container(
         alignment: Alignment.center,
-        height: MediaQuery.of(context).size.height / 6.5,
-        width: MediaQuery.of(context).size.width / 4,
+        height: 100,
+        width: 100,
         decoration: new BoxDecoration(
             shape: BoxShape.circle,
             image: new DecorationImage(
@@ -338,8 +338,8 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                 children: [
                   Container(
                       alignment: Alignment.center,
-                      height: MediaQuery.of(context).size.height / 10,
-                      width: MediaQuery.of(context).size.width / 6,
+                      height: 80,
+                      width: 80,
                       decoration: new BoxDecoration(
                           shape: BoxShape.circle,
                           image: new DecorationImage(
@@ -367,8 +367,8 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                 children: [
                   Container(
                       alignment: Alignment.center,
-                      height: MediaQuery.of(context).size.height / 10,
-                      width: MediaQuery.of(context).size.width / 6,
+                      height: 80,
+                      width: 80,
                       decoration: new BoxDecoration(
                           shape: BoxShape.circle,
                           image: new DecorationImage(
@@ -396,8 +396,8 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                 children: [
                   Container(
                       alignment: Alignment.center,
-                      height: MediaQuery.of(context).size.height / 10,
-                      width: MediaQuery.of(context).size.width / 6,
+                      height: 80,
+                      width: 80,
                       decoration: new BoxDecoration(
                           shape: BoxShape.circle,
                           image: new DecorationImage(
@@ -427,9 +427,8 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                 children: [
                   Container(
                       alignment: Alignment.center,
-                      //margin: EdgeInsets.only(top: 100),
-                      height: MediaQuery.of(context).size.height / 10,
-                      width: MediaQuery.of(context).size.width / 6,
+                      height: 80,
+                      width: 80,
                       decoration: new BoxDecoration(
                           shape: BoxShape.circle,
                           image: new DecorationImage(

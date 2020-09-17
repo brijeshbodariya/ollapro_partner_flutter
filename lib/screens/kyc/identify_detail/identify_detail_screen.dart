@@ -24,40 +24,47 @@ class IdentifyDetailScreenState extends State<IdentifyDetailScreen> {
     model ?? (model = IdentifyDetailScreenViewModel(this));
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Form(
-            child: Container(
-              alignment: Alignment.topLeft,
-              child: Column(
-                children: [
-                  appBarKYC(context,MaterialPageRoute(builder: (context)=> BankDetailScreen())),
-                  HeaderLine.headerLineComplete(context, 3, 3, 1, 2, 2, 2),
-                  identifyDetailText(),
-                  //aadhar card
-                  commonTextField(
-                      title: App.aadhar,
-                      controller: aadharController,
-                      hintText: "Enter Aadhar NUmber",
-                      textInputType: TextInputType.phone
-                  ),SizedBox(height: 10,),
-                  //pan card
-                  commonTextField(
-                      title: App.pan,
-                      controller: panController,
-                      hintText: "Enter PAN NUmber",
-                      textInputType: TextInputType.text
-                  ),SizedBox(height: 10,),
-                  //gstin
-                  commonTextField(
-                      title: App.gst,
-                      controller: gstController,
-                      hintText: "Enter GSTIN NUmber",
-                      textInputType: TextInputType.text
+        body: Container(
+          alignment: Alignment.topLeft,
+          child: Column(
+            children: [
+              appBarKYC(context,MaterialPageRoute(builder: (context)=> BankDetailScreen())),
+              HeaderLine.headerLineComplete(context, 3, 3, 1, 2, 2, 2),
+              identifyDetailText(),
+
+              Form(
+                child: Container(
+                  height: Utils.getDeviceHeight(context) / 1.8,
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: [
+                      //aadhar card
+                      commonTextField(
+                          title: App.aadhar,
+                          controller: aadharController,
+                          hintText: "Enter Aadhar NUmber",
+                          textInputType: TextInputType.phone
+                      ),
+                      SizedBox(height: 10,),
+                      //pan card
+                      commonTextField(
+                          title: App.pan,
+                          controller: panController,
+                          hintText: "Enter PAN NUmber",
+                          textInputType: TextInputType.text
+                      ),SizedBox(height: 10,),
+                      //gstin
+                      commonTextField(
+                          title: App.gst,
+                          controller: gstController,
+                          hintText: "Enter GSTIN NUmber",
+                          textInputType: TextInputType.text
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
         bottomNavigationBar: Container(

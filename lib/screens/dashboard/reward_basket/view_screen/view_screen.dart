@@ -157,13 +157,13 @@ class ViewScreenState extends State<ViewScreen> {
           return Container(
             margin: EdgeInsets.only(top: 10),
             padding: EdgeInsets.only(top: 10),
-            height: Utils.getDeviceHeight(context) / 5.3,
+            height: 150,
             color: grey,
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Row(
                       children: [

@@ -132,37 +132,35 @@ class UploadDocumentState extends State<UploadDocument> {
 
     return SafeArea(
       child: Scaffold(
-        body: Form(
-          child: Container(
-            alignment: Alignment.topLeft,
-            child: Column(
-              children: [
-                appBarKYC(context,MaterialPageRoute(builder: (context)=> DashBoardScreen())),
-                HeaderLine.headerLineComplete(context, 3, 3, 3, 3, 3, 1),
-                uploadDocumentText(),
-                Container(
-                  height: Utils.getDeviceHeight(context)/ 1.7,
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: [
-                      photo1Field(),
+        body: Container(
+          alignment: Alignment.topLeft,
+          child: Column(
+            children: [
+              appBarKYC(context,MaterialPageRoute(builder: (context)=> DashBoardScreen())),
+              HeaderLine.headerLineComplete(context, 3, 3, 3, 3, 3, 1),
+              uploadDocumentText(),
+              Container(
+                height: Utils.getDeviceHeight(context)/ 1.7,
+                child: ListView(
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    photo1Field(),
 
-                      photo2Field(),
+                    photo2Field(),
 
-                      aadharFrontField(),
+                    aadharFrontField(),
 
-                      aadharBackField(),
+                    aadharBackField(),
 
-                      panField(),
+                    panField(),
 
-                      chequeField(),
-                      selfField(),
-                    ],
-                  ),
-                )
+                    chequeField(),
+                    selfField(),
+                  ],
+                ),
+              )
 
-              ],
-            ),
+            ],
           ),
         ),
         bottomNavigationBar: Container(
