@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
-import 'package:ollapro_partner/common/dropdown.dart';
 import 'package:ollapro_partner/common/header.dart';
 import 'package:ollapro_partner/common/utils.dart';
+import 'package:ollapro_partner/common/validation.dart';
 import 'package:ollapro_partner/screens/kyc/contact_detail/contact_detail_screen.dart';
+import 'package:ollapro_partner/screens/kyc/personal_detail/personal_detail_screen_view_model.dart';
 
 class PersonalDetailScreen extends StatefulWidget {
   final bool editScreen;
@@ -18,29 +19,24 @@ class PersonalDetailScreen extends StatefulWidget {
 }
 
 class PersonalDetailScreenState extends State<PersonalDetailScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController fNameController = TextEditingController();
   TextEditingController lNameController = TextEditingController();
+  TextEditingController dobController = TextEditingController();
   TextEditingController mNameController = TextEditingController();
   TextEditingController fatherNameController = TextEditingController();
-  String titleActivity;
-  String genderActivity;
-  String languageActivity;
+
   DateTime _dateTime;
   String pickedDate;
   String dateFormatted;
   String dateCheck = "Select Date";
-  String title, gender, language;
+  bool _autoValidate = false;
+  Validation validation;
+  String selectedTitle;
+  String selectedGender;
+  String selectedLanguage;
 
-  @override
-  void initState() {
-    super.initState();
-    titleActivity = '';
-    title = '';
-    genderActivity = '';
-    gender = '';
-    languageActivity = '';
-    language = '';
-  }
+  PersonalDetailScreenViewModel model;
 
   openDatePicker() {
     DateTime currentDate = DateTime.now();
@@ -57,7 +53,7 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
           _dateTime = getDate;
           pickedDate = formatter.format(_dateTime);
           setState(() {
-            dateCheck = pickedDate;
+            dobController.text = pickedDate;
           });
         } else {
           print("Current date to before date not selected.");
@@ -65,9 +61,29 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
       });
     });
   }
+  void _validateInputs() {
+    if (fNameController.text.isEmpty || mNameController.text.isEmpty || lNameController.text.isEmpty || fNameController.text.isEmpty || dobController.text.isEmpty) {
+      Utils.showToast("Enter Details");
+    } else {
+      if (_formKey.currentState.validate()) {
+        _formKey.currentState.save();
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ContactDetailScreen()));
+      } else {
+        setState(() {
+          _autoValidate = true;
+          Utils.showToast("Enter Details properly");
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    print("runtimeType -> " + runtimeType.toString());
+    model ?? (model = PersonalDetailScreenViewModel(this));
+
+    validation = Validation();
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -77,6 +93,8 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
               SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Form(
+                  autovalidate: _autoValidate,
+                  key: _formKey,
                   child: Container(
                     width: Utils.getDeviceWidth(context),
                     margin: EdgeInsets.only(top: 160),
@@ -87,6 +105,7 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
                         //firstName
                         commonTextField(
                             title: App.fName,
+                            validation: validation.validateFirstName,
                             controller: fNameController,
                             hintText: "Enter First Name",
                             textInputType: TextInputType.text),
@@ -101,6 +120,7 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
                                 flex: 1,
                                 child: commonTextField(
                                     title: App.mName,
+                                    validation: validation.validateMiddleName,
                                     controller: mNameController,
                                     hintText: "Enter Middle Name",
                                     textInputType: TextInputType.text),
@@ -110,6 +130,7 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
                                 flex: 1,
                                 child: commonTextField(
                                     title: App.lName,
+                                    validation: validation.validateLastName,
                                     controller: lNameController,
                                     hintText: "Enter last Name",
                                     textInputType: TextInputType.text),
@@ -117,7 +138,10 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
                             ],
                           ),
                         ),
-                        dateField(),
+
+                       //dob field
+                       dobField(),
+
                         SizedBox(
                           height: 10,
                         ),
@@ -126,6 +150,7 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
                         //fathers name
                         commonTextField(
                             title: App.fatherName,
+                            validation: validation.validateFatherName,
                             controller: fatherNameController,
                             hintText: "Enter father's Name",
                             textInputType: TextInputType.text),
@@ -188,42 +213,91 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
         ),
         Container(
           margin: EdgeInsets.only(left: 15, right: 15),
-          child: DropDownFormField(
-            hintText: 'Select title',
-            value: titleActivity,
-            onSaved: (value) {
-              setState(() {
-                titleActivity = value;
-              });
-            },
-            onChanged: (value) {
-              setState(() {
-                titleActivity = value;
-              });
-            },
-            dataSource: [
-              {
-                "display": "Mr.",
-                "value": "Mr.",
-              },
-              {
-                "display": "Mrs.",
-                "value": "Mrs.",
-              },
-            ],
-            textField: 'display',
-            valueField: 'value',
+          child:  DropdownButtonFormField<String>(
+            value: selectedTitle,
+            hint: Text(
+              'Select title',
+            ),
+            onChanged: (salutation) =>
+                setState(() => selectedTitle = salutation),
+            validator: (value) => value == null ? 'Select title here' : null,
+            items:
+            ['MR.', 'MS.'].map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
           ),
         ),
-        Container(
-          //padding: EdgeInsets.all(16),
-          child: Text(title),
-        )
       ],
     );
   }
-
-  dateField() {
+  dobField() {
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.topLeft,
+          margin: EdgeInsets.only(left: 15, top: 15, right: 115),
+          child: Text(
+            App.dob,
+            style: TextStyle(
+                fontSize: 17, color: secondaryColor, fontFamily: App.font),
+          ),
+        ),
+        Container(
+          alignment: Alignment.topLeft,
+          margin: EdgeInsets.only(left: 15, right: 15),
+          child: TextFormField(
+            controller: dobController,
+            validator: validation.validateDob,
+            onTap: () {
+              openDatePicker();
+              FocusScope.of(context).requestFocus(new FocusNode());
+            },
+            decoration:InputDecoration(
+              hintText: "Select date",
+              suffixIcon:  GestureDetector(
+                  onTap: () {
+                    openDatePicker();
+                  },
+                  child: Image.asset(
+                    App.calendarLogo,
+                    height: 20,
+                    width: 20,
+                  )),
+              disabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: secondaryColor,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+  textFiledDecoration(String hintText) {
+    return InputDecoration(
+      hintText: hintText,
+      contentPadding: EdgeInsets.only(right: 50, left: 20),
+        suffixIcon:  GestureDetector(
+            onTap: () {
+              openDatePicker();
+            },
+            child: Image.asset(
+              App.calendarLogo,
+              height: 20,
+              width: 20,
+            )),
+      disabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: secondaryColor,
+        ),
+      ),
+    );
+  }
+ /* dateField() {
     return Column(
       children: [
         Container(
@@ -266,7 +340,7 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
         ),
       ],
     );
-  }
+  }*/
 
   genderField() {
     return Column(
@@ -282,37 +356,23 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
         ),
         Container(
           margin: EdgeInsets.only(left: 15, right: 15),
-          child: DropDownFormField(
-            hintText: 'Select gender',
-            value: genderActivity,
-            onSaved: (value) {
-              setState(() {
-                genderActivity = value;
-              });
-            },
-            onChanged: (value) {
-              setState(() {
-                genderActivity = value;
-              });
-            },
-            dataSource: [
-              {
-                "display": "Male",
-                "value": "Male",
-              },
-              {
-                "display": "Female",
-                "value": "Female",
-              },
-            ],
-            textField: 'display',
-            valueField: 'value',
+          child: DropdownButtonFormField<String>(
+            value: selectedGender,
+            hint: Text(
+              'Select title',
+            ),
+            onChanged: (salutation) =>
+                setState(() => selectedGender = salutation),
+            validator: (value) => value == null ? 'Select gender here' : null,
+            items:
+            ['Male', 'Female'].map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
           ),
         ),
-        Container(
-          //padding: EdgeInsets.all(16),
-          child: Text(gender),
-        )
       ],
     );
   }
@@ -331,45 +391,23 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
         ),
         Container(
           margin: EdgeInsets.only(left: 15, right: 15),
-          child: DropDownFormField(
-            hintText: 'Select Number of language known',
-            value: languageActivity,
-            onSaved: (value) {
-              setState(() {
-                languageActivity = value;
-              });
-            },
-            onChanged: (value) {
-              setState(() {
-                languageActivity = value;
-              });
-            },
-            dataSource: [
-              {
-                "display": "1",
-                "value": "1",
-              },
-              {
-                "display": "2",
-                "value": "2",
-              },
-              {
-                "display": "3",
-                "value": "3",
-              },
-              {
-                "display": "4",
-                "value": "4",
-              },
-            ],
-            textField: 'display',
-            valueField: 'value',
+          child:DropdownButtonFormField<String>(
+            value: selectedLanguage,
+            hint: Text(
+              'Select title',
+            ),
+            onChanged: (salutation) =>
+                setState(() => selectedLanguage = salutation),
+            validator: (value) => value == null ? 'Select Language here' : null,
+            items:
+            ['1', '2','3','4'].map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
           ),
         ),
-        Container(
-          //padding: EdgeInsets.all(16),
-          child: Text(language),
-        )
       ],
     );
   }
@@ -379,8 +417,7 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
         padding: EdgeInsets.only(bottom: 30, top: 30),
         child: InkWell(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ContactDetailScreen()));
+          _validateInputs();
           },
           child: Container(
             alignment: Alignment.center,

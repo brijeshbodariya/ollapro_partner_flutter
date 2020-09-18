@@ -4,6 +4,7 @@ import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/dropdown.dart';
 import 'package:ollapro_partner/common/header.dart';
 import 'package:ollapro_partner/common/utils.dart';
+import 'package:ollapro_partner/common/validation.dart';
 import 'package:ollapro_partner/screens/kyc/reference/reference_screen.dart';
 
 import 'bank_detail_view_model.dart';
@@ -14,35 +15,50 @@ class BankDetailScreen extends StatefulWidget {
 }
 
 class BankDetailScreenState extends State<BankDetailScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController bankNameController = TextEditingController();
   TextEditingController accountController = TextEditingController();
   TextEditingController account1Controller = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController ifscController = TextEditingController();
   BankDetailViewModel model;
-  String account, accountActivity;
+  String selectedAccount;
+  bool _autoValidate = false;
+  Validation validation;
 
-  @override
-  void initState() {
-    accountActivity = '';
-    account = ''; // TODO: implement initState
-    super.initState();
+  void _validateInputs() {
+    if (bankNameController.text.isEmpty || accountController.text.isEmpty || account1Controller.text.isEmpty || nameController.text.isEmpty || ifscController.text.isEmpty) {
+      Utils.showToast("Enter Details");
+    } else {
+      if (_formKey.currentState.validate()) {
+        _formKey.currentState.save();
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ReferenceScreen()));
+      } else {
+        setState(() {
+          _autoValidate = true;
+          Utils.showToast("Enter Details properly");
+        });
+      }
+    }
   }
-
   @override
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = BankDetailViewModel(this));
+    validation = Validation();
     return SafeArea(
       child: Scaffold(
         body: Container(
           alignment: Alignment.topLeft,
           child: Stack(
             children: [
-
-
               SingleChildScrollView(
                 child: Form(
+                  key: _formKey,
+                  autovalidate: _autoValidate,
                   child: Container(
                     width: Utils.getDeviceWidth(context),
                     margin: EdgeInsets.only(top: 160),
@@ -51,6 +67,7 @@ class BankDetailScreenState extends State<BankDetailScreen> {
                         //bank name
                         commonTextField(
                             title: App.bankName,
+                            validation: validation.validateBankName,
                             controller: bankNameController,
                             hintText: "Enter Bank name",
                             textInputType: TextInputType.text
@@ -59,6 +76,7 @@ class BankDetailScreenState extends State<BankDetailScreen> {
                         //account number
                         commonTextField(
                             title: App.accountNumber,
+                            validation: validation.validateAccount,
                             controller: accountController,
                             hintText: "Enter Account Number",
                             textInputType: TextInputType.phone
@@ -66,6 +84,7 @@ class BankDetailScreenState extends State<BankDetailScreen> {
                         //account number
                         commonTextField(
                             title: App.account1Number,
+                            validation: validation.validateReAccount,
                             controller: account1Controller,
                             hintText: "Re enter Account Number",
                             textInputType: TextInputType.phone
@@ -73,6 +92,7 @@ class BankDetailScreenState extends State<BankDetailScreen> {
                         //account holder name
                         commonTextField(
                             title: App.nameOfHolder,
+                            validation: validation.validateAccountHolderName,
                             controller: nameController,
                             hintText: "Account holder name",
                             textInputType: TextInputType.text
@@ -81,6 +101,7 @@ class BankDetailScreenState extends State<BankDetailScreen> {
                         //ifsc code
                         commonTextField(
                             title: App.ifscCode,
+                            validation: validation.validateIFSC,
                             controller: ifscController,
                             hintText: "Enter IFSC code",
                             textInputType: TextInputType.text
@@ -157,37 +178,23 @@ class BankDetailScreenState extends State<BankDetailScreen> {
         ),
         Container(
           margin: EdgeInsets.only(left: 15, right: 15),
-          child: DropDownFormField(
-            hintText: 'Select Account Type',
-            value: accountActivity,
-            onSaved: (value) {
-              setState(() {
-                accountActivity = value;
-              });
-            },
-            onChanged: (value) {
-              setState(() {
-                accountActivity = value;
-              });
-            },
-            dataSource: [
-              {
-                "display": "Saving",
-                "value": "Saving",
-              },
-              {
-                "display": "Current",
-                "value": "Current",
-              },
-            ],
-            textField: 'display',
-            valueField: 'value',
+          child:DropdownButtonFormField<String>(
+            value: selectedAccount,
+            hint: Text(
+              'Select title',
+            ),
+            onChanged: (salutation) =>
+                setState(() => selectedAccount = salutation),
+            validator: (value) => value == null ? 'Select Account type' : null,
+            items:
+            ['Current', 'Saving'].map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
           ),
         ),
-        Container(
-          //padding: EdgeInsets.all(16),
-          child: Text(account),
-        )
       ],
     );
   }
@@ -221,10 +228,7 @@ class BankDetailScreenState extends State<BankDetailScreen> {
         padding: EdgeInsets.only(bottom: 30, top: 30),
         child: InkWell(
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ReferenceScreen()));
+           _validateInputs();
           },
           child: Container(
             alignment: Alignment.center,

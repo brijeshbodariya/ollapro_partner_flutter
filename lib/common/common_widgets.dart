@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'app.dart';
 
-Widget commonTextField({TextEditingController controller,String title,String hintText,TextInputType textInputType,prefixIcon,suffixIcon,obscureText}){
+Widget commonTextField({context,TextEditingController controller,String title,String hintText,TextInputType textInputType,prefixIcon,suffixIcon,validation,bool obscureText}){
   return Column(
     children: [
       Container(
@@ -18,7 +18,8 @@ Widget commonTextField({TextEditingController controller,String title,String hin
         margin: EdgeInsets.only(left: 15, right: 15),
         child: TextFormField(
           controller: controller,
-         // obscureText: obscureText ,
+         validator: validation,
+         obscureText: obscureText ?? false,
           decoration: InputDecoration(
             disabledBorder: OutlineInputBorder(
               borderSide: BorderSide(

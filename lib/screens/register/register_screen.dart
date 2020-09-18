@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/utils.dart';
+import 'package:ollapro_partner/common/validation.dart';
 import 'package:ollapro_partner/screens/login/login_screen.dart';
 import 'package:ollapro_partner/screens/otp/otp_screen.dart';
 import 'package:ollapro_partner/screens/register/register_screen_view_model.dart';
@@ -24,16 +25,17 @@ class RegisterScreenState extends State<RegisterScreen> {
   bool _obscureText1 = true;
   bool _obscureText2 = true;
   RegisterScreenViewModel model;
-
+  bool _autoValidate = false;
+  Validation validation;
   void _reRegisterPassword() {
     setState(() {
-      _obscureText1 = !_obscureText1;
+      _obscureText2 = !_obscureText2;
     });
   }
 
   void _registerPassword() {
     setState(() {
-      _obscureText2 = !_obscureText2;
+      _obscureText1 = !_obscureText1;
     });
   }
 
@@ -41,6 +43,8 @@ class RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = RegisterScreenViewModel(this));
+    validation = Validation();
+
     return SafeArea(
         child: Scaffold(
       body: Form(
@@ -58,6 +62,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(height: 30,),
                   commonTextField(
                       title: App.fullName,
+                      validation: validation.validateFullName,
                       controller: fullNameController,
                       hintText: "Enter Full Name",
                       prefixIcon: Image.asset(
@@ -70,6 +75,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                   //email
                   commonTextField(
                     title: App.emailAddress,
+                      validation: validation.validateEmail,
                     controller: emailController,
                     hintText: "Enter Email",
                     prefixIcon: Image.asset(
@@ -82,6 +88,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                   //phone
                   commonTextField(
                       title: App.mobileNumber,
+                      validation: validation.validatePhone,
                       controller: phoneController,
                       hintText: "Enter Phone NUmber",
                       prefixIcon: Image.asset(
@@ -94,7 +101,9 @@ class RegisterScreenState extends State<RegisterScreen> {
                   //password
                   commonTextField(
                       title: App.password,
+                    validation: validation.validatePassword,
                       controller: passwordController,
+                    obscureText: _obscureText1,
                       hintText: "Enter Password",
                       prefixIcon: Image.asset(
                         App.passwordLogo,
@@ -116,7 +125,9 @@ class RegisterScreenState extends State<RegisterScreen> {
                   //confirm password
                   commonTextField(
                     title: App.password,
+                    validation: validation.validatePassword,
                     controller: confirmPasswordController,
+                    obscureText: _obscureText2,
                     hintText: "Enter Confirm Password",
                     prefixIcon: Image.asset(
                       App.passwordLogo,
@@ -145,6 +156,23 @@ class RegisterScreenState extends State<RegisterScreen> {
       bottomNavigationBar: bottomLogin(),
     ));
   }
+  void _validateInputs() {
+    if (phoneController.text.isEmpty || passwordController.text.isEmpty || confirmPasswordController.text.isEmpty || emailController.text.isEmpty || fullNameController.text.isEmpty) {
+      Utils.showToast("Enter Details");
+    } else {
+      if (_formKey.currentState.validate()) {
+        _formKey.currentState.save();
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => OtpScreen()));
+      } else {
+        setState(() {
+          _autoValidate = true;
+          Utils.showToast("Enter Details properly");
+        });
+      }
+    }
+  }
+
   bottomLogin() {
     return Padding(
       padding: EdgeInsets.only(bottom: 15),
@@ -203,8 +231,7 @@ class RegisterScreenState extends State<RegisterScreen> {
         padding: EdgeInsets.only(bottom: 20, top: 30),
         child: InkWell(
           onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => OtpScreen()));
+          _validateInputs();
           },
           child: Container(
             alignment: Alignment.center,

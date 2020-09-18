@@ -6,6 +6,7 @@ import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/header.dart';
 import 'package:ollapro_partner/common/utils.dart';
+import 'package:ollapro_partner/common/validation.dart';
 import 'package:ollapro_partner/screens/dashboard/dashboard_screen.dart';
 import 'package:ollapro_partner/screens/kyc/upload_document/upload_document_view_model.dart';
 
@@ -15,7 +16,15 @@ class UploadDocument extends StatefulWidget {
 }
 
 class UploadDocumentState extends State<UploadDocument> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   UploadDocumentViewModel model;
+  TextEditingController image1Controller = TextEditingController();
+  TextEditingController image2Controller = TextEditingController();
+  TextEditingController image3Controller = TextEditingController();
+  TextEditingController image4Controller = TextEditingController();
+  TextEditingController image5Controller = TextEditingController();
+  TextEditingController image6Controller = TextEditingController();
+  TextEditingController image7Controller = TextEditingController();
   File image1;
   File image2;
   File image3;
@@ -23,13 +32,15 @@ class UploadDocumentState extends State<UploadDocument> {
   File image5;
   File image6;
   File image7;
-  String file1="Select photo1";
-  String file2="Select photo2";
-  String file3="Select aadhar front";
-  String file4="Select aadhar back";
-  String file5="Select aadhar front";
-  String file6="Select aadhar front";
-  String file7="Select aadhar front";
+  String file1 = "Select photo1";
+  String file2 = "Select photo2";
+  String file3 = "Select aadhar front";
+  String file4 = "Select aadhar back";
+  String file5 = "Select aadhar front";
+  String file6 = "Select aadhar front";
+  String file7 = "Select aadhar front";
+  bool _autoValidate = false;
+  Validation validation;
 
   _getPhoto1() async {
     PickedFile pickedFile = await ImagePicker().getImage(
@@ -72,6 +83,7 @@ class UploadDocumentState extends State<UploadDocument> {
       });
     }
   }
+
   _getPhoto4() async {
     PickedFile pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
@@ -85,6 +97,7 @@ class UploadDocumentState extends State<UploadDocument> {
       });
     }
   }
+
   _getPhoto5() async {
     PickedFile pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
@@ -98,6 +111,7 @@ class UploadDocumentState extends State<UploadDocument> {
       });
     }
   }
+
   _getPhoto6() async {
     PickedFile pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
@@ -111,6 +125,7 @@ class UploadDocumentState extends State<UploadDocument> {
       });
     }
   }
+
   _getPhoto7() async {
     PickedFile pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
@@ -129,31 +144,27 @@ class UploadDocumentState extends State<UploadDocument> {
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = UploadDocumentViewModel(this));
-
+    validation = Validation();
     return SafeArea(
       child: Scaffold(
         body: Container(
           alignment: Alignment.topLeft,
           child: Stack(
             children: [
-
               SingleChildScrollView(
                 child: Form(
+                  key: _formKey,
+                  autovalidate: _autoValidate,
                   child: Container(
                     width: Utils.getDeviceWidth(context),
                     margin: EdgeInsets.only(top: 160),
                     child: Column(
                       children: [
                         photo1Field(),
-
                         photo2Field(),
-
                         aadharFrontField(),
-
                         aadharBackField(),
-
                         panField(),
-
                         chequeField(),
                         selfField(),
                       ],
@@ -166,7 +177,10 @@ class UploadDocumentState extends State<UploadDocument> {
                 color: Colors.white,
                 child: Column(
                   children: [
-                    appBarKYC(context,MaterialPageRoute(builder: (context)=> DashBoardScreen())),
+                    appBarKYC(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DashBoardScreen())),
                     HeaderLine.headerLineComplete(context, 3, 3, 3, 3, 3, 1),
                     uploadDocumentText(),
                   ],
@@ -183,6 +197,7 @@ class UploadDocumentState extends State<UploadDocument> {
       ),
     );
   }
+
   uploadDocumentText() {
     return Container(
       alignment: Alignment.topLeft,
@@ -197,6 +212,7 @@ class UploadDocumentState extends State<UploadDocument> {
       ),
     );
   }
+
   photo1Field() {
     return Column(
       children: [
@@ -226,7 +242,8 @@ class UploadDocumentState extends State<UploadDocument> {
                       child: Text(
                       file1,
                       maxLines: 2,
-                      style: TextStyle(color: primaryColor, fontFamily: App.font),
+                      style:
+                          TextStyle(color: primaryColor, fontFamily: App.font),
                     ))
                   : Container(),
               Container(
@@ -242,6 +259,7 @@ class UploadDocumentState extends State<UploadDocument> {
       ],
     );
   }
+
   photo2Field() {
     return Column(
       children: [
@@ -271,7 +289,8 @@ class UploadDocumentState extends State<UploadDocument> {
                       child: Text(
                       file2,
                       maxLines: 2,
-                      style: TextStyle(color: primaryColor, fontFamily: App.font),
+                      style:
+                          TextStyle(color: primaryColor, fontFamily: App.font),
                     ))
                   : Container(),
               Container(
@@ -287,6 +306,7 @@ class UploadDocumentState extends State<UploadDocument> {
       ],
     );
   }
+
   aadharFrontField() {
     return Column(
       children: [
@@ -313,11 +333,12 @@ class UploadDocumentState extends State<UploadDocument> {
             children: [
               image3 != null
                   ? Flexible(
-                  child: Text(
-                    file3,
-                    maxLines: 2,
-                    style: TextStyle(color: primaryColor, fontFamily: App.font),
-                  ))
+                      child: Text(
+                      file3,
+                      maxLines: 2,
+                      style:
+                          TextStyle(color: primaryColor, fontFamily: App.font),
+                    ))
                   : Container(),
               Container(
                 padding: EdgeInsets.only(left: 10),
@@ -332,6 +353,7 @@ class UploadDocumentState extends State<UploadDocument> {
       ],
     );
   }
+
   aadharBackField() {
     return Column(
       children: [
@@ -358,11 +380,12 @@ class UploadDocumentState extends State<UploadDocument> {
             children: [
               image4 != null
                   ? Flexible(
-                  child: Text(
-                    file4,
-                    maxLines: 2,
-                    style: TextStyle(color: primaryColor, fontFamily: App.font),
-                  ))
+                      child: Text(
+                      file4,
+                      maxLines: 2,
+                      style:
+                          TextStyle(color: primaryColor, fontFamily: App.font),
+                    ))
                   : Container(),
               Container(
                 padding: EdgeInsets.only(left: 10),
@@ -377,6 +400,7 @@ class UploadDocumentState extends State<UploadDocument> {
       ],
     );
   }
+
   panField() {
     return Column(
       children: [
@@ -403,11 +427,12 @@ class UploadDocumentState extends State<UploadDocument> {
             children: [
               image5 != null
                   ? Flexible(
-                  child: Text(
-                    file5,
-                    maxLines: 2,
-                    style: TextStyle(color: primaryColor, fontFamily: App.font),
-                  ))
+                      child: Text(
+                      file5,
+                      maxLines: 2,
+                      style:
+                          TextStyle(color: primaryColor, fontFamily: App.font),
+                    ))
                   : Container(),
               Container(
                 padding: EdgeInsets.only(left: 10),
@@ -422,6 +447,7 @@ class UploadDocumentState extends State<UploadDocument> {
       ],
     );
   }
+
   chequeField() {
     return Column(
       children: [
@@ -448,11 +474,12 @@ class UploadDocumentState extends State<UploadDocument> {
             children: [
               image6 != null
                   ? Flexible(
-                  child: Text(
-                    file6,
-                    maxLines: 2,
-                    style: TextStyle(color: primaryColor, fontFamily: App.font),
-                  ))
+                      child: Text(
+                      file6,
+                      maxLines: 2,
+                      style:
+                          TextStyle(color: primaryColor, fontFamily: App.font),
+                    ))
                   : Container(),
               Container(
                 padding: EdgeInsets.only(left: 10),
@@ -467,6 +494,7 @@ class UploadDocumentState extends State<UploadDocument> {
       ],
     );
   }
+
   selfField() {
     return Column(
       children: [
@@ -482,7 +510,7 @@ class UploadDocumentState extends State<UploadDocument> {
         Container(
           padding: EdgeInsets.all(8.0),
           height: 55,
-          margin: EdgeInsets.only(left: 15, right: 15,bottom: 20),
+          margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(color: secondaryColor),
@@ -493,11 +521,12 @@ class UploadDocumentState extends State<UploadDocument> {
             children: [
               image7 != null
                   ? Flexible(
-                  child: Text(
-                    file7,
-                    maxLines: 2,
-                    style: TextStyle(color: primaryColor, fontFamily: App.font),
-                  ))
+                      child: Text(
+                      file7,
+                      maxLines: 2,
+                      style:
+                          TextStyle(color: primaryColor, fontFamily: App.font),
+                    ))
                   : Container(),
               Container(
                 padding: EdgeInsets.only(left: 10),
@@ -512,12 +541,14 @@ class UploadDocumentState extends State<UploadDocument> {
       ],
     );
   }
+
   submitButton() {
     return Padding(
         padding: EdgeInsets.only(bottom: 20, top: 20),
         child: InkWell(
           onTap: () {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> DashBoardScreen()));
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => DashBoardScreen()));
           },
           child: Container(
             alignment: Alignment.center,

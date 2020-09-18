@@ -3,6 +3,7 @@ import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/header.dart';
 import 'package:ollapro_partner/common/utils.dart';
+import 'package:ollapro_partner/common/validation.dart';
 import 'package:ollapro_partner/screens/kyc/bankdetail/bank_detail_screen.dart';
 
 import 'identify_detail_screen_view_model.dart';
@@ -13,15 +14,36 @@ class IdentifyDetailScreen extends StatefulWidget {
 }
 
 class IdentifyDetailScreenState extends State<IdentifyDetailScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController aadharController = TextEditingController();
   TextEditingController panController = TextEditingController();
   TextEditingController gstController = TextEditingController();
   IdentifyDetailScreenViewModel model;
-
+  bool _autoValidate = false;
+  Validation validation;
+  void _validateInputs() {
+    if (aadharController.text.isEmpty || panController.text.isEmpty || gstController.text.isEmpty ) {
+      Utils.showToast("Enter Details");
+    } else {
+      if (_formKey.currentState.validate()) {
+        _formKey.currentState.save();
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => BankDetailScreen()));
+      } else {
+        setState(() {
+          _autoValidate = true;
+          Utils.showToast("Enter Details properly");
+        });
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = IdentifyDetailScreenViewModel(this));
+    validation = Validation();
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -30,6 +52,8 @@ class IdentifyDetailScreenState extends State<IdentifyDetailScreen> {
             children: [
               SingleChildScrollView(
                 child: Form(
+                  key: _formKey,
+                  autovalidate: _autoValidate,
                   child: Container(
                    // height: Utils.getDeviceHeight(context),
                     width: Utils.getDeviceWidth(context),
@@ -39,6 +63,7 @@ class IdentifyDetailScreenState extends State<IdentifyDetailScreen> {
                         //aadhar card
                         commonTextField(
                             title: App.aadhar,
+                            validation: validation.validateAadhar,
                             controller: aadharController,
                             hintText: "Enter Aadhar NUmber",
                             textInputType: TextInputType.phone
@@ -47,6 +72,7 @@ class IdentifyDetailScreenState extends State<IdentifyDetailScreen> {
                         //pan card
                         commonTextField(
                             title: App.pan,
+                            validation: validation.validatePAN,
                             controller: panController,
                             hintText: "Enter PAN NUmber",
                             textInputType: TextInputType.text
@@ -54,6 +80,7 @@ class IdentifyDetailScreenState extends State<IdentifyDetailScreen> {
                         //gstin
                         commonTextField(
                             title: App.gst,
+                            validation: validation.validateGST,
                             controller: gstController,
                             hintText: "Enter GSTIN NUmber",
                             textInputType: TextInputType.text
@@ -137,10 +164,7 @@ class IdentifyDetailScreenState extends State<IdentifyDetailScreen> {
         padding: EdgeInsets.only(bottom: 30, top: 30),
         child: InkWell(
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => BankDetailScreen()));
+          _validateInputs();
           },
           child: Container(
             alignment: Alignment.center,

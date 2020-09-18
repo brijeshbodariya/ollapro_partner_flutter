@@ -3,6 +3,7 @@ import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/header.dart';
 import 'package:ollapro_partner/common/utils.dart';
+import 'package:ollapro_partner/common/validation.dart';
 import 'package:ollapro_partner/screens/kyc/contact_detail/contact_detail_screen_view_model.dart';
 import 'package:ollapro_partner/screens/kyc/identify_detail/identify_detail_screen.dart';
 
@@ -15,9 +16,10 @@ class ContactDetailScreen extends StatefulWidget {
 }
 
 class ContactDetailScreenState extends State<ContactDetailScreen> {
-  TextEditingController phoneController = TextEditingController(text: "+91 ");
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController phoneController = TextEditingController(text: "+91");
   TextEditingController altPhoneController =
-      TextEditingController(text: "+91 ");
+      TextEditingController(text: "+91");
   TextEditingController emailController = TextEditingController();
   TextEditingController add1Controller = TextEditingController();
   TextEditingController add2Controller = TextEditingController();
@@ -26,7 +28,8 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
   TextEditingController pinCodeController = TextEditingController();
   ContactDetailScreenViewModel model;
   Repository repo = Repository();
-
+  bool _autoValidate = false;
+  Validation validation;
   List<String> _states = ["Choose a state"];
   List<String> _city = ["Choose .."];
   String _selectedState = "Choose a state";
@@ -38,10 +41,30 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
     super.initState();
   }
 
+  void _validateInputs() {
+    if (emailController.text.isEmpty || add1Controller.text.isEmpty || add2Controller.text.isEmpty || add3Controller.text.isEmpty || placeController.text.isEmpty || pinCodeController.text.isEmpty) {
+      Utils.showToast("Enter Details");
+    } else {
+      if (_formKey.currentState.validate()) {
+        _formKey.currentState.save();
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => IdentifyDetailScreen()));
+      } else {
+        setState(() {
+          _autoValidate = true;
+          Utils.showToast("Enter Details properly");
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = ContactDetailScreenViewModel(this));
+    validation = Validation();
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -52,6 +75,8 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
               SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Form(
+                  key: _formKey,
+                  autovalidate: _autoValidate,
                   child: Container(
                    // height: Utils.getDeviceHeight(context),
                     width: Utils.getDeviceWidth(context),
@@ -60,6 +85,7 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
                       children: [
                         commonTextField(
                             title: App.mobileNumber,
+                            validation: validation.validatePhone,
                             controller: phoneController,
                             hintText: "Enter Phone NUmber",
                             textInputType: TextInputType.phone),
@@ -69,6 +95,7 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
                         //alternate phone
                         commonTextField(
                             title: App.altMobileNumber,
+                            validation: validation.validateAltPhone,
                             controller: altPhoneController,
                             hintText: "Enter Alternate Phone NUmber",
                             textInputType: TextInputType.phone),
@@ -78,6 +105,7 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
                         //email
                         commonTextField(
                             title: App.emailAddress,
+                            validation: validation.validateEmail,
                             controller: emailController,
                             hintText: "Enter Email",
                             textInputType: TextInputType.emailAddress),
@@ -88,6 +116,7 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
                         commonTextField(
                             title: App.communicationAddress,
                             controller: add1Controller,
+                            validation: validation.validateAddress1Name,
                             hintText: "Enter Address 1",
                             textInputType: TextInputType.text),
                         add2Field(),
@@ -114,6 +143,7 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
                                 flex: 1,
                                 child: commonTextField(
                                     title: App.exactPlace,
+                                    validation: validation.validatePlace,
                                     controller: placeController,
                                     hintText: "Enter Exact place",
                                     textInputType: TextInputType.text),
@@ -123,9 +153,10 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
                                 flex: 1,
                                 child: commonTextField(
                                     title: App.pinCode,
+                                    validation: validation.validatePinCode,
                                     controller: pinCodeController,
                                     hintText: "Enter pincode",
-                                    textInputType: TextInputType.text),
+                                    textInputType: TextInputType.phone),
                               ),
 
                             ],
@@ -188,6 +219,7 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
       child: TextFormField(
         style: TextStyle(color: primaryColor, fontFamily: App.font),
         controller: add2Controller,
+        validator: validation.validateAddress2Name,
         decoration: InputDecoration(
           disabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
@@ -213,6 +245,7 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
       child: TextFormField(
         style: TextStyle(color: primaryColor, fontFamily: App.font),
         controller: add3Controller,
+        validator: validation.validateAddress3Name,
         decoration: InputDecoration(
           disabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
@@ -337,10 +370,7 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
         padding: EdgeInsets.only(bottom: 30, top: 30),
         child: InkWell(
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => IdentifyDetailScreen()));
+           _validateInputs();
           },
           child: Container(
             alignment: Alignment.center,

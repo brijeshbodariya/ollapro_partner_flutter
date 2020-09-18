@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
+import 'package:ollapro_partner/common/general_text_feild.dart';
 import 'package:ollapro_partner/common/utils.dart';
+import 'package:ollapro_partner/common/validation.dart';
 import 'package:ollapro_partner/screens/dashboard/dashboard_screen.dart';
 import 'package:ollapro_partner/screens/forgot_password/forgot_password.dart';
 import 'package:ollapro_partner/screens/register/register_screen.dart';
@@ -15,11 +17,13 @@ class LoginScreen extends StatefulWidget {
 
 class LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController phoneController = TextEditingController(text: "+91 ");
+  TextEditingController phoneController = TextEditingController(text: "+91");
   TextEditingController passwordController = TextEditingController();
   LoginScreenViewModel model;
   bool _obscureText = true;
   bool checkBox = false;
+  bool _autoValidate = false;
+  Validation validation;
 
   void _loginPassword() {
     setState(() {
@@ -32,6 +36,7 @@ class LoginScreenState extends State<LoginScreen> {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = LoginScreenViewModel(this));
 
+    validation = Validation();
     return Scaffold(
       body: Form(
         key: _formKey,
@@ -57,6 +62,7 @@ class LoginScreenState extends State<LoginScreen> {
                   ),
                   //phone
                   commonTextField(
+                      validation: validation.validatePhone,
                       title: App.mobileNumber,
                       controller: phoneController,
                       hintText: "Enter Phone NUmber",
@@ -72,7 +78,9 @@ class LoginScreenState extends State<LoginScreen> {
                   //password
                   commonTextField(
                     title: App.password,
+                    validation: validation.validatePassword,
                     controller: passwordController,
+                    obscureText: _obscureText,
                     hintText: "Enter Password",
                     prefixIcon: Image.asset(
                       App.passwordLogo,
@@ -174,12 +182,13 @@ class LoginScreenState extends State<LoginScreen> {
                   print(checkBox);
                 },
                 value: checkBox,
-
               ),
-              Text("Remember Me",style: TextStyle(color: secondaryColor,fontSize: 16),),
+              Text(
+                "Remember Me",
+                style: TextStyle(color: secondaryColor, fontSize: 16),
+              ),
             ],
           ),
-
           Container(
             alignment: Alignment.topLeft,
             child: InkWell(
@@ -206,8 +215,7 @@ class LoginScreenState extends State<LoginScreen> {
         padding: EdgeInsets.only(bottom: 15),
         child: InkWell(
           onTap: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => DashBoardScreen()));
+            _validateInputs();
           },
           child: Container(
             alignment: Alignment.center,
@@ -227,5 +235,26 @@ class LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ));
+  }
+
+  void _validateInputs() {
+    if (phoneController.text.isEmpty || passwordController.text.isEmpty) {
+      Utils.showToast("Enter Details");
+    } else {
+      if (_formKey.currentState.validate()) {
+        _formKey.currentState.save();
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => DashBoardScreen()));
+      } else {
+        setState(() {
+          _autoValidate = true;
+          Utils.showToast("Enter Details properly");
+        });
+      }
+    }
+  }
+
+  clear() {
+    phoneController.clear();
   }
 }
