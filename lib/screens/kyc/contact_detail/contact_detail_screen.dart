@@ -46,98 +46,108 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
       child: Scaffold(
         body: Container(
           alignment: Alignment.topLeft,
-          child: Column(
+          child: Stack(
             children: [
-              appBarKYC(context,MaterialPageRoute(builder: (context)=> IdentifyDetailScreen())),
-              HeaderLine.headerLineComplete(context, 3, 1, 2, 2, 2, 2),
-              contactDetailText(),
-              SizedBox(
-                height: 10,
-              ),
               //phone
-              Container(
-                height: Utils.getDeviceHeight(context) / 1.8,
-                child: ListView(
-                  scrollDirection: Axis.vertical,
-                  children: [
-                    commonTextField(
-                        title: App.mobileNumber,
-                        controller: phoneController,
-                        hintText: "Enter Phone NUmber",
-                        textInputType: TextInputType.phone),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    //alternate phone
-                    commonTextField(
-                        title: App.altMobileNumber,
-                        controller: altPhoneController,
-                        hintText: "Enter Alternate Phone NUmber",
-                        textInputType: TextInputType.phone),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    //email
-                    commonTextField(
-                        title: App.emailAddress,
-                        controller: emailController,
-                        hintText: "Enter Email",
-                        textInputType: TextInputType.emailAddress),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    //communication address
-                    commonTextField(
-                        title: App.communicationAddress,
-                        controller: add1Controller,
-                        hintText: "Enter Address 1",
-                        textInputType: TextInputType.text),
-                    add2Field(),
-                    add3Field(),
-                    Container(
-                      margin: EdgeInsets.only(top: 15),
-                      width: Utils.getDeviceWidth(context),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          stateSelect(),
-                          citySelect(),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 10),
-                      width: Utils.getDeviceWidth(context),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          //middle name
-                          Expanded(
-                            flex: 1,
-                            child: commonTextField(
-                                title: App.exactPlace,
-                                controller: placeController,
-                                hintText: "Enter Exact place",
-                                textInputType: TextInputType.text),
+              SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Form(
+                  child: Container(
+                   // height: Utils.getDeviceHeight(context),
+                    width: Utils.getDeviceWidth(context),
+                    margin: EdgeInsets.only(top: 160),
+                    child: Column(
+                      children: [
+                        commonTextField(
+                            title: App.mobileNumber,
+                            controller: phoneController,
+                            hintText: "Enter Phone NUmber",
+                            textInputType: TextInputType.phone),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        //alternate phone
+                        commonTextField(
+                            title: App.altMobileNumber,
+                            controller: altPhoneController,
+                            hintText: "Enter Alternate Phone NUmber",
+                            textInputType: TextInputType.phone),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        //email
+                        commonTextField(
+                            title: App.emailAddress,
+                            controller: emailController,
+                            hintText: "Enter Email",
+                            textInputType: TextInputType.emailAddress),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        //communication address
+                        commonTextField(
+                            title: App.communicationAddress,
+                            controller: add1Controller,
+                            hintText: "Enter Address 1",
+                            textInputType: TextInputType.text),
+                        add2Field(),
+                        add3Field(),
+                        Container(
+                          margin: EdgeInsets.only(top: 15),
+                          width: Utils.getDeviceWidth(context),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              stateSelect(),
+                              citySelect(),
+                            ],
                           ),
-                          //lastname
-                          Expanded(
-                            flex: 1,
-                            child: commonTextField(
-                                title: App.pinCode,
-                                controller: pinCodeController,
-                                hintText: "Enter pincode",
-                                textInputType: TextInputType.text),
-                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 10),
+                          width: Utils.getDeviceWidth(context),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              //middle name
+                              Expanded(
+                                flex: 1,
+                                child: commonTextField(
+                                    title: App.exactPlace,
+                                    controller: placeController,
+                                    hintText: "Enter Exact place",
+                                    textInputType: TextInputType.text),
+                              ),
+                              //lastname
+                              Expanded(
+                                flex: 1,
+                                child: commonTextField(
+                                    title: App.pinCode,
+                                    controller: pinCodeController,
+                                    hintText: "Enter pincode",
+                                    textInputType: TextInputType.text),
+                              ),
 
-                        ],
-                      ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 20,)
+                      ],
                     ),
-                    SizedBox(height: 20,)
+                  ),
+                ),
+              ),
+              Container(
+                height: 160,
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    appBarKYC(context,MaterialPageRoute(builder: (context)=> IdentifyDetailScreen())),
+                    HeaderLine.headerLineComplete(context, 3, 1, 2, 2, 2, 2),
+                    contactDetailText(),
                   ],
                 ),
               ),
-
             ],
           ),
         ),

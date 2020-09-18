@@ -31,80 +31,90 @@ class ReferenceScreenState extends State<ReferenceScreen> {
       child: Scaffold(
         body: Container(
           alignment: Alignment.topLeft,
-          child: Column(
+          child: Stack(
             children: [
-              appBarKYC(context,MaterialPageRoute(builder: (context)=> UploadDocument())),
-              HeaderLine.headerLineComplete(context, 3, 3, 3, 3, 1, 2),
-              referenceDetailText(),
-              Form(
-                child: Container(
-                  height: Utils.getDeviceHeight(context) / 1.8,
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: [ reference1Text(),
-                      // reference1 name
-                      Container(
-                        color: white,
-                        child: Column(
-                          children: [
-                            commonTextField(
-                                title: App.name,
-                                controller: nameController,
-                                hintText: "Enter Name",
-                                textInputType: TextInputType.text
-                            ),
-                            SizedBox(height: 10),
-                            // reference1 place
-                            commonTextField(
-                                title: App.place,
-                                controller: placeController,
-                                hintText: "Enter Place",
-                                textInputType: TextInputType.text
-                            ),SizedBox(height: 10),
-                            // reference1 mobile number
-                            commonTextField(
-                                title: App.mobileNumber,
-                                controller: phoneController,
-                                hintText: "Enter Mobile Number",
-                                textInputType: TextInputType.phone
-                            ),SizedBox(height: 10),
-                          ],
+
+              SingleChildScrollView(
+                child: Form(
+                  child: Container(
+                    width: Utils.getDeviceWidth(context),
+                    margin: EdgeInsets.only(top: 160),
+                    child: Column(
+                      children: [ reference1Text(),
+                        // reference1 name
+                        Container(
+                          color: white,
+                          child: Column(
+                            children: [
+                              commonTextField(
+                                  title: App.name,
+                                  controller: nameController,
+                                  hintText: "Enter Name",
+                                  textInputType: TextInputType.text
+                              ),
+                              SizedBox(height: 10),
+                              // reference1 place
+                              commonTextField(
+                                  title: App.place,
+                                  controller: placeController,
+                                  hintText: "Enter Place",
+                                  textInputType: TextInputType.text
+                              ),SizedBox(height: 10),
+                              // reference1 mobile number
+                              commonTextField(
+                                  title: App.mobileNumber,
+                                  controller: phoneController,
+                                  hintText: "Enter Mobile Number",
+                                  textInputType: TextInputType.phone
+                              ),SizedBox(height: 10),
+                            ],
+                          ),
                         ),
-                      ),
-                      reference2Text(),
-                      Container(
-                        color: white,
-                        child: Column(
-                          children: [
-                            // reference2 name
-                            commonTextField(
-                                title: App.name,
-                                controller: name1Controller,
-                                hintText: "Enter Name",
-                                textInputType: TextInputType.text
-                            ),SizedBox(height: 10),
-                            // reference2 place
-                            commonTextField(
-                                title: App.place,
-                                controller: place1Controller,
-                                hintText: "Enter Place",
-                                textInputType: TextInputType.text
-                            ),SizedBox(height: 10),
-                            // reference2 mobile number
-                            commonTextField(
-                                title: App.mobileNumber,
-                                controller: phone1Controller,
-                                hintText: "Enter Mobile Number",
-                                textInputType: TextInputType.phone
-                            ),SizedBox(height: 10),
-                          ],
+                        reference2Text(),
+                        Container(
+                          color: white,
+                          child: Column(
+                            children: [
+                              // reference2 name
+                              commonTextField(
+                                  title: App.name,
+                                  controller: name1Controller,
+                                  hintText: "Enter Name",
+                                  textInputType: TextInputType.text
+                              ),SizedBox(height: 10),
+                              // reference2 place
+                              commonTextField(
+                                  title: App.place,
+                                  controller: place1Controller,
+                                  hintText: "Enter Place",
+                                  textInputType: TextInputType.text
+                              ),SizedBox(height: 10),
+                              // reference2 mobile number
+                              commonTextField(
+                                  title: App.mobileNumber,
+                                  controller: phone1Controller,
+                                  hintText: "Enter Mobile Number",
+                                  textInputType: TextInputType.phone
+                              ),SizedBox(height: 10),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-
+              Container(
+                height: 160,
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    appBarKYC(context,MaterialPageRoute(builder: (context)=> UploadDocument())),
+                    HeaderLine.headerLineComplete(context, 3, 3, 3, 3, 1, 2),
+                    referenceDetailText(),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

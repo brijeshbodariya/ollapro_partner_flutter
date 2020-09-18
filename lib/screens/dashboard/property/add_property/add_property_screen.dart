@@ -239,77 +239,7 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
                           hintText: "Enter Property",
                           textInputType: TextInputType.phone),
                       SizedBox(height: 10),
-                      Container(
-                        alignment: Alignment.topLeft,
-                        margin: EdgeInsets.only(left: 15, top: 15),
-                        child: Text(
-                          App.uploadPicture,
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: secondaryColor,
-                              fontFamily: App.font),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 10, bottom: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            image1 != null ? Container(
-                              height: 70,
-                              width: 70,
-                              child: Image.file(image1),
-                            ):Container(
-                              height: 70,
-                              width: 70,
-                              child: InkWell(
-                                  onTap: _getPhoto1,
-                                  child: Image.asset(
-                                    App.uploadLogo,
-                                  )),
-                            ),
-                            image2 != null ? Container(
-                              height: 70,
-                              width: 70,
-                              child: Image.file(image2),
-                            ):Container(
-                              height: 70,
-                              width: 70,
-                              child: InkWell(
-                                  onTap: _getPhoto2,
-                                  child: Image.asset(
-                                    App.uploadLogo,
-                                  )),
-                            ),
-                            image3 != null ?  Container(
-                              height: 70,
-                              width: 70,
-                              child: Image.file(image3),
-                            ): Container(
-                              height: 70,
-                              width: 70,
-                              child: InkWell(
-                                  onTap: _getPhoto3,
-                                  child: Image.asset(
-                                    App.uploadLogo,
-                                  )),
-                            ),
-                            image4 != null?  Container(
-                              height: 70,
-                              width: 70,
-                              child: Image.file(image4),
-                            ): Container(
-                              height: 70,
-                              width: 70,
-                              child: InkWell(
-                                  onTap: _getPhoto4,
-                                  child: Image.asset(
-                                    App.uploadLogo,
-                                  )),
-                            ),
-                          ],
-                        ),
-                      )
+                     uploadPicture(),
                     ],
                   ),
                 ),
@@ -466,6 +396,84 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
           Text(list[index].name),
         ]),
       ),
+    );
+  }
+
+  uploadPicture() {
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.topLeft,
+          margin: EdgeInsets.only(left: 15, top: 15),
+          child: Text(
+            App.uploadPicture,
+            style: TextStyle(
+                fontSize: 16,
+                color: secondaryColor,
+                fontFamily: App.font),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 10, bottom: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              image1 != null ? Container(
+                height: 70,
+                width: 70,
+                child: Image.file(image1),
+              ):Container(
+                height: 70,
+                width: 70,
+                child: InkWell(
+                    onTap: _getPhoto1,
+                    child: Image.asset(
+                      App.uploadLogo,
+                    )),
+              ),
+              image2 != null ? Container(
+                height: 70,
+                width: 70,
+                child: Image.file(image2),
+              ):Container(
+                height: 70,
+                width: 70,
+                child: InkWell(
+                    onTap: _getPhoto2,
+                    child: Image.asset(
+                      App.uploadLogo,
+                    )),
+              ),
+              image3 != null ?  Container(
+                height: 70,
+                width: 70,
+                child: Image.file(image3),
+              ): Container(
+                height: 70,
+                width: 70,
+                child: InkWell(
+                    onTap: _getPhoto3,
+                    child: Image.asset(
+                      App.uploadLogo,
+                    )),
+              ),
+              image4 != null?  Container(
+                height: 70,
+                width: 70,
+                child: Image.file(image4),
+              ): Container(
+                height: 70,
+                width: 70,
+                child: InkWell(
+                    onTap: _getPhoto4,
+                    child: Image.asset(
+                      App.uploadLogo,
+                    )),
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }

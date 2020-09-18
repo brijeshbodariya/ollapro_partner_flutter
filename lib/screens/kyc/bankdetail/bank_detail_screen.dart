@@ -37,57 +37,68 @@ class BankDetailScreenState extends State<BankDetailScreen> {
       child: Scaffold(
         body: Container(
           alignment: Alignment.topLeft,
-          child: Column(
+          child: Stack(
             children: [
-              appBarKYC(context,MaterialPageRoute(builder: (context)=> ReferenceScreen())),
-              HeaderLine.headerLineComplete(context, 3, 3, 3, 1, 2, 2),
-              bankDetailText(),
 
-              Form(
-                child: Container(
-                  height: Utils.getDeviceHeight(context) /1.8,
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: [
-                      //bank name
-                      commonTextField(
-                          title: App.bankName,
-                          controller: bankNameController,
-                          hintText: "Enter Bank name",
-                          textInputType: TextInputType.text
-                      ),
-                      SizedBox(height: 10),
-                      //account number
-                      commonTextField(
-                          title: App.accountNumber,
-                          controller: accountController,
-                          hintText: "Enter Account Number",
-                          textInputType: TextInputType.phone
-                      ),SizedBox(height: 10),
-                      //account number
-                      commonTextField(
-                          title: App.account1Number,
-                          controller: account1Controller,
-                          hintText: "Re enter Account Number",
-                          textInputType: TextInputType.phone
-                      ),SizedBox(height: 10),
-                      //account holder name
-                      commonTextField(
-                          title: App.nameOfHolder,
-                          controller: nameController,
-                          hintText: "Account holder name",
-                          textInputType: TextInputType.text
-                      ),SizedBox(height: 10),
-                      accountTypeField(),
-                      //ifsc code
-                      commonTextField(
-                          title: App.ifscCode,
-                          controller: ifscController,
-                          hintText: "Enter IFSC code",
-                          textInputType: TextInputType.text
-                      )
-                    ],
+
+              SingleChildScrollView(
+                child: Form(
+                  child: Container(
+                    width: Utils.getDeviceWidth(context),
+                    margin: EdgeInsets.only(top: 160),
+                    child: Column(
+                      children: [
+                        //bank name
+                        commonTextField(
+                            title: App.bankName,
+                            controller: bankNameController,
+                            hintText: "Enter Bank name",
+                            textInputType: TextInputType.text
+                        ),
+                        SizedBox(height: 10),
+                        //account number
+                        commonTextField(
+                            title: App.accountNumber,
+                            controller: accountController,
+                            hintText: "Enter Account Number",
+                            textInputType: TextInputType.phone
+                        ),SizedBox(height: 10),
+                        //account number
+                        commonTextField(
+                            title: App.account1Number,
+                            controller: account1Controller,
+                            hintText: "Re enter Account Number",
+                            textInputType: TextInputType.phone
+                        ),SizedBox(height: 10),
+                        //account holder name
+                        commonTextField(
+                            title: App.nameOfHolder,
+                            controller: nameController,
+                            hintText: "Account holder name",
+                            textInputType: TextInputType.text
+                        ),SizedBox(height: 10),
+                        accountTypeField(),
+                        //ifsc code
+                        commonTextField(
+                            title: App.ifscCode,
+                            controller: ifscController,
+                            hintText: "Enter IFSC code",
+                            textInputType: TextInputType.text
+                        )
+                      ],
+                    ),
                   ),
+                ),
+              ),
+              Container(
+                height: 160,
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    appBarKYC(context,MaterialPageRoute(builder: (context)=> ReferenceScreen())),
+                    HeaderLine.headerLineComplete(context, 3, 3, 3, 1, 2, 2),
+                    bankDetailText(),
+                  ],
                 ),
               ),
             ],

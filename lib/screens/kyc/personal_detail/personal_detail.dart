@@ -74,14 +74,12 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
           alignment: Alignment.topLeft,
           child: Stack(
             children: [
-
               SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Form(
                   child: Container(
-                    height: Utils.getDeviceHeight(context),
                     width: Utils.getDeviceWidth(context),
-                    margin: EdgeInsets.only(top: 170),
+                    margin: EdgeInsets.only(top: 160),
                     //height: Utils.getDeviceHeight(context) / 1.8,
                     child: Column(
                       children: [
@@ -140,7 +138,7 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
                 ),
               ),
               Container(
-                height: 170,
+                height: 160,
                 color: Colors.white,
                 child: Column(
                   children: [
@@ -149,7 +147,6 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
                         MaterialPageRoute(
                             builder: (context) => ContactDetailScreen())),
                     HeaderLine.headerLineComplete(context, 1, 2, 2, 2, 2, 2),
-
                     personalDetailText(),
                   ],
                 ),

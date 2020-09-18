@@ -17,9 +17,9 @@ class LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController phoneController = TextEditingController(text: "+91 ");
   TextEditingController passwordController = TextEditingController();
-
   LoginScreenViewModel model;
   bool _obscureText = true;
+  bool checkBox = false;
 
   void _loginPassword() {
     setState(() {
@@ -164,14 +164,22 @@ class LoginScreenState extends State<LoginScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            alignment: Alignment.topLeft,
-            child: Text(
-              App.rememberMe,
-              style: TextStyle(
-                  fontSize: 16, color: secondaryColor, fontFamily: App.font),
-            ),
+          Row(
+            children: [
+              Checkbox(
+                onChanged: (bool value) {
+                  setState(() {
+                    checkBox = !checkBox;
+                  });
+                  print(checkBox);
+                },
+                value: checkBox,
+
+              ),
+              Text("Remember Me",style: TextStyle(color: secondaryColor,fontSize: 16),),
+            ],
           ),
+
           Container(
             alignment: Alignment.topLeft,
             child: InkWell(

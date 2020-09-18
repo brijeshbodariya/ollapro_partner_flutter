@@ -51,11 +51,123 @@ class Validation{
     else
       return null;
   }
+  String validateAltPhone(String value) {
+    if (value.length != 13)
+      return 'Enter Alternate number including +91';
+    else
+      return null;
+  }
   String validateFullName(String value) {
-    if (value.length <= 2)
+    if (value.isEmpty)
       return 'Enter Full name here';
     else
       return null;
   }
-
+  String validateName(String value) {
+    if (value.isEmpty)
+      return 'Enter  name here';
+    else
+      return null;
+  }
+  String validateFirstName(String value) {
+    if (value.isEmpty)
+      return 'Enter First name here';
+    else
+      return null;
+  }
+  String validateLastName(String value) {
+    if (value.isEmpty)
+      return 'Enter Last name here';
+    else
+      return null;
+  }
+  String validateMiddleName(String value) {
+    if (value.isEmpty)
+      return 'Enter Middle name here';
+    else
+      return null;
+  }
+  String validateFatherName(String value) {
+    if (value.isEmpty)
+      return 'Enter Father name here';
+    else
+      return null;
+  }
+  String validateAddress1Name(String value) {
+    if (value.isEmpty)
+      return 'Enter Address1 name here';
+    else
+      return null;
+  }  String validateAddress2Name(String value) {
+    if (value.isEmpty)
+      return 'Enter Address2 name here';
+    else
+      return null;
+  }
+  String validateAddress3Name(String value) {
+    if (value.isEmpty)
+      return 'Enter Address3 name here';
+    else
+      return null;
+  }
+  String validatePlace(String value) {
+    if (value.isEmpty)
+      return 'Enter place here';
+    else
+      return null;
+  }
+  String validatePinCode(String value) {
+    if (value.isEmpty)
+      return 'Enter pincode here';
+    else
+      return null;
+  }
+  String validateAadhar(String value) {
+    if (value.isEmpty)
+      return 'Enter Aadhar number';
+    else
+      return null;
+  }
+  String validatePAN(String value) {
+    if (value.isEmpty)
+      return 'Enter PAN number';
+    else
+      return null;
+  }
+  String validateGST(String value) {
+    if (value.isEmpty)
+      return 'Enter GST number';
+    else
+      return null;
+  }
+  String validateBankName(String value) {
+    if (value.isEmpty)
+      return 'Enter Bank Name';
+    else
+      return null;
+  }
+  String validateAccount(String value) {
+    if (value.isEmpty)
+      return 'Enter Account number';
+    else
+      return null;
+  }
+  String validateReAccount(String value) {
+    if (value.isEmpty)
+      return 'Enter Re-Account number';
+    else
+      return null;
+  }
+  String validateIFSC(String value) {
+    if (value.isEmpty)
+      return 'Enter IFSC number';
+    else
+      return null;
+  }
+  String validateAccountHolderName(String value) {
+    if (value.isEmpty)
+      return 'Enter Account Holder Name';
+    else
+      return null;
+  }
 }

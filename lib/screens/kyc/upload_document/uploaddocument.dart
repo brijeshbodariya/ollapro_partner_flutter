@@ -134,32 +134,44 @@ class UploadDocumentState extends State<UploadDocument> {
       child: Scaffold(
         body: Container(
           alignment: Alignment.topLeft,
-          child: Column(
+          child: Stack(
             children: [
-              appBarKYC(context,MaterialPageRoute(builder: (context)=> DashBoardScreen())),
-              HeaderLine.headerLineComplete(context, 3, 3, 3, 3, 3, 1),
-              uploadDocumentText(),
+
+              SingleChildScrollView(
+                child: Form(
+                  child: Container(
+                    width: Utils.getDeviceWidth(context),
+                    margin: EdgeInsets.only(top: 160),
+                    child: Column(
+                      children: [
+                        photo1Field(),
+
+                        photo2Field(),
+
+                        aadharFrontField(),
+
+                        aadharBackField(),
+
+                        panField(),
+
+                        chequeField(),
+                        selfField(),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               Container(
-                height: Utils.getDeviceHeight(context)/ 1.7,
-                child: ListView(
-                  scrollDirection: Axis.vertical,
+                height: 160,
+                color: Colors.white,
+                child: Column(
                   children: [
-                    photo1Field(),
-
-                    photo2Field(),
-
-                    aadharFrontField(),
-
-                    aadharBackField(),
-
-                    panField(),
-
-                    chequeField(),
-                    selfField(),
+                    appBarKYC(context,MaterialPageRoute(builder: (context)=> DashBoardScreen())),
+                    HeaderLine.headerLineComplete(context, 3, 3, 3, 3, 3, 1),
+                    uploadDocumentText(),
                   ],
                 ),
-              )
-
+              ),
             ],
           ),
         ),

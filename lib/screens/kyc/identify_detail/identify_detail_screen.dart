@@ -26,42 +26,52 @@ class IdentifyDetailScreenState extends State<IdentifyDetailScreen> {
       child: Scaffold(
         body: Container(
           alignment: Alignment.topLeft,
-          child: Column(
+          child: Stack(
             children: [
-              appBarKYC(context,MaterialPageRoute(builder: (context)=> BankDetailScreen())),
-              HeaderLine.headerLineComplete(context, 3, 3, 1, 2, 2, 2),
-              identifyDetailText(),
-
-              Form(
-                child: Container(
-                  height: Utils.getDeviceHeight(context) / 1.8,
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: [
-                      //aadhar card
-                      commonTextField(
-                          title: App.aadhar,
-                          controller: aadharController,
-                          hintText: "Enter Aadhar NUmber",
-                          textInputType: TextInputType.phone
-                      ),
-                      SizedBox(height: 10,),
-                      //pan card
-                      commonTextField(
-                          title: App.pan,
-                          controller: panController,
-                          hintText: "Enter PAN NUmber",
-                          textInputType: TextInputType.text
-                      ),SizedBox(height: 10,),
-                      //gstin
-                      commonTextField(
-                          title: App.gst,
-                          controller: gstController,
-                          hintText: "Enter GSTIN NUmber",
-                          textInputType: TextInputType.text
-                      ),
-                    ],
+              SingleChildScrollView(
+                child: Form(
+                  child: Container(
+                   // height: Utils.getDeviceHeight(context),
+                    width: Utils.getDeviceWidth(context),
+                    margin: EdgeInsets.only(top: 160),
+                    child: Column(
+                      children: [
+                        //aadhar card
+                        commonTextField(
+                            title: App.aadhar,
+                            controller: aadharController,
+                            hintText: "Enter Aadhar NUmber",
+                            textInputType: TextInputType.phone
+                        ),
+                        SizedBox(height: 10,),
+                        //pan card
+                        commonTextField(
+                            title: App.pan,
+                            controller: panController,
+                            hintText: "Enter PAN NUmber",
+                            textInputType: TextInputType.text
+                        ),SizedBox(height: 10,),
+                        //gstin
+                        commonTextField(
+                            title: App.gst,
+                            controller: gstController,
+                            hintText: "Enter GSTIN NUmber",
+                            textInputType: TextInputType.text
+                        ),
+                      ],
+                    ),
                   ),
+                ),
+              ),
+              Container(
+                height: 160,
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    appBarKYC(context,MaterialPageRoute(builder: (context)=> BankDetailScreen())),
+                    HeaderLine.headerLineComplete(context, 3, 3, 1, 2, 2, 2),
+                    identifyDetailText(),
+                  ],
                 ),
               ),
             ],
