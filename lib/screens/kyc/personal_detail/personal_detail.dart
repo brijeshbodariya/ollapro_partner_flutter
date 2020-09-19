@@ -81,9 +81,9 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
     model ?? (model = PersonalDetailScreenViewModel(this));
 
     validation = Validation();
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
           alignment: Alignment.topLeft,
           child: Stack(
             children: [
@@ -176,8 +176,8 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
             ],
           ),
         ),
-        bottomNavigationBar: nextButton(),
       ),
+      bottomNavigationBar: nextButton(),
     );
   }
 
@@ -296,50 +296,6 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
     );
   }
 
-  /* dateField() {
-    return Column(
-      children: [
-        Container(
-          alignment: Alignment.topLeft,
-          margin: EdgeInsets.only(left: 15, top: 15, right: 115),
-          child: Text(
-            App.dob,
-            style: TextStyle(
-                fontSize: 17, color: secondaryColor, fontFamily: App.font),
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.all(8.0),
-          height: 55,
-          margin: EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: secondaryColor),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                  child: Text(
-                dateCheck,
-                style: TextStyle(color: primaryColor, fontFamily: App.font),
-              )),
-              GestureDetector(
-                  onTap: () {
-                    openDatePicker();
-                  },
-                  child: Image.asset(
-                    App.calendarLogo,
-                    height: 20,
-                    width: 20,
-                  )),
-            ],
-          ),
-        ),
-      ],
-    );
-  }*/
 
   genderField() {
     return Column(
@@ -412,29 +368,27 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
   }
 
   nextButton() {
-    return Padding(
-        padding: EdgeInsets.only(bottom: 30, top: 30),
-        child: InkWell(
-          onTap: () {
-            _validateInputs();
-          },
-          child: Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(left: 20, right: 20),
-            height: 50,
-            width: Utils.getDeviceWidth(context),
-            decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.all(
-                  Radius.circular(30) //         <--- border radius here
-                  ),
-            ),
-            child: Text(
-              App.nextButton,
-              style:
-                  TextStyle(color: white, fontFamily: App.font, fontSize: 20),
-            ),
-          ),
-        ));
+    return InkWell(
+      onTap: () {
+        _validateInputs();
+      },
+      child: Container(
+        alignment: Alignment.center,
+        margin: EdgeInsets.only(top:10,left: 20, right: 20,bottom: 15),
+        height: 50,
+        width: Utils.getDeviceWidth(context),
+        decoration: BoxDecoration(
+          color: primaryColor,
+          borderRadius: BorderRadius.all(
+              Radius.circular(30) //         <--- border radius here
+              ),
+        ),
+        child: Text(
+          App.nextButton,
+          style:
+              TextStyle(color: white, fontFamily: App.font, fontSize: 20),
+        ),
+      ),
+    );
   }
 }

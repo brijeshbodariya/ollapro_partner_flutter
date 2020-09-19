@@ -17,9 +17,9 @@ class OfferDetailsScreenState extends State<OfferDetailsScreen> {
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = OfferDetailScreenViewModel(this));
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
           color: primaryColor,
           child: Stack(
             children: [
@@ -37,7 +37,6 @@ class OfferDetailsScreenState extends State<OfferDetailsScreen> {
                   child: Column(
                     children: [
                       ClipRRect(
-
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(20),
                             topRight: Radius.circular(20)),
@@ -69,8 +68,8 @@ class OfferDetailsScreenState extends State<OfferDetailsScreen> {
             ],
           ),
         ),
-        bottomNavigationBar: claimButton(),
       ),
+      bottomNavigationBar: claimButton(),
     );
   }
 
@@ -80,7 +79,7 @@ class OfferDetailsScreenState extends State<OfferDetailsScreen> {
         child: InkWell(
           onTap: () {},
           child: Container(
-            margin: EdgeInsets.only(left: 10, right: 10),
+            margin: EdgeInsets.only(left: 10, right: 10,bottom: 10),
             alignment: Alignment.center,
             height: 50,
             width: Utils.getDeviceWidth(context) / 2.5,

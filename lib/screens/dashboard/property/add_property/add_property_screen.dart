@@ -290,7 +290,7 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
             /* Navigator.push(context, MaterialPageRoute(builder: (context)=> AddLandLordScreen()));*/
           },
           child: Container(
-            margin: EdgeInsets.only(left: 10, right: 10),
+            margin: EdgeInsets.only(left: 10, right: 10,bottom: 10),
             alignment: Alignment.center,
             height: 50,
             width: Utils.getDeviceWidth(context) / 2.5,

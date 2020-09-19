@@ -36,9 +36,9 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = ForgotPasswordViewModel(this));
     validation = Validation();
-    return SafeArea(
-      child: Scaffold(
-        body: Form(
+    return Scaffold(
+      body: SafeArea(
+        child: Form(
           key: _formKey,
           child: SingleChildScrollView(
             child: Column(

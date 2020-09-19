@@ -31,9 +31,9 @@ class ScratchScreenState extends State<ScratchScreen> {
     model ?? (model = ScratchScreenViewModel(this));
 
 
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
           color: primaryColor,
           child: Stack(
             children: [

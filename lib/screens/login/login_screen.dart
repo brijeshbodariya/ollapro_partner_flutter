@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
-import 'package:ollapro_partner/common/general_text_feild.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/common/validation.dart';
 import 'package:ollapro_partner/screens/dashboard/dashboard_screen.dart';
 import 'package:ollapro_partner/screens/forgot_password/forgot_password.dart';
 import 'package:ollapro_partner/screens/register/register_screen.dart';
-
 import 'login_screen_view_model.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -37,74 +35,76 @@ class LoginScreenState extends State<LoginScreen> {
     model ?? (model = LoginScreenViewModel(this));
     validation = Validation();
     return Scaffold(
-      body: Form(
-        key: _formKey,
-        autovalidate: _autoValidate,
-        child: ListView(
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          children: [
-            Container(
-              height: Utils.getDeviceHeight(context),
-              width: Utils.getDeviceWidth(context),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(App.loginBg),
-                  fit: BoxFit.fill,
+      body: SafeArea(
+        child: Form(
+          key: _formKey,
+          autovalidate: _autoValidate,
+          child: ListView(
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            children: [
+              Container(
+                height: Utils.getDeviceHeight(context),
+                width: Utils.getDeviceWidth(context),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(App.loginBg),
+                    fit: BoxFit.fill,
+                  ),
                 ),
-              ),
-              child: Column(
-                children: [
-                  partnerLogintext(),
-                  credentialsText(),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  //phone
-                  commonTextField(
-                      validation: validation.validatePhone,
-                      title: App.mobileNumber,
-                      controller: phoneController,
-                      hintText: "Enter Phone NUmber",
-                      prefixIcon: Image.asset(
-                        App.mobileLogo,
-                        height: 20,
-                        width: 20,
-                      ),
-                      textInputType: TextInputType.phone),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  //password
-                  commonTextField(
-                    title: App.password,
-                    validation: validation.validatePassword,
-                    controller: passwordController,
-                    obscureText: _obscureText,
-                    hintText: "Enter Password",
-                    prefixIcon: Image.asset(
-                      App.passwordLogo,
-                      height: 20,
-                      width: 20,
+                child: Column(
+                  children: [
+                    partnerLogintext(),
+                    credentialsText(),
+                    SizedBox(
+                      height: 30,
                     ),
-                    textInputType: TextInputType.text,
-                    suffixIcon: Container(
-                      child: GestureDetector(
-                        onTap: _loginPassword,
-                        child: Image.asset(
-                          App.visibility,
+                    //phone
+                    commonTextField(
+                        validation: validation.validatePhone,
+                        title: App.mobileNumber,
+                        controller: phoneController,
+                        hintText: "Enter Phone NUmber",
+                        prefixIcon: Image.asset(
+                          App.mobileLogo,
                           height: 20,
                           width: 20,
                         ),
+                        textInputType: TextInputType.phone),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    //password
+                    commonTextField(
+                      title: App.password,
+                      validation: validation.validatePassword,
+                      controller: passwordController,
+                      obscureText: _obscureText,
+                      hintText: "Enter Password",
+                      prefixIcon: Image.asset(
+                        App.passwordLogo,
+                        height: 20,
+                        width: 20,
+                      ),
+                      textInputType: TextInputType.text,
+                      suffixIcon: Container(
+                        child: GestureDetector(
+                          onTap: _loginPassword,
+                          child: Image.asset(
+                            App.visibility,
+                            height: 20,
+                            width: 20,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                  rememberPassword(),
-                  loginButton(),
-                ],
-              ),
-            )
-          ],
+                    rememberPassword(),
+                    loginButton(),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: bottomRegister(),
@@ -121,7 +121,7 @@ class LoginScreenState extends State<LoginScreen> {
           },
           child: Container(
             alignment: Alignment.center,
-            margin: EdgeInsets.only(left: 20, right: 20),
+            margin: EdgeInsets.only(left: 20, right: 20,bottom: 10),
             height: 50,
             width: Utils.getDeviceWidth(context),
             decoration: BoxDecoration(

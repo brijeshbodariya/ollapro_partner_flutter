@@ -36,9 +36,9 @@ class RewardBasketScreenState extends State<RewardBasketScreen> {
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = RewardBasketViewModel(this));
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
           color: primaryColor,
           child: Stack(
             children: [
@@ -315,8 +315,8 @@ class RewardBasketScreenState extends State<RewardBasketScreen> {
                           alignment: Alignment.center,
                           padding: EdgeInsets.all(20),
                           margin: EdgeInsets.only(left: 10),
-                          height: Utils.getDeviceHeight(context) / 11,
-                          width: Utils.getDeviceWidth(context) / 7,
+                          height: 60,
+                          width: 60,
                           decoration: new BoxDecoration(
                               shape: BoxShape.circle, color: white),
                           child: Image.asset(

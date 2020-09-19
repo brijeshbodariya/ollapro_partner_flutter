@@ -45,116 +45,117 @@ class RegisterScreenState extends State<RegisterScreen> {
     model ?? (model = RegisterScreenViewModel(this));
     validation = Validation();
 
-    return SafeArea(
-        child: Scaffold(
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          children: [
-            Container(
-              color: white,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  createAccountText(),
-                  enterYourDetailtext(),
-                 //firstName
-                  SizedBox(height: 30,),
-                  commonTextField(
-                      title: App.fullName,
-                      validation: validation.validateFullName,
-                      controller: fullNameController,
-                      hintText: "Enter Full Name",
-                      prefixIcon: Image.asset(
-                        App.personLogo,
-                        height: 20,
-                        width: 20,
-                      ),
-                      textInputType: TextInputType.text
-                  ),
-                  //email
-                  commonTextField(
-                    title: App.emailAddress,
-                      validation: validation.validateEmail,
-                    controller: emailController,
-                    hintText: "Enter Email",
+    return Scaffold(
+      body: SafeArea(
+        child: Form(
+    key: _formKey,
+    child: ListView(
+        children: [
+          Container(
+            color: white,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                createAccountText(),
+                enterYourDetailtext(),
+               //firstName
+                SizedBox(height: 30,),
+                commonTextField(
+                    title: App.fullName,
+                    validation: validation.validateFullName,
+                    controller: fullNameController,
+                    hintText: "Enter Full Name",
                     prefixIcon: Image.asset(
-                      App.emailLogo,
+                      App.personLogo,
                       height: 20,
                       width: 20,
                     ),
-                    textInputType: TextInputType.emailAddress
+                    textInputType: TextInputType.text
+                ),
+                //email
+                commonTextField(
+                  title: App.emailAddress,
+                    validation: validation.validateEmail,
+                  controller: emailController,
+                  hintText: "Enter Email",
+                  prefixIcon: Image.asset(
+                    App.emailLogo,
+                    height: 20,
+                    width: 20,
                   ),
-                  //phone
-                  commonTextField(
-                      title: App.mobileNumber,
-                      validation: validation.validatePhone,
-                      controller: phoneController,
-                      hintText: "Enter Phone NUmber",
-                      prefixIcon: Image.asset(
-                        App.mobileLogo,
-                        height: 20,
-                        width: 20,
-                      ),
-                      textInputType: TextInputType.phone
-                  ),
-                  //password
-                  commonTextField(
-                      title: App.password,
-                    validation: validation.validatePassword,
-                      controller: passwordController,
-                    obscureText: _obscureText1,
-                      hintText: "Enter Password",
-                      prefixIcon: Image.asset(
-                        App.passwordLogo,
-                        height: 20,
-                        width: 20,
-                      ),
-                      textInputType: TextInputType.text,
-                    suffixIcon: Container(
-                      child:GestureDetector(
-                        onTap: _registerPassword,
-                        child: Image.asset(
-                          App.visibility,
-                          height: 20,
-                          width: 20,
-                        ),
-                      ),
+                  textInputType: TextInputType.emailAddress
+                ),
+                //phone
+                commonTextField(
+                    title: App.mobileNumber,
+                    validation: validation.validatePhone,
+                    controller: phoneController,
+                    hintText: "Enter Phone NUmber",
+                    prefixIcon: Image.asset(
+                      App.mobileLogo,
+                      height: 20,
+                      width: 20,
                     ),
-                  ),
-                  //confirm password
-                  commonTextField(
+                    textInputType: TextInputType.phone
+                ),
+                //password
+                commonTextField(
                     title: App.password,
-                    validation: validation.validatePassword,
-                    controller: confirmPasswordController,
-                    obscureText: _obscureText2,
-                    hintText: "Enter Confirm Password",
+                  validation: validation.validatePassword,
+                    controller: passwordController,
+                  obscureText: _obscureText1,
+                    hintText: "Enter Password",
                     prefixIcon: Image.asset(
                       App.passwordLogo,
                       height: 20,
                       width: 20,
                     ),
                     textInputType: TextInputType.text,
-                    suffixIcon: Container(
-                      child:GestureDetector(
-                        onTap: _reRegisterPassword,
-                        child: Image.asset(
-                          App.visibility,
-                          height: 20,
-                          width: 20,
-                        ),
+                  suffixIcon: Container(
+                    child:GestureDetector(
+                      onTap: _registerPassword,
+                      child: Image.asset(
+                        App.visibility,
+                        height: 20,
+                        width: 20,
                       ),
                     ),
                   ),
-                  registerButton(),
-                ],
-              ),
-            )
-          ],
+                ),
+                //confirm password
+                commonTextField(
+                  title: App.password,
+                  validation: validation.validatePassword,
+                  controller: confirmPasswordController,
+                  obscureText: _obscureText2,
+                  hintText: "Enter Confirm Password",
+                  prefixIcon: Image.asset(
+                    App.passwordLogo,
+                    height: 20,
+                    width: 20,
+                  ),
+                  textInputType: TextInputType.text,
+                  suffixIcon: Container(
+                    child:GestureDetector(
+                      onTap: _reRegisterPassword,
+                      child: Image.asset(
+                        App.visibility,
+                        height: 20,
+                        width: 20,
+                      ),
+                    ),
+                  ),
+                ),
+                registerButton(),
+              ],
+            ),
+          )
+        ],
+    ),
         ),
       ),
       bottomNavigationBar: bottomLogin(),
-    ));
+    );
   }
   void _validateInputs() {
       if (_formKey.currentState.validate()) {
@@ -164,13 +165,14 @@ class RegisterScreenState extends State<RegisterScreen> {
       } else {
         setState(() {
           _autoValidate = true;
-          Utils.showToast("Please enter details");
+          Utils.showToast("Please fill details");
         });
     }
   }
 
   bottomLogin() {
-    return Padding(
+    return Container(
+      margin: EdgeInsets.only(bottom: 10),
       padding: EdgeInsets.only(bottom: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

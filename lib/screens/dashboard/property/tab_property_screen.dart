@@ -19,11 +19,11 @@ class TabPropertyState extends State<TabProperty> {
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = TabPropertyScreenViewModel(this));
-    return SafeArea(
-      child: DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          body: Container(
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        body: SafeArea(
+          child: Container(
             color: primaryColor,
             child: Column(
               children: [
@@ -78,8 +78,8 @@ class TabPropertyState extends State<TabProperty> {
               ],
             ),
           ),
-          bottomNavigationBar: submitButton(),
         ),
+        bottomNavigationBar: submitButton(),
       ),
     );
   }
@@ -93,7 +93,7 @@ class TabPropertyState extends State<TabProperty> {
                 MaterialPageRoute(builder: (context) => AddPropertyScreen()));
           },
           child: Container(
-            margin: EdgeInsets.only(left: 10, right: 10),
+            margin: EdgeInsets.only(left: 10, right: 10,bottom: 10),
             alignment: Alignment.center,
             height: 50,
             width: Utils.getDeviceWidth(context) / 2.5,

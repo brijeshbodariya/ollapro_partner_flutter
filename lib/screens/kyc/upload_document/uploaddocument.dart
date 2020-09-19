@@ -155,9 +155,9 @@ class UploadDocumentState extends State<UploadDocument> {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = UploadDocumentViewModel(this));
     validation = Validation();
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
           alignment: Alignment.topLeft,
           child: Stack(
             children: [
@@ -199,11 +199,11 @@ class UploadDocumentState extends State<UploadDocument> {
             ],
           ),
         ),
-        bottomNavigationBar: Container(
-          width: Utils.getDeviceWidth(context),
-          margin: EdgeInsets.only(left: 20, right: 20),
-          child: submitButton(),
-        ),
+      ),
+      bottomNavigationBar: Container(
+        width: Utils.getDeviceWidth(context),
+        margin: EdgeInsets.only(left: 20, right: 20, bottom: 15),
+        child: submitButton(),
       ),
     );
   }
@@ -602,28 +602,26 @@ class UploadDocumentState extends State<UploadDocument> {
   }
 
   submitButton() {
-    return Padding(
-        padding: EdgeInsets.only(bottom: 20, top: 20),
-        child: InkWell(
-          onTap: () {
-           _validateInputs();
-          },
-          child: Container(
-            alignment: Alignment.center,
-            height: 50,
-            width: Utils.getDeviceWidth(context) / 2.5,
-            decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.all(
-                  Radius.circular(30) //         <--- border radius here
-                  ),
-            ),
-            child: Text(
-              App.submitButton,
-              style:
-                  TextStyle(color: white, fontFamily: App.font, fontSize: 20),
-            ),
-          ),
-        ));
+    return InkWell(
+      onTap: () {
+       _validateInputs();
+      },
+      child: Container(
+        alignment: Alignment.center,
+        height: 50,
+        width: Utils.getDeviceWidth(context) / 2.5,
+        decoration: BoxDecoration(
+          color: primaryColor,
+          borderRadius: BorderRadius.all(
+              Radius.circular(30) //         <--- border radius here
+              ),
+        ),
+        child: Text(
+          App.submitButton,
+          style:
+              TextStyle(color: white, fontFamily: App.font, fontSize: 20),
+        ),
+      ),
+    );
   }
 }

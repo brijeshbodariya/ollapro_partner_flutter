@@ -43,9 +43,9 @@ class TenantScreenState extends State<TenantScreen> {
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = TenantScreenViewModel(this));
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
           color: primaryColor,
           child: Stack(
             children: [
@@ -70,8 +70,8 @@ class TenantScreenState extends State<TenantScreen> {
             ],
           ),
         ),
-        bottomNavigationBar: submitButton(),
       ),
+      bottomNavigationBar: submitButton(),
     );
   }
 
@@ -84,7 +84,7 @@ class TenantScreenState extends State<TenantScreen> {
                 MaterialPageRoute(builder: (context) => AddTenantScreen()));
           },
           child: Container(
-            margin: EdgeInsets.only(left: 10, right: 10),
+            margin: EdgeInsets.only(left: 10, right: 10,bottom: 10),
             alignment: Alignment.center,
             height: 50,
             width: Utils.getDeviceWidth(context) / 2.5,

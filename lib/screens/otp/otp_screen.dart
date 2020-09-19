@@ -38,10 +38,9 @@ class OtpScreenState extends State<OtpScreen> {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = OtpScreenViewModel(this));
 
-    return SafeArea(
-      child: Scaffold(
-
-        body: SingleChildScrollView(
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Form(
             key: _formKey,
             autovalidate: _autoValidate,
@@ -52,6 +51,7 @@ class OtpScreenState extends State<OtpScreen> {
                 verificationText(),
                 verifyText(),
                 otpTextFeild(),
+                errorText(),
                 verifyButton(),
                 otpTimer(),
                 codeText(),
@@ -138,6 +138,12 @@ class OtpScreenState extends State<OtpScreen> {
         ProvidedPinBoxTextAnimation.scalingTransition,
         pinTextAnimatedSwitcherDuration: const Duration(milliseconds: 300),
       ),
+    );
+  }
+
+  errorText(){
+    return Container(
+      child: controller != null ? Container(): Text("Enter otp",style: TextStyle(color: red, fontFamily: App.font),),
     );
   }
 

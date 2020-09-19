@@ -53,74 +53,74 @@ class DashBoardScreenState extends State<DashBoardScreen> {
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = DashBoardScreenViewModel(this));
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            App.dashBoardTitle,
-            style: TextStyle(color: white, fontFamily: App.font),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          App.dashBoardTitle,
+          style: TextStyle(color: white, fontFamily: App.font),
+        ),
+        leading: Container(
+          child: Image.asset(
+            App.menuDrawerLogo,
+            color: white,
           ),
-          leading: Container(
-            child: Image.asset(
-              App.menuDrawerLogo,
-              color: white,
+        ),
+        actions: [
+          Container(
+            margin: EdgeInsets.only(right: 13),
+            child: GestureDetector(
+              onTap: () {},
+              child: Image.asset(
+                App.shareLogo,
+                height: 20,
+                width: 20,
+              ),
             ),
           ),
-          actions: [
-            Container(
-              margin: EdgeInsets.only(right: 13),
+          Container(
+              margin: EdgeInsets.only(right: 10),
               child: GestureDetector(
                 onTap: () {},
                 child: Image.asset(
-                  App.shareLogo,
+                  App.notificationLogo,
                   height: 20,
                   width: 20,
                 ),
-              ),
-            ),
-            Container(
-                margin: EdgeInsets.only(right: 10),
-                child: GestureDetector(
-                  onTap: () {},
-                  child: Image.asset(
-                    App.notificationLogo,
-                    height: 20,
-                    width: 20,
-                  ),
-                )),
-          ],
-        ),
-        drawer: Drawer(),
-        body: WillPopScope(
-          onWillPop: () async {
-            final value = await showDialog<bool>(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    content: Text('Are you sure you want to exit?'),
-                    actions: <Widget>[
-                      FlatButton(
-                        child:
-                            Text('No', style: TextStyle(fontFamily: App.font)),
-                        onPressed: () {
-                          Navigator.of(context).pop(false);
-                        },
+              )),
+        ],
+      ),
+      drawer: Drawer(),
+      body: WillPopScope(
+        onWillPop: () async {
+          final value = await showDialog<bool>(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  content: Text('Are you sure you want to exit?'),
+                  actions: <Widget>[
+                    FlatButton(
+                      child:
+                          Text('No', style: TextStyle(fontFamily: App.font)),
+                      onPressed: () {
+                        Navigator.of(context).pop(false);
+                      },
+                    ),
+                    FlatButton(
+                      child: Text(
+                        'Yes, exit',
+                        style: TextStyle(fontFamily: App.font),
                       ),
-                      FlatButton(
-                        child: Text(
-                          'Yes, exit',
-                          style: TextStyle(fontFamily: App.font),
-                        ),
-                        onPressed: () {
-                          SystemNavigator.pop();
-                        },
-                      ),
-                    ],
-                  );
-                });
+                      onPressed: () {
+                        SystemNavigator.pop();
+                      },
+                    ),
+                  ],
+                );
+              });
 
-            return value == true;
-          },
+          return value == true;
+        },
+        child: SafeArea(
           child: ListView(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,

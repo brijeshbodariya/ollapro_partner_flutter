@@ -166,7 +166,7 @@ class AddLandLordScreenState extends State<AddLandLordScreen> {
             _validateInputs();
           },
           child: Container(
-            margin: EdgeInsets.only(left: 10, right: 10),
+            margin: EdgeInsets.only(left: 10, right: 10,bottom: 10),
             alignment: Alignment.center,
             height: 50,
             width: Utils.getDeviceWidth(context) / 2.5,

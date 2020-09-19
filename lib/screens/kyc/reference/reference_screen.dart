@@ -45,13 +45,12 @@ class ReferenceScreenState extends State<ReferenceScreen> {
     model ?? (model = ReferenceViewModel(this));
     validation = Validation();
 
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
           alignment: Alignment.topLeft,
           child: Stack(
             children: [
-
               SingleChildScrollView(
                 child: Form(
                   key: _formKey,
@@ -144,19 +143,19 @@ class ReferenceScreenState extends State<ReferenceScreen> {
             ],
           ),
         ),
-        bottomNavigationBar: Container(
-          width: Utils.getDeviceWidth(context),
-          margin: EdgeInsets.only(left: 20, right: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              backButton(),
-              nextButton(),
-            ],
-          ),
+      ),
+      bottomNavigationBar:  Container(
+        width: Utils.getDeviceWidth(context),
+        margin: EdgeInsets.only(left: 20, right: 20,bottom: 20,top: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            backButton(),
+            nextButton(),
+          ],
         ),
       ),
-    );
+      );
   }
   referenceDetailText() {
     return Container(
@@ -201,53 +200,49 @@ class ReferenceScreenState extends State<ReferenceScreen> {
     );
   }
   backButton() {
-    return Padding(
-        padding: EdgeInsets.only(bottom: 30, top: 30),
-        child: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Container(
-            alignment: Alignment.center,
-            height: 50,
-            width: Utils.getDeviceWidth(context) / 2.5,
-            decoration: BoxDecoration(
-              color: secondaryColor,
-              borderRadius: BorderRadius.all(
-                  Radius.circular(30) //         <--- border radius here
-                  ),
-            ),
-            child: Text(
-              App.backButton,
-              style:
-                  TextStyle(color: white, fontFamily: App.font, fontSize: 20),
-            ),
-          ),
-        ));
+    return InkWell(
+      onTap: () {
+        Navigator.pop(context);
+      },
+      child: Container(
+        alignment: Alignment.center,
+        height: 50,
+        width: Utils.getDeviceWidth(context) / 2.5,
+        decoration: BoxDecoration(
+          color: secondaryColor,
+          borderRadius: BorderRadius.all(
+              Radius.circular(30) //         <--- border radius here
+              ),
+        ),
+        child: Text(
+          App.backButton,
+          style:
+              TextStyle(color: white, fontFamily: App.font, fontSize: 20),
+        ),
+      ),
+    );
   }
   nextButton() {
-    return Padding(
-        padding: EdgeInsets.only(bottom: 30, top: 30),
-        child: InkWell(
-          onTap: () {
-          _validateInputs();
-          },
-          child: Container(
-            alignment: Alignment.center,
-            height: 50,
-            width: Utils.getDeviceWidth(context) / 2.5,
-            decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.all(
-                  Radius.circular(30) //         <--- border radius here
-                  ),
-            ),
-            child: Text(
-              App.nextButton,
-              style:
-                  TextStyle(color: white, fontFamily: App.font, fontSize: 20),
-            ),
-          ),
-        ));
+    return InkWell(
+      onTap: () {
+      _validateInputs();
+      },
+      child: Container(
+        alignment: Alignment.center,
+        height: 50,
+        width: Utils.getDeviceWidth(context) / 2.5,
+        decoration: BoxDecoration(
+          color: primaryColor,
+          borderRadius: BorderRadius.all(
+              Radius.circular(30) //         <--- border radius here
+              ),
+        ),
+        child: Text(
+          App.nextButton,
+          style:
+              TextStyle(color: white, fontFamily: App.font, fontSize: 20),
+        ),
+      ),
+    );
   }
 }

@@ -17,9 +17,9 @@ class TransferScreenState extends State<TransferScreen> {
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = TransferScreenViewModel(this));
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
           color: primaryColor,
           child: Stack(
             children: [

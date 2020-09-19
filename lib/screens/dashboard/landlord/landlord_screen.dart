@@ -45,9 +45,9 @@ String _selection;
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = LandLordScreenViewModel(this));
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
           color: primaryColor,
           child: Stack(
             children: [
@@ -73,8 +73,8 @@ String _selection;
             ],
           ),
         ),
-        bottomNavigationBar: submitButton(),
       ),
+      bottomNavigationBar: submitButton(),
     );
   }
 
@@ -86,7 +86,7 @@ String _selection;
             Navigator.push(context, MaterialPageRoute(builder: (context)=> AddLandLordScreen()));
           },
           child: Container(
-            margin: EdgeInsets.only(left: 10, right: 10),
+            margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
             alignment: Alignment.center,
             height: 50,
             width: Utils.getDeviceWidth(context) / 2.5,

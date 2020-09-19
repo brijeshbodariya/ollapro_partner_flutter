@@ -27,9 +27,9 @@ class ViewScreenState extends State<ViewScreen> {
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = ViewScreenViewModel(this));
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
           color: primaryColor,
           child: Stack(
             children: [
@@ -171,8 +171,8 @@ class ViewScreenState extends State<ViewScreen> {
                           alignment: Alignment.center,
                           padding: EdgeInsets.all(20),
                           margin: EdgeInsets.only(left: 10),
-                          height: MediaQuery.of(context).size.height / 11,
-                          width: MediaQuery.of(context).size.width / 7,
+                          height: 60,
+                          width: 60,
                           decoration: new BoxDecoration(
                               shape: BoxShape.circle,
                               color: white
