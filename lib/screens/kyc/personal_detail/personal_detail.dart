@@ -61,20 +61,17 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
       });
     });
   }
+
   void _validateInputs() {
-    if (fNameController.text.isEmpty || mNameController.text.isEmpty || lNameController.text.isEmpty || fNameController.text.isEmpty || dobController.text.isEmpty) {
-      Utils.showToast("Enter Details");
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => ContactDetailScreen()));
     } else {
-      if (_formKey.currentState.validate()) {
-        _formKey.currentState.save();
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ContactDetailScreen()));
-      } else {
-        setState(() {
-          _autoValidate = true;
-          Utils.showToast("Enter Details properly");
-        });
-      }
+      setState(() {
+        _autoValidate = true;
+        Utils.showToast("Please enter details");
+      });
     }
   }
 
@@ -139,8 +136,8 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
                           ),
                         ),
 
-                       //dob field
-                       dobField(),
+                        //dob field
+                        dobField(),
 
                         SizedBox(
                           height: 10,
@@ -213,7 +210,7 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
         ),
         Container(
           margin: EdgeInsets.only(left: 15, right: 15),
-          child:  DropdownButtonFormField<String>(
+          child: DropdownButtonFormField<String>(
             value: selectedTitle,
             hint: Text(
               'Select title',
@@ -221,8 +218,7 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
             onChanged: (salutation) =>
                 setState(() => selectedTitle = salutation),
             validator: (value) => value == null ? 'Select title here' : null,
-            items:
-            ['MR.', 'MS.'].map<DropdownMenuItem<String>>((String value) {
+            items: ['MR.', 'MS.'].map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(value),
@@ -233,6 +229,7 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
       ],
     );
   }
+
   dobField() {
     return Column(
       children: [
@@ -255,9 +252,9 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
               openDatePicker();
               FocusScope.of(context).requestFocus(new FocusNode());
             },
-            decoration:InputDecoration(
+            decoration: InputDecoration(
               hintText: "Select date",
-              suffixIcon:  GestureDetector(
+              suffixIcon: GestureDetector(
                   onTap: () {
                     openDatePicker();
                   },
@@ -277,19 +274,20 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
       ],
     );
   }
+
   textFiledDecoration(String hintText) {
     return InputDecoration(
       hintText: hintText,
       contentPadding: EdgeInsets.only(right: 50, left: 20),
-        suffixIcon:  GestureDetector(
-            onTap: () {
-              openDatePicker();
-            },
-            child: Image.asset(
-              App.calendarLogo,
-              height: 20,
-              width: 20,
-            )),
+      suffixIcon: GestureDetector(
+          onTap: () {
+            openDatePicker();
+          },
+          child: Image.asset(
+            App.calendarLogo,
+            height: 20,
+            width: 20,
+          )),
       disabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
           color: secondaryColor,
@@ -297,7 +295,8 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
       ),
     );
   }
- /* dateField() {
+
+  /* dateField() {
     return Column(
       children: [
         Container(
@@ -364,8 +363,8 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
             onChanged: (salutation) =>
                 setState(() => selectedGender = salutation),
             validator: (value) => value == null ? 'Select gender here' : null,
-            items:
-            ['Male', 'Female'].map<DropdownMenuItem<String>>((String value) {
+            items: ['Male', 'Female']
+                .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(value),
@@ -391,7 +390,7 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
         ),
         Container(
           margin: EdgeInsets.only(left: 15, right: 15),
-          child:DropdownButtonFormField<String>(
+          child: DropdownButtonFormField<String>(
             value: selectedLanguage,
             hint: Text(
               'Select title',
@@ -399,8 +398,8 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
             onChanged: (salutation) =>
                 setState(() => selectedLanguage = salutation),
             validator: (value) => value == null ? 'Select Language here' : null,
-            items:
-            ['1', '2','3','4'].map<DropdownMenuItem<String>>((String value) {
+            items: ['1', '2', '3', '4']
+                .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(value),
@@ -417,7 +416,7 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
         padding: EdgeInsets.only(bottom: 30, top: 30),
         child: InkWell(
           onTap: () {
-          _validateInputs();
+            _validateInputs();
           },
           child: Container(
             alignment: Alignment.center,

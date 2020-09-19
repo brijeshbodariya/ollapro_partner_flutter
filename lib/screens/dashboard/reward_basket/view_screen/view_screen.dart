@@ -157,7 +157,7 @@ class ViewScreenState extends State<ViewScreen> {
           return Container(
             margin: EdgeInsets.only(top: 10),
             padding: EdgeInsets.only(top: 10),
-            height: 150,
+            height: 140,
             color: grey,
             child: Column(
               children: [
@@ -217,7 +217,7 @@ class ViewScreenState extends State<ViewScreen> {
                               style: TextStyle(
                                 color: secondaryColor,
                                 fontFamily: App.font,
-                                fontSize: 15,
+                                fontSize: 16,
                               ),
                             ),
                             Container(
@@ -238,7 +238,7 @@ class ViewScreenState extends State<ViewScreen> {
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 10),
+                  margin: EdgeInsets.only(top: 20),
                   height: 1,
                   color: secondaryColor,
                   width: Utils.getDeviceWidth(context),

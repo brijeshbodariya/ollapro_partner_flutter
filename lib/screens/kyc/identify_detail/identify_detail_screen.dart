@@ -22,9 +22,6 @@ class IdentifyDetailScreenState extends State<IdentifyDetailScreen> {
   bool _autoValidate = false;
   Validation validation;
   void _validateInputs() {
-    if (aadharController.text.isEmpty || panController.text.isEmpty || gstController.text.isEmpty ) {
-      Utils.showToast("Enter Details");
-    } else {
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
         Navigator.push(
@@ -34,10 +31,9 @@ class IdentifyDetailScreenState extends State<IdentifyDetailScreen> {
       } else {
         setState(() {
           _autoValidate = true;
-          Utils.showToast("Enter Details properly");
+          Utils.showToast("Please enter details");
         });
       }
-    }
   }
   @override
   Widget build(BuildContext context) {

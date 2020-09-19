@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/utils.dart';
+import 'package:ollapro_partner/common/validation.dart';
+
+import 'forgot_password_view_model.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   @override
@@ -12,9 +15,27 @@ class ForgotPasswordScreen extends StatefulWidget {
 class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController phoneController = TextEditingController(text: "+91 ");
+  bool _autoValidate = false;
+  Validation validation;
+  ForgotPasswordViewModel model;
+
+  void _validateInputs() {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      Utils.showToast("Success");
+    } else {
+      setState(() {
+        _autoValidate = true;
+        Utils.showToast("Please enter details");
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    print("runtimeType -> " + runtimeType.toString());
+    model ?? (model = ForgotPasswordViewModel(this));
+    validation = Validation();
     return SafeArea(
       child: Scaffold(
         body: Form(
@@ -24,10 +45,13 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               children: [
                 backButton(),
                 forgotText(),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
                 //phone
                 commonTextField(
                     title: App.mobileNumber,
+                    validation: validation.validatePhone,
                     controller: phoneController,
                     hintText: "Enter Phone NUmber",
                     prefixIcon: Image.asset(
@@ -48,12 +72,18 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   backButton() {
     return Container(
       alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15,top: 20),
+      margin: EdgeInsets.only(left: 15, top: 20),
       child: ClipOval(
         child: Material(
           color: grey, // button color
           child: InkWell(
-            child: SizedBox(width: 40, height: 40, child: Icon(Icons.arrow_back_ios,color: primaryColor,)),
+            child: SizedBox(
+                width: 40,
+                height: 40,
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  color: primaryColor,
+                )),
             onTap: () {
               Navigator.pop(context);
             },
@@ -62,6 +92,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ),
     );
   }
+
   forgotText() {
     return Container(
       alignment: Alignment.topLeft,
@@ -88,13 +119,14 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ),
     );
   }
+
   phoneField() {
     return Container(
       alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15,top: 45),
+      margin: EdgeInsets.only(left: 15, right: 15, top: 45),
       child: TextFormField(
-        style: TextStyle(fontWeight: FontWeight.bold,color: primaryColor),
-        controller: phoneController ,
+        style: TextStyle(fontWeight: FontWeight.bold, color: primaryColor),
+        controller: phoneController,
         decoration: InputDecoration(
           disabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
@@ -117,11 +149,13 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ),
     );
   }
+
   submitButton() {
     return Padding(
-        padding: EdgeInsets.only(top:20,bottom: 15),
+        padding: EdgeInsets.only(top: 20, bottom: 15),
         child: InkWell(
-          onTap: (){
+          onTap: () {
+            _validateInputs();
           },
           child: Container(
             alignment: Alignment.center,
@@ -132,12 +166,12 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               color: primaryColor,
               borderRadius: BorderRadius.all(
                   Radius.circular(30) //         <--- border radius here
-              ),
+                  ),
             ),
             child: Text(
               App.submitButton,
               style:
-              TextStyle(color: white, fontFamily: App.font, fontSize: 15),
+                  TextStyle(color: white, fontFamily: App.font, fontSize: 15),
             ),
           ),
         ));

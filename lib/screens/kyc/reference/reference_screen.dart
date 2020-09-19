@@ -27,9 +27,6 @@ class ReferenceScreenState extends State<ReferenceScreen> {
   Validation validation;
 
   void _validateInputs() {
-    if (nameController.text.isEmpty || name1Controller.text.isEmpty || placeController.text.isEmpty || place1Controller.text.isEmpty || phoneController.text.isEmpty  || phone1Controller.text.isEmpty) {
-      Utils.showToast("Enter Details");
-    } else {
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
         Navigator.push(context,
@@ -37,9 +34,9 @@ class ReferenceScreenState extends State<ReferenceScreen> {
       } else {
         setState(() {
           _autoValidate = true;
-          Utils.showToast("Enter Details properly");
+          Utils.showToast("Please enter details");
         });
-      }
+
     }
   }
   @override

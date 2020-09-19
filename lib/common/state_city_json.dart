@@ -1,6 +1,5 @@
 import 'package:ollapro_partner/model/state_model.dart';
 
-
 class Repository {
   List<Map> getAll() => stateSelection;
 

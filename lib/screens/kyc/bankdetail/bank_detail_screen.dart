@@ -27,9 +27,6 @@ class BankDetailScreenState extends State<BankDetailScreen> {
   Validation validation;
 
   void _validateInputs() {
-    if (bankNameController.text.isEmpty || accountController.text.isEmpty || account1Controller.text.isEmpty || nameController.text.isEmpty || ifscController.text.isEmpty) {
-      Utils.showToast("Enter Details");
-    } else {
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
         Navigator.push(
@@ -39,10 +36,9 @@ class BankDetailScreenState extends State<BankDetailScreen> {
       } else {
         setState(() {
           _autoValidate = true;
-          Utils.showToast("Enter Details properly");
+          Utils.showToast("Please enter details");
         });
       }
-    }
   }
   @override
   Widget build(BuildContext context) {

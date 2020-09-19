@@ -301,7 +301,7 @@ class RewardBasketScreenState extends State<RewardBasketScreen> {
           return Container(
             margin: EdgeInsets.only(top: 10),
             padding: EdgeInsets.only(top: 10),
-            height: 160,
+            height: 140,
             color: grey,
             child: Column(
               children: [
@@ -315,8 +315,8 @@ class RewardBasketScreenState extends State<RewardBasketScreen> {
                           alignment: Alignment.center,
                           padding: EdgeInsets.all(20),
                           margin: EdgeInsets.only(left: 10),
-                          height: MediaQuery.of(context).size.height / 11,
-                          width: MediaQuery.of(context).size.width / 7,
+                          height: Utils.getDeviceHeight(context) / 11,
+                          width: Utils.getDeviceWidth(context) / 7,
                           decoration: new BoxDecoration(
                               shape: BoxShape.circle, color: white),
                           child: Image.asset(
@@ -364,7 +364,7 @@ class RewardBasketScreenState extends State<RewardBasketScreen> {
                               style: TextStyle(
                                 color: secondaryColor,
                                 fontFamily: App.font,
-                                fontSize: 15,
+                                fontSize: 16,
                               ),
                             ),
                             Container(

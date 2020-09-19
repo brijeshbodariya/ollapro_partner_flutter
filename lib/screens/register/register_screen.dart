@@ -157,9 +157,6 @@ class RegisterScreenState extends State<RegisterScreen> {
     ));
   }
   void _validateInputs() {
-    if (phoneController.text.isEmpty || passwordController.text.isEmpty || confirmPasswordController.text.isEmpty || emailController.text.isEmpty || fullNameController.text.isEmpty) {
-      Utils.showToast("Enter Details");
-    } else {
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
         Navigator.push(
@@ -167,9 +164,8 @@ class RegisterScreenState extends State<RegisterScreen> {
       } else {
         setState(() {
           _autoValidate = true;
-          Utils.showToast("Enter Details properly");
+          Utils.showToast("Please enter details");
         });
-      }
     }
   }
 

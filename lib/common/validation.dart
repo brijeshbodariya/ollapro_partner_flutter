@@ -199,4 +199,10 @@ class Validation {
     } else
       return null;
   }
+  String validateProperty(String value) {
+    if (value == null || value.isEmpty) {
+      return 'Property type is empty';
+    } else
+      return null;
+  }
 }

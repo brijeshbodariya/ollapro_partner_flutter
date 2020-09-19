@@ -5,7 +5,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/utils.dart';
-import '../../../../common/repo.dart';
+import 'package:ollapro_partner/common/validation.dart';
+import '../../../../common/state_city_json.dart';
 import 'add_property_screen_view_model.dart';
 
 //model are name and image
@@ -32,6 +33,22 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
   AddPropertyViewModel model;
   Repository repo = Repository();
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _autoValidate = false;
+  Validation validation;
+
+  void _validateInputs() {
+      if (_formKey.currentState.validate() && image1 != null) {
+        _formKey.currentState.save();
+        Utils.showToast("Success");
+      } else {
+        setState(() {
+          _autoValidate = true;
+          Utils.showToast("Enter details properly");
+        });
+      }
+  }
+
   List<String> _states = ["Choose a state"];
   List<String> _city = ["Choose .."];
   String _selectedState = "Choose a state";
@@ -42,10 +59,10 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
   File image2;
   File image3;
   File image4;
-  String file1="Select photo1";
-  String file2="Select photo2";
-  String file3="Select photo3";
-  String file4="Select photo4";
+  String file1 = "Select photo1";
+  String file2 = "Select photo2";
+  String file3 = "Select photo3";
+  String file4 = "Select photo4";
 
   void _onSelectedState(String value) {
     setState(() {
@@ -59,6 +76,7 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
   void _onSelectedCity(String value) {
     setState(() => _selectedCity = value);
   }
+
   _getPhoto1() async {
     PickedFile pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
@@ -68,10 +86,10 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
     if (pickedFile != null) {
       setState(() {
         image1 = File(pickedFile.path);
-
       });
     }
   }
+
   _getPhoto2() async {
     PickedFile pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
@@ -99,6 +117,7 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
       });
     }
   }
+
   _getPhoto4() async {
     PickedFile pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
@@ -112,6 +131,7 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
       });
     }
   }
+
   @override
   void initState() {
     _states = List.from(_states)..addAll(repo.getStates());
@@ -130,14 +150,14 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = AddPropertyViewModel(this));
-
+    validation = Validation();
     return Scaffold(
       body: SafeArea(
         child: Container(
           color: primaryColor,
           child: Stack(
             children: [
-              appBarDash(context, App.addNewLandLordTitle),
+              appBarDash(context, App.addPropertyTitle),
               Container(
                 height: Utils.getDeviceHeight(context),
                 width: Utils.getDeviceWidth(context),
@@ -148,99 +168,108 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
                         topRight: Radius.circular(25)),
                     color: white),
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(left: 10, top: 15),
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          App.location,
-                          style: TextStyle(
-                              color: primaryColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),
+                  child: Form(
+                    key: _formKey,
+                    autovalidate: _autoValidate,
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(left: 10, top: 15),
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            App.location,
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      //pincode
-                      commonTextField(
-                          title: App.pinCode,
-                          controller: pincodeController,
-                          hintText: "Enter Pincode",
-                          textInputType: TextInputType.text),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      stateSelect(),
-                      citySelect(),
-                      //place
-                      commonTextField(
-                          title: App.place,
-                          controller: placeController,
-                          hintText: "Enter Place here",
-                          textInputType: TextInputType.text),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      //communication address
-                      commonTextField(
-                          title: App.communicationAddress,
-                          controller: add1Controller,
-                          hintText: "Enter Address 1",
-                          textInputType: TextInputType.text),
-                      add2Field(),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      //landmark if any
-                      commonTextField(
-                          title: App.landmark,
-                          controller: landMarkController,
-                          hintText: "Enter Address 1",
-                          textInputType: TextInputType.text),
-                      SizedBox(height: 10),
-                      Container(
-                        margin: EdgeInsets.only(left: 10, top: 15),
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          App.typeOfAcc,
-                          style: TextStyle(
-                              color: primaryColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),
+                        SizedBox(
+                          height: 10,
                         ),
-                      ),
-                      Container(
-                        alignment: Alignment.topLeft,
-                        margin: EdgeInsets.only(left: 15, top: 15),
-                        child: Text(
-                          App.selectType,
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: secondaryColor,
-                              fontFamily: App.font),
+                        //pincode
+                        commonTextField(
+                            title: App.pinCode,
+                            validation: validation.validatePinCode,
+                            controller: pincodeController,
+                            hintText: "Enter Pincode",
+                            textInputType: TextInputType.phone),
+                        SizedBox(
+                          height: 10,
                         ),
-                      ),
-                      //check box
-                      ListView.builder(
-                          itemCount: list.length,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return typeOfAcc(index);
-                          }),
-                      SizedBox(height: 10),
-                      //property title
-                      commonTextField(
-                          title: App.propertyTitleText,
-                          controller: propertyController,
-                          hintText: "Enter Property",
-                          textInputType: TextInputType.phone),
-                      SizedBox(height: 10),
-                     uploadPicture(),
-                    ],
+                        stateSelect(),
+                        citySelect(),
+                        //place
+                        commonTextField(
+                            title: App.place,
+                            validation: validation.validatePlace,
+                            controller: placeController,
+                            hintText: "Enter Place here",
+                            textInputType: TextInputType.text),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        //communication address
+                        commonTextField(
+                            title: App.communicationAddress,
+                            controller: add1Controller,
+                            validation: validation.validateAddress1Name,
+                            hintText: "Enter Address 1",
+                            textInputType: TextInputType.text),
+                        add2Field(),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        //landmark if any
+                        commonTextField(
+                            title: App.landmark,
+                            validation: validation.validateAddress1Name,
+                            controller: landMarkController,
+                            hintText: "Enter LandMark",
+                            textInputType: TextInputType.text),
+                        SizedBox(height: 10),
+                        Container(
+                          margin: EdgeInsets.only(left: 10, top: 15),
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            App.typeOfAcc,
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.topLeft,
+                          margin: EdgeInsets.only(left: 15, top: 15),
+                          child: Text(
+                            App.selectType,
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: secondaryColor,
+                                fontFamily: App.font),
+                          ),
+                        ),
+                        //check box
+                        ListView.builder(
+                            itemCount: list.length,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return typeOfAcc(index);
+                            }),
+                        SizedBox(height: 10),
+                        //property title
+                        commonTextField(
+                            title: App.propertyTitleText,
+                            validation: validation.validateProperty,
+                            controller: propertyController,
+                            hintText: "Enter Property",
+                            textInputType: TextInputType.phone),
+                        SizedBox(height: 10),
+                        uploadPicture(),
+                      ],
+                    ),
                   ),
                 ),
               )
@@ -251,11 +280,13 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
       bottomNavigationBar: submitButton(),
     );
   }
+
   submitButton() {
     return Padding(
         padding: EdgeInsets.only(bottom: 10, top: 10),
         child: InkWell(
           onTap: () {
+            _validateInputs();
             /* Navigator.push(context, MaterialPageRoute(builder: (context)=> AddLandLordScreen()));*/
           },
           child: Container(
@@ -277,6 +308,7 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
           ),
         ));
   }
+
   add2Field() {
     return Container(
       alignment: Alignment.topLeft,
@@ -284,6 +316,7 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
       child: TextFormField(
         style: TextStyle(color: primaryColor, fontFamily: App.font),
         controller: add2Controller,
+        validator: validation.validateAddress2Name,
         decoration: InputDecoration(
           disabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
@@ -301,6 +334,7 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
       ),
     );
   }
+
   stateSelect() {
     return Column(
       children: [
@@ -334,6 +368,7 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
       ],
     );
   }
+
   citySelect() {
     return Column(
       children: [
@@ -368,6 +403,7 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
       ],
     );
   }
+
   Widget typeOfAcc(int index) {
     return InkResponse(
       onTap: () {
@@ -408,67 +444,84 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
           child: Text(
             App.uploadPicture,
             style: TextStyle(
-                fontSize: 16,
-                color: secondaryColor,
-                fontFamily: App.font),
+                fontSize: 16, color: secondaryColor, fontFamily: App.font),
           ),
         ),
         Container(
           margin: EdgeInsets.only(top: 10, bottom: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          child: Column(
             children: [
-              image1 != null ? Container(
-                height: 70,
-                width: 70,
-                child: Image.file(image1),
-              ):Container(
-                height: 70,
-                width: 70,
-                child: InkWell(
-                    onTap: _getPhoto1,
-                    child: Image.asset(
-                      App.uploadLogo,
-                    )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  image1 != null
+                      ? Container(
+                          height: 70,
+                          width: 70,
+                          child: Image.file(image1),
+                        )
+                      : Container(
+                          height: 70,
+                          width: 70,
+                          child: InkWell(
+                              onTap: _getPhoto1,
+                              child: Image.asset(
+                                App.uploadLogo,
+                              )),
+                        ),
+                  image2 != null
+                      ? Container(
+                          height: 70,
+                          width: 70,
+                          child: Image.file(image2),
+                        )
+                      : Container(
+                          height: 70,
+                          width: 70,
+                          child: InkWell(
+                              onTap: _getPhoto2,
+                              child: Image.asset(
+                                App.uploadLogo,
+                              )),
+                        ),
+                  image3 != null
+                      ? Container(
+                          height: 70,
+                          width: 70,
+                          child: Image.file(image3),
+                        )
+                      : Container(
+                          height: 70,
+                          width: 70,
+                          child: InkWell(
+                              onTap: _getPhoto3,
+                              child: Image.asset(
+                                App.uploadLogo,
+                              )),
+                        ),
+                  image4 != null
+                      ? Container(
+                          height: 70,
+                          width: 70,
+                          child: Image.file(image4),
+                        )
+                      : Container(
+                          height: 70,
+                          width: 70,
+                          child: InkWell(
+                              onTap: _getPhoto4,
+                              child: Image.asset(
+                                App.uploadLogo,
+                              )),
+                        ),
+                ],
               ),
-              image2 != null ? Container(
-                height: 70,
-                width: 70,
-                child: Image.file(image2),
-              ):Container(
-                height: 70,
-                width: 70,
-                child: InkWell(
-                    onTap: _getPhoto2,
-                    child: Image.asset(
-                      App.uploadLogo,
-                    )),
-              ),
-              image3 != null ?  Container(
-                height: 70,
-                width: 70,
-                child: Image.file(image3),
-              ): Container(
-                height: 70,
-                width: 70,
-                child: InkWell(
-                    onTap: _getPhoto3,
-                    child: Image.asset(
-                      App.uploadLogo,
-                    )),
-              ),
-              image4 != null?  Container(
-                height: 70,
-                width: 70,
-                child: Image.file(image4),
-              ): Container(
-                height: 70,
-                width: 70,
-                child: InkWell(
-                    onTap: _getPhoto4,
-                    child: Image.asset(
-                      App.uploadLogo,
-                    )),
+              image1 != null || image2 != null || image3 != null || image4 != null ? Container(): Text(
+                "Please select images",
+                style: TextStyle(
+                  color: red,
+                  fontFamily: App.font,
+                ),
               ),
             ],
           ),

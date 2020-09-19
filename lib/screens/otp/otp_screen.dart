@@ -17,8 +17,22 @@ class OtpScreenState extends State<OtpScreen> {
   int pinLength = 6;
   bool hasError = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _autoValidate = false;
   TextEditingController controller = TextEditingController();
   OtpScreenViewModel model;
+
+  void _validateInputs() {
+    if (_formKey.currentState.validate() && otpdata != null) {
+      _formKey.currentState.save();
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => PersonalDetailScreen()));
+    } else {
+      setState(() {
+        _autoValidate = true;
+        Utils.showToast("Please enter OTP");
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
@@ -27,9 +41,10 @@ class OtpScreenState extends State<OtpScreen> {
     return SafeArea(
       child: Scaffold(
 
-        body: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
+        body: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            autovalidate: _autoValidate,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -131,8 +146,7 @@ class OtpScreenState extends State<OtpScreen> {
         padding: EdgeInsets.only(bottom: 10,top: 30),
         child: InkWell(
           onTap: (){
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => PersonalDetailScreen()));
+          _validateInputs();
           },
           child: Container(
             alignment: Alignment.center,

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ollapro_partner/common/app.dart';
@@ -139,7 +138,18 @@ class UploadDocumentState extends State<UploadDocument> {
       });
     }
   }
-
+  void _validateInputs() {
+      if (_formKey.currentState.validate() && image1 != null && image2 != null && image3 != null && image4 != null && image5 != null && image6 != null && image7 != null) {
+        _formKey.currentState.save();
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => DashBoardScreen()));
+      } else {
+        setState(() {
+          _autoValidate = true;
+          Utils.showToast("Please select images");
+        });
+      }
+  }
   @override
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
@@ -256,6 +266,13 @@ class UploadDocumentState extends State<UploadDocument> {
             ],
           ),
         ),
+        image1 != null ? Container():  Text(
+          "Please select image",
+          style: TextStyle(
+            color: red,
+            fontFamily: App.font,
+          ),
+        ),
       ],
     );
   }
@@ -301,6 +318,13 @@ class UploadDocumentState extends State<UploadDocument> {
                 ),
               ),
             ],
+          ),
+        ),
+        image2 != null ? Container():  Text(
+          "Please select image",
+          style: TextStyle(
+            color: red,
+            fontFamily: App.font,
           ),
         ),
       ],
@@ -350,6 +374,13 @@ class UploadDocumentState extends State<UploadDocument> {
             ],
           ),
         ),
+        image3 != null ? Container():  Text(
+          "Please select aadhar front image",
+          style: TextStyle(
+            color: red,
+            fontFamily: App.font,
+          ),
+        ),
       ],
     );
   }
@@ -395,6 +426,13 @@ class UploadDocumentState extends State<UploadDocument> {
                 ),
               ),
             ],
+          ),
+        ),
+        image4 != null ? Container():  Text(
+          "Please select aadhar back image",
+          style: TextStyle(
+            color: red,
+            fontFamily: App.font,
           ),
         ),
       ],
@@ -444,6 +482,13 @@ class UploadDocumentState extends State<UploadDocument> {
             ],
           ),
         ),
+        image5 != null ? Container():  Text(
+          "Please select PAN card image",
+          style: TextStyle(
+            color: red,
+            fontFamily: App.font,
+          ),
+        ),
       ],
     );
   }
@@ -489,6 +534,13 @@ class UploadDocumentState extends State<UploadDocument> {
                 ),
               ),
             ],
+          ),
+        ),
+        image6 != null ? Container():  Text(
+          "Please select cancel check image",
+          style: TextStyle(
+            color: red,
+            fontFamily: App.font,
           ),
         ),
       ],
@@ -538,6 +590,13 @@ class UploadDocumentState extends State<UploadDocument> {
             ],
           ),
         ),
+        image7 != null ? Container():  Text(
+          "Please select self attested image",
+          style: TextStyle(
+            color: red,
+            fontFamily: App.font,
+          ),
+        ),
       ],
     );
   }
@@ -547,8 +606,7 @@ class UploadDocumentState extends State<UploadDocument> {
         padding: EdgeInsets.only(bottom: 20, top: 20),
         child: InkWell(
           onTap: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => DashBoardScreen()));
+           _validateInputs();
           },
           child: Container(
             alignment: Alignment.center,

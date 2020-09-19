@@ -35,11 +35,11 @@ class LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = LoginScreenViewModel(this));
-
     validation = Validation();
     return Scaffold(
       body: Form(
         key: _formKey,
+        autovalidate: _autoValidate,
         child: ListView(
           shrinkWrap: true,
           scrollDirection: Axis.vertical,
@@ -238,9 +238,6 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   void _validateInputs() {
-    if (phoneController.text.isEmpty || passwordController.text.isEmpty) {
-      Utils.showToast("Enter Details");
-    } else {
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
         Navigator.pushReplacement(context,
@@ -248,13 +245,8 @@ class LoginScreenState extends State<LoginScreen> {
       } else {
         setState(() {
           _autoValidate = true;
-          Utils.showToast("Enter Details properly");
+          Utils.showToast("Please enter login credentials");
         });
       }
-    }
-  }
-
-  clear() {
-    phoneController.clear();
   }
 }

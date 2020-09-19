@@ -7,7 +7,7 @@ import 'package:ollapro_partner/common/validation.dart';
 import 'package:ollapro_partner/screens/kyc/contact_detail/contact_detail_screen_view_model.dart';
 import 'package:ollapro_partner/screens/kyc/identify_detail/identify_detail_screen.dart';
 
-import '../../../common/repo.dart';
+import '../../../common/state_city_json.dart';
 import '../../../common/utils.dart';
 
 class ContactDetailScreen extends StatefulWidget {
@@ -18,8 +18,7 @@ class ContactDetailScreen extends StatefulWidget {
 class ContactDetailScreenState extends State<ContactDetailScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController phoneController = TextEditingController(text: "+91");
-  TextEditingController altPhoneController =
-      TextEditingController(text: "+91");
+  TextEditingController altPhoneController = TextEditingController(text: "+91");
   TextEditingController emailController = TextEditingController();
   TextEditingController add1Controller = TextEditingController();
   TextEditingController add2Controller = TextEditingController();
@@ -31,33 +30,14 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
   bool _autoValidate = false;
   Validation validation;
   List<String> _states = ["Choose a state"];
-  List<String> _city = ["Choose .."];
+  List<String> _city = ["Choose a city"];
   String _selectedState = "Choose a state";
-  String _selectedCity = "Choose ..";
+  String _selectedCity = "Choose a city";
 
   @override
   void initState() {
     _states = List.from(_states)..addAll(repo.getStates());
     super.initState();
-  }
-
-  void _validateInputs() {
-    if (emailController.text.isEmpty || add1Controller.text.isEmpty || add2Controller.text.isEmpty || add3Controller.text.isEmpty || placeController.text.isEmpty || pinCodeController.text.isEmpty) {
-      Utils.showToast("Enter Details");
-    } else {
-      if (_formKey.currentState.validate()) {
-        _formKey.currentState.save();
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => IdentifyDetailScreen()));
-      } else {
-        setState(() {
-          _autoValidate = true;
-          Utils.showToast("Enter Details properly");
-        });
-      }
-    }
   }
 
   @override
@@ -78,7 +58,7 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
                   key: _formKey,
                   autovalidate: _autoValidate,
                   child: Container(
-                   // height: Utils.getDeviceHeight(context),
+                    // height: Utils.getDeviceHeight(context),
                     width: Utils.getDeviceWidth(context),
                     margin: EdgeInsets.only(top: 160),
                     child: Column(
@@ -158,11 +138,12 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
                                     hintText: "Enter pincode",
                                     textInputType: TextInputType.phone),
                               ),
-
                             ],
                           ),
                         ),
-                        SizedBox(height: 20,)
+                        SizedBox(
+                          height: 20,
+                        )
                       ],
                     ),
                   ),
@@ -173,7 +154,10 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
                 color: Colors.white,
                 child: Column(
                   children: [
-                    appBarKYC(context,MaterialPageRoute(builder: (context)=> IdentifyDetailScreen())),
+                    appBarKYC(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => IdentifyDetailScreen())),
                     HeaderLine.headerLineComplete(context, 3, 1, 2, 2, 2, 2),
                     contactDetailText(),
                   ],
@@ -195,6 +179,19 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
         ),
       ),
     );
+  }
+
+  void _validateInputs() {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => IdentifyDetailScreen()));
+    } else {
+      setState(() {
+        _autoValidate = true;
+        Utils.showToast("Please enter details");
+      });
+    }
   }
 
   contactDetailText() {
@@ -296,6 +293,12 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
               value: _selectedState,
             ),
           ),
+          _selectedState != null
+              ? Container()
+              : Text(
+                  'Select state',
+                  style: TextStyle(color: red, fontFamily: App.font),
+                )
         ],
       ),
     );
@@ -334,6 +337,12 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
               value: _selectedCity,
             ),
           ),
+          _selectedCity != null
+              ? Container()
+              : Text(
+                  'Select city',
+                  style: TextStyle(color: red, fontFamily: App.font),
+                )
         ],
       ),
     );
@@ -370,7 +379,7 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
         padding: EdgeInsets.only(bottom: 30, top: 30),
         child: InkWell(
           onTap: () {
-           _validateInputs();
+            _validateInputs();
           },
           child: Container(
             alignment: Alignment.center,
