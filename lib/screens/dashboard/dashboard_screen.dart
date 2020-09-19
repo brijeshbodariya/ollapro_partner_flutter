@@ -131,7 +131,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                   Column(
                     children: [
                       Container(
-                        height: Utils.getDeviceHeight(context) / 4,
+                        height: 180,
                         child: Stack(
                           children: [
                             Image.asset(
@@ -182,7 +182,10 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                     ],
                   ),
                   Padding(
-                      padding: EdgeInsets.only(top: 100), child: userImage())
+                    padding: EdgeInsets.only(top: 120),
+                    child: userImage(),
+                  )
+                // userImage()
                 ],
               )
             ],

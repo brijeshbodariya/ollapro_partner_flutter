@@ -26,3 +26,4 @@ class Utils{
         textColor: primaryColor);
   }
 }
+

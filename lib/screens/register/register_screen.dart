@@ -27,6 +27,7 @@ class RegisterScreenState extends State<RegisterScreen> {
   RegisterScreenViewModel model;
   bool _autoValidate = false;
   Validation validation;
+
   void _reRegisterPassword() {
     setState(() {
       _obscureText2 = !_obscureText2;
@@ -48,125 +49,126 @@ class RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       body: SafeArea(
         child: Form(
-    key: _formKey,
-    child: ListView(
-        children: [
-          Container(
-            color: white,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                createAccountText(),
-                enterYourDetailtext(),
-               //firstName
-                SizedBox(height: 30,),
-                commonTextField(
-                    title: App.fullName,
-                    validation: validation.validateFullName,
-                    controller: fullNameController,
-                    hintText: "Enter Full Name",
-                    prefixIcon: Image.asset(
-                      App.personLogo,
-                      height: 20,
-                      width: 20,
+          key: _formKey,
+          autovalidate: _autoValidate,
+          child: ListView(
+            children: [
+              Container(
+                color: white,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    createAccountText(),
+                    enterYourDetailtext(),
+                    //firstName
+                    SizedBox(
+                      height: 30,
                     ),
-                    textInputType: TextInputType.text
-                ),
-                //email
-                commonTextField(
-                  title: App.emailAddress,
-                    validation: validation.validateEmail,
-                  controller: emailController,
-                  hintText: "Enter Email",
-                  prefixIcon: Image.asset(
-                    App.emailLogo,
-                    height: 20,
-                    width: 20,
-                  ),
-                  textInputType: TextInputType.emailAddress
-                ),
-                //phone
-                commonTextField(
-                    title: App.mobileNumber,
-                    validation: validation.validatePhone,
-                    controller: phoneController,
-                    hintText: "Enter Phone NUmber",
-                    prefixIcon: Image.asset(
-                      App.mobileLogo,
-                      height: 20,
-                      width: 20,
-                    ),
-                    textInputType: TextInputType.phone
-                ),
-                //password
-                commonTextField(
-                    title: App.password,
-                  validation: validation.validatePassword,
-                    controller: passwordController,
-                  obscureText: _obscureText1,
-                    hintText: "Enter Password",
-                    prefixIcon: Image.asset(
-                      App.passwordLogo,
-                      height: 20,
-                      width: 20,
-                    ),
-                    textInputType: TextInputType.text,
-                  suffixIcon: Container(
-                    child:GestureDetector(
-                      onTap: _registerPassword,
-                      child: Image.asset(
-                        App.visibility,
+                    commonTextField(
+                        title: App.fullName,
+                        validation: validation.validateFullName,
+                        controller: fullNameController,
+                        hintText: "Enter Full Name",
+                        prefixIcon: Image.asset(
+                          App.personLogo,
+                          height: 20,
+                          width: 20,
+                        ),
+                        textInputType: TextInputType.text),
+                    //email
+                    commonTextField(
+                        title: App.emailAddress,
+                        validation: validation.validateEmail,
+                        controller: emailController,
+                        hintText: "Enter Email",
+                        prefixIcon: Image.asset(
+                          App.emailLogo,
+                          height: 20,
+                          width: 20,
+                        ),
+                        textInputType: TextInputType.emailAddress),
+                    //phone
+                    commonTextField(
+                        title: App.mobileNumber,
+                        validation: validation.validatePhone,
+                        controller: phoneController,
+                        hintText: "Enter Phone NUmber",
+                        prefixIcon: Image.asset(
+                          App.mobileLogo,
+                          height: 20,
+                          width: 20,
+                        ),
+                        textInputType: TextInputType.phone),
+                    //password
+                    commonTextField(
+                      title: App.password,
+                      validation: validation.validatePassword,
+                      controller: passwordController,
+                      obscureText: _obscureText1,
+                      hintText: "Enter Password",
+                      prefixIcon: Image.asset(
+                        App.passwordLogo,
                         height: 20,
                         width: 20,
                       ),
+                      textInputType: TextInputType.text,
+                      suffixIcon: Container(
+                        child: GestureDetector(
+                          onTap: _registerPassword,
+                          child: Image.asset(
+                            App.visibility,
+                            height: 20,
+                            width: 20,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                //confirm password
-                commonTextField(
-                  title: App.password,
-                  validation: validation.validatePassword,
-                  controller: confirmPasswordController,
-                  obscureText: _obscureText2,
-                  hintText: "Enter Confirm Password",
-                  prefixIcon: Image.asset(
-                    App.passwordLogo,
-                    height: 20,
-                    width: 20,
-                  ),
-                  textInputType: TextInputType.text,
-                  suffixIcon: Container(
-                    child:GestureDetector(
-                      onTap: _reRegisterPassword,
-                      child: Image.asset(
-                        App.visibility,
+                    //confirm password
+                    commonTextField(
+                      title: App.password,
+                      validation: validation.validatePassword,
+                      controller: confirmPasswordController,
+                      obscureText: _obscureText2,
+                      hintText: "Enter Confirm Password",
+                      prefixIcon: Image.asset(
+                        App.passwordLogo,
                         height: 20,
                         width: 20,
                       ),
+                      textInputType: TextInputType.text,
+                      suffixIcon: Container(
+                        child: GestureDetector(
+                          onTap: _reRegisterPassword,
+                          child: Image.asset(
+                            App.visibility,
+                            height: 20,
+                            width: 20,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                    registerButton(),
+                  ],
                 ),
-                registerButton(),
-              ],
-            ),
-          )
-        ],
-    ),
+              )
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: bottomLogin(),
     );
   }
+
   void _validateInputs() {
-      if (_formKey.currentState.validate()) {
-        _formKey.currentState.save();
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => OtpScreen()));
-      } else {
-        setState(() {
-          _autoValidate = true;
-          Utils.showToast("Please fill details");
-        });
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => OtpScreen()));
+    } else {
+      setState(() {
+        _autoValidate = true;
+        Utils.showToast("Please fill details");
+      });
     }
   }
 
@@ -199,6 +201,7 @@ class RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
+
   createAccountText() {
     return Container(
       alignment: Alignment.topLeft,
@@ -213,6 +216,7 @@ class RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
+
   enterYourDetailtext() {
     return Container(
       alignment: Alignment.topLeft,
@@ -224,12 +228,13 @@ class RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
+
   registerButton() {
     return Padding(
         padding: EdgeInsets.only(bottom: 20, top: 30),
         child: InkWell(
           onTap: () {
-          _validateInputs();
+            _validateInputs();
           },
           child: Container(
             alignment: Alignment.center,
