@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/header.dart';
 import 'package:ollapro_partner/common/utils.dart';
@@ -144,17 +145,10 @@ class ReferenceScreenState extends State<ReferenceScreen> {
           ),
         ),
       ),
-      bottomNavigationBar:  Container(
-        width: Utils.getDeviceWidth(context),
-        margin: EdgeInsets.only(left: 20, right: 20,bottom: 20,top: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            backButton(),
-            nextButton(),
-          ],
-        ),
-      ),
+      bottomNavigationBar: commonRowButton(context,
+          buttonName1: App.backButton,
+          buttonName2: App.nextButton,
+          onPressed:_validateInputs ),
       );
   }
   referenceDetailText() {
@@ -196,52 +190,6 @@ class ReferenceScreenState extends State<ReferenceScreen> {
             color: primaryColor,
             fontWeight: FontWeight.bold,
             fontFamily: App.font),
-      ),
-    );
-  }
-  backButton() {
-    return InkWell(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      child: Container(
-        alignment: Alignment.center,
-        height: 50,
-        width: Utils.getDeviceWidth(context) / 2.5,
-        decoration: BoxDecoration(
-          color: secondaryColor,
-          borderRadius: BorderRadius.all(
-              Radius.circular(30) //         <--- border radius here
-              ),
-        ),
-        child: Text(
-          App.backButton,
-          style:
-              TextStyle(color: white, fontFamily: App.font, fontSize: 20),
-        ),
-      ),
-    );
-  }
-  nextButton() {
-    return InkWell(
-      onTap: () {
-      _validateInputs();
-      },
-      child: Container(
-        alignment: Alignment.center,
-        height: 50,
-        width: Utils.getDeviceWidth(context) / 2.5,
-        decoration: BoxDecoration(
-          color: primaryColor,
-          borderRadius: BorderRadius.all(
-              Radius.circular(30) //         <--- border radius here
-              ),
-        ),
-        child: Text(
-          App.nextButton,
-          style:
-              TextStyle(color: white, fontFamily: App.font, fontSize: 20),
-        ),
       ),
     );
   }

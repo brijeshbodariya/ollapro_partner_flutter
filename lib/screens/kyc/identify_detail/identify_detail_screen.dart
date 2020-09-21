@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/header.dart';
 import 'package:ollapro_partner/common/utils.dart';
@@ -61,7 +62,7 @@ class IdentifyDetailScreenState extends State<IdentifyDetailScreen> {
                             title: App.aadhar,
                             validation: validation.validateAadhar,
                             controller: aadharController,
-                            hintText: "Enter Aadhar NUmber",
+                            hintText: "Enter Aadhar Number",
                             textInputType: TextInputType.phone
                         ),
                         SizedBox(height: 10,),
@@ -70,7 +71,7 @@ class IdentifyDetailScreenState extends State<IdentifyDetailScreen> {
                             title: App.pan,
                             validation: validation.validatePAN,
                             controller: panController,
-                            hintText: "Enter PAN NUmber",
+                            hintText: "Enter PAN Number",
                             textInputType: TextInputType.text
                         ),SizedBox(height: 10,),
                         //gstin
@@ -78,7 +79,7 @@ class IdentifyDetailScreenState extends State<IdentifyDetailScreen> {
                             title: App.gst,
                             validation: validation.validateGST,
                             controller: gstController,
-                            hintText: "Enter GSTIN NUmber",
+                            hintText: "Enter GSTIN Number",
                             textInputType: TextInputType.text
                         ),
                       ],
@@ -101,17 +102,10 @@ class IdentifyDetailScreenState extends State<IdentifyDetailScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        width: Utils.getDeviceWidth(context),
-        margin: EdgeInsets.only(left: 20, right: 20,bottom: 20,top: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            backButton(),
-            nextButton(),
-          ],
-        ),
-      ),
+      bottomNavigationBar: commonRowButton(context,
+          buttonName1: App.backButton,
+          buttonName2: App.nextButton,
+          onPressed:_validateInputs ),
     );
   }
 
@@ -129,51 +123,5 @@ class IdentifyDetailScreenState extends State<IdentifyDetailScreen> {
       ),
     );
   }
-  backButton() {
-    return InkWell(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      child: Container(
-        alignment: Alignment.center,
-        height: 50,
-        width: Utils.getDeviceWidth(context) / 2.5,
-        decoration: BoxDecoration(
-          color: secondaryColor,
-          borderRadius: BorderRadius.all(
-              Radius.circular(30) //         <--- border radius here
-          ),
-        ),
-        child: Text(
-          App.backButton,
-          style:
-          TextStyle(color: white, fontFamily: App.font, fontSize: 20),
-        ),
-      ),
-    );
-  }
 
-  nextButton() {
-    return InkWell(
-      onTap: () {
-      _validateInputs();
-      },
-      child: Container(
-        alignment: Alignment.center,
-        height: 50,
-        width: Utils.getDeviceWidth(context) / 2.5,
-        decoration: BoxDecoration(
-          color: primaryColor,
-          borderRadius: BorderRadius.all(
-              Radius.circular(30) //         <--- border radius here
-          ),
-        ),
-        child: Text(
-          App.nextButton,
-          style:
-          TextStyle(color: white, fontFamily: App.font, fontSize: 20),
-        ),
-      ),
-    );
-  }
 }

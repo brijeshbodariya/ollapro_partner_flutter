@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/screens/kyc/personal_detail/personal_detail.dart';
+import 'package:otp_count_down/otp_count_down.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 
 import 'otp_screen_view_model.dart';
@@ -20,19 +22,23 @@ class OtpScreenState extends State<OtpScreen> {
   bool _autoValidate = false;
   TextEditingController controller = TextEditingController();
   OtpScreenViewModel model;
+  OTPCountDown _otpCountDown; // create instance
+  final int _otpTimeInMS = 500 * 2 * 60;  // time in milliseconds for count down
+  String countdown;
 
-  void _validateInputs() {
-    if (_formKey.currentState.validate() && otpdata != null) {
-      _formKey.currentState.save();
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => PersonalDetailScreen()));
-    } else {
-      setState(() {
-        _autoValidate = true;
-        Utils.showToast("Please enter OTP");
-      });
-    }
+  @override
+  void dispose() {
+    _otpCountDown.cancelTimer();
+    super.dispose();
   }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    startTimer();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
@@ -50,18 +56,40 @@ class OtpScreenState extends State<OtpScreen> {
                 backButton(),
                 verificationText(),
                 verifyText(),
-                otpTextFeild(),
+                otpTextField(),
                 errorText(),
-                verifyButton(),
+                SizedBox(height: 30,),
+
+                // verify button
+                commonButton(context,
+                onPressed: _validateInputs,
+                buttonName: App.verifyButton),
                 otpTimer(),
                 codeText(),
-                resendCodeButton(),
+                SizedBox(height: 10,),
+                // resend button
+                commonButton(context,
+                    onPressed: _validateInputs,
+                    buttonName: App.resendCodeButton),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  void _validateInputs() {
+    if (_formKey.currentState.validate() && otpdata != null) {
+      _formKey.currentState.save();
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => PersonalDetailScreen()));
+    } else {
+      setState(() {
+        _autoValidate = true;
+        Utils.showToast("Please enter OTP");
+      });
+    }
   }
   backButton() {
     return Container(
@@ -107,7 +135,7 @@ class OtpScreenState extends State<OtpScreen> {
     );
   }
 
-  otpTextFeild() {
+  otpTextField() {
     return Container(
       margin: EdgeInsets.only(top: 20),
       child: PinCodeTextField(
@@ -147,38 +175,25 @@ class OtpScreenState extends State<OtpScreen> {
     );
   }
 
-  verifyButton() {
-    return  Padding(
-        padding: EdgeInsets.only(bottom: 10,top: 30),
-        child: InkWell(
-          onTap: (){
-          _validateInputs();
-          },
-          child: Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(left: 20, right: 20),
-            height: 50,
-            width: Utils.getDeviceWidth(context),
-            decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.all(
-                  Radius.circular(30) //         <--- border radius here
-              ),
-            ),
-            child: Text(
-              App.verifyButton,
-              style:
-              TextStyle(color: white, fontFamily: App.font, fontSize: 20),
-            ),
-          ),
-        ));
+  void startTimer() {
+    _otpCountDown = OTPCountDown.startOTPTimer(
+      timeInMS: _otpTimeInMS, // time in milliseconds
+      currentCountDown: (String counter) {
+        setState(() {
+          countdown = counter;
+        });
+        print("Count down : $counter"); // shows current count down time
+      },
+      onFinish: () {
+        print("Count down finished!"); // called when the count down finishes.
+      },
+    );
   }
-
   otpTimer() {
     return Container(
       margin: EdgeInsets.only(top: 15),
       child: Text(
-        "00:30",
+        countdown ?? "00:00",
         style: TextStyle(
             fontSize: 15,
             fontFamily: App.font,
@@ -198,30 +213,6 @@ class OtpScreenState extends State<OtpScreen> {
       ),
     );
   }
-  resendCodeButton() {
-    return Padding(
-        padding: EdgeInsets.only(top: 10),
-        child: InkWell(
-          onTap: (){
-          },
-          child: Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(left: 20, right: 20),
-            height: 50,
-            width: Utils.getDeviceWidth(context),
-            decoration: BoxDecoration(
-              color: white,
-              borderRadius: BorderRadius.all(
-                  Radius.circular(30) //         <--- border radius here
-              ),
-            ),
-            child: Text(
-              App.resendCodeButton,
-              style:
-              TextStyle(color: primaryColor, fontFamily: App.font, fontSize: 20),
-            ),
-          ),
-        ));
-  }
+
 
 }

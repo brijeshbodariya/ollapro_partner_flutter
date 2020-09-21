@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/common/validation.dart';
@@ -44,7 +45,6 @@ class LoginScreenState extends State<LoginScreen> {
             scrollDirection: Axis.vertical,
             children: [
               Container(
-                height: Utils.getDeviceHeight(context),
                 width: Utils.getDeviceWidth(context),
                 decoration: BoxDecoration(
                   image: DecorationImage(
@@ -54,7 +54,7 @@ class LoginScreenState extends State<LoginScreen> {
                 ),
                 child: Column(
                   children: [
-                    partnerLogintext(),
+                    partnerLoginText(),
                     credentialsText(),
                     SizedBox(
                       height: 30,
@@ -99,7 +99,11 @@ class LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     rememberPassword(),
-                    loginButton(),
+
+                    //login button
+                    commonButton(context,
+                    onPressed:  _validateInputs,
+                    buttonName: App.loginButton),
                   ],
                 ),
               )
@@ -107,39 +111,18 @@ class LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: bottomRegister(),
+      bottomNavigationBar: commonButton(context,
+      buttonName:  App.loginToRegisterButton,
+      colorName: white,
+      customFontSize: 16,
+      textColor: primaryColor,
+      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> RegisterScreen())),)
+
+      //bottomRegister(),
     );
   }
 
-  bottomRegister() {
-    return Padding(
-        padding: EdgeInsets.only(bottom: 15),
-        child: InkWell(
-          onTap: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => RegisterScreen()));
-          },
-          child: Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(left: 20, right: 20,bottom: 10),
-            height: 50,
-            width: Utils.getDeviceWidth(context),
-            decoration: BoxDecoration(
-              color: white,
-              borderRadius: BorderRadius.all(
-                  Radius.circular(30) //         <--- border radius here
-                  ),
-            ),
-            child: Text(
-              App.loginToRegisterButton,
-              style: TextStyle(
-                  color: primaryColor, fontFamily: App.font, fontSize: 15),
-            ),
-          ),
-        ));
-  }
-
-  partnerLogintext() {
+  partnerLoginText() {
     return Container(
       alignment: Alignment.topLeft,
       margin: EdgeInsets.only(left: 15, top: 50),
@@ -209,34 +192,6 @@ class LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
-  loginButton() {
-    return Padding(
-        padding: EdgeInsets.only(bottom: 15),
-        child: InkWell(
-          onTap: () {
-            _validateInputs();
-          },
-          child: Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(left: 20, right: 20),
-            height: 50,
-            width: Utils.getDeviceWidth(context),
-            decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.all(
-                  Radius.circular(30) //         <--- border radius here
-                  ),
-            ),
-            child: Text(
-              App.loginButton,
-              style:
-                  TextStyle(color: white, fontFamily: App.font, fontSize: 15),
-            ),
-          ),
-        ));
-  }
-
   void _validateInputs() {
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();

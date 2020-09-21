@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/common/validation.dart';
@@ -18,18 +19,6 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   bool _autoValidate = false;
   Validation validation;
   ForgotPasswordViewModel model;
-
-  void _validateInputs() {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
-      Utils.showToast("Success");
-    } else {
-      setState(() {
-        _autoValidate = true;
-        Utils.showToast("Please enter details");
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +49,14 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       width: 20,
                     ),
                     textInputType: TextInputType.phone),
-                submitButton(),
+                SizedBox(
+                  height: 20,
+                ),
+                commonButton(
+                  context,
+                  onPressed: _validateInputs,
+                  buttonName: App.submitButton,
+                )
               ],
             ),
           ),
@@ -68,7 +64,6 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ),
     );
   }
-
   backButton() {
     return Container(
       alignment: Alignment.topLeft,
@@ -92,7 +87,6 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ),
     );
   }
-
   forgotText() {
     return Container(
       alignment: Alignment.topLeft,
@@ -107,73 +101,15 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ),
     );
   }
-
-  mobileText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 5),
-      child: Text(
-        App.mobileText,
-        style: TextStyle(
-            fontSize: 18, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-
-  phoneField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15, top: 45),
-      child: TextFormField(
-        style: TextStyle(fontWeight: FontWeight.bold, color: primaryColor),
-        controller: phoneController,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          prefixIcon: Image.asset(
-            App.mobileLogo,
-            height: 25,
-            width: 25,
-          ),
-          hintText: "Enter Mobile Number",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.phone,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-
-  submitButton() {
-    return Padding(
-        padding: EdgeInsets.only(top: 20, bottom: 15),
-        child: InkWell(
-          onTap: () {
-            _validateInputs();
-          },
-          child: Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(left: 20, right: 20),
-            height: 50,
-            width: Utils.getDeviceWidth(context),
-            decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.all(
-                  Radius.circular(30) //         <--- border radius here
-                  ),
-            ),
-            child: Text(
-              App.submitButton,
-              style:
-                  TextStyle(color: white, fontFamily: App.font, fontSize: 15),
-            ),
-          ),
-        ));
+  void _validateInputs() {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      Utils.showToast("Success");
+    } else {
+      setState(() {
+        _autoValidate = true;
+        Utils.showToast("Please enter details");
+      });
+    }
   }
 }

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/header.dart';
 import 'package:ollapro_partner/common/utils.dart';
@@ -17,13 +18,6 @@ class UploadDocument extends StatefulWidget {
 class UploadDocumentState extends State<UploadDocument> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   UploadDocumentViewModel model;
-  TextEditingController image1Controller = TextEditingController();
-  TextEditingController image2Controller = TextEditingController();
-  TextEditingController image3Controller = TextEditingController();
-  TextEditingController image4Controller = TextEditingController();
-  TextEditingController image5Controller = TextEditingController();
-  TextEditingController image6Controller = TextEditingController();
-  TextEditingController image7Controller = TextEditingController();
   File image1;
   File image2;
   File image3;
@@ -41,115 +35,7 @@ class UploadDocumentState extends State<UploadDocument> {
   bool _autoValidate = false;
   Validation validation;
 
-  _getPhoto1() async {
-    PickedFile pickedFile = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        image1 = File(pickedFile.path);
-        file1 = image1.path.split('/').last;
-      });
-    }
-  }
 
-  _getPhoto2() async {
-    PickedFile pickedFile = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        image2 = File(pickedFile.path);
-        file2 = image2.path.split('/').last;
-      });
-    }
-  }
-
-  _getPhoto3() async {
-    PickedFile pickedFile = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        image3 = File(pickedFile.path);
-        file3 = image3.path.split('/').last;
-      });
-    }
-  }
-
-  _getPhoto4() async {
-    PickedFile pickedFile = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        image4 = File(pickedFile.path);
-        file4 = image4.path.split('/').last;
-      });
-    }
-  }
-
-  _getPhoto5() async {
-    PickedFile pickedFile = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        image5 = File(pickedFile.path);
-        file5 = image5.path.split('/').last;
-      });
-    }
-  }
-
-  _getPhoto6() async {
-    PickedFile pickedFile = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        image6 = File(pickedFile.path);
-        file6 = image6.path.split('/').last;
-      });
-    }
-  }
-
-  _getPhoto7() async {
-    PickedFile pickedFile = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        image7 = File(pickedFile.path);
-        file7 = image7.path.split('/').last;
-      });
-    }
-  }
-  void _validateInputs() {
-      if (_formKey.currentState.validate() && image1 != null && image2 != null && image3 != null && image4 != null && image5 != null && image6 != null && image7 != null) {
-        _formKey.currentState.save();
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => DashBoardScreen()));
-      } else {
-        setState(() {
-          _autoValidate = true;
-          Utils.showToast("Please select images");
-        });
-      }
-  }
   @override
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
@@ -170,13 +56,64 @@ class UploadDocumentState extends State<UploadDocument> {
                     margin: EdgeInsets.only(top: 160),
                     child: Column(
                       children: [
-                        photo1Field(),
-                        photo2Field(),
-                        aadharFrontField(),
-                        aadharBackField(),
-                        panField(),
-                        chequeField(),
-                        selfField(),
+
+                        //photo 1
+                        commonPhotoField(context,
+                        title: App.photo1,
+                        onPressed: _getPhoto1,
+                        errorName: "Please select image",
+                        fileName: file1 ,
+                          imageName: image1
+                        ),
+                        //photo 2
+                        commonPhotoField(context,
+                            title: App.photo2,
+                            onPressed: _getPhoto2,
+                            errorName: "Please select image",
+                            fileName: file2 ,
+                            imageName: image2
+                        ),
+                        //aadhar front
+                        commonPhotoField(context,
+                            title: App.aadharFront,
+                            onPressed: _getPhoto3,
+                            errorName: "Please select aadhar front",
+                            fileName: file3,
+                            imageName: image3
+                        ),
+                        //aadhar back
+                        commonPhotoField(context,
+                            title: App.aadharback,
+                            onPressed: _getPhoto4,
+                            errorName: "Please select aadhar back",
+                            fileName: file4,
+                            imageName: image4
+                        ),
+                        //pan card
+                        commonPhotoField(context,
+                            title: App.panCard,
+                            onPressed: _getPhoto5,
+                            errorName: "Please select PAN card back",
+                            fileName: file5,
+                            imageName: image5
+                        ),
+                        //pan card
+                        commonPhotoField(context,
+                            title: App.cancelledCheque,
+                            onPressed: _getPhoto6,
+                            errorName: "Please select cancel check image",
+                            fileName: file6,
+                            imageName: image6
+                        ),
+                        //pan card
+                        commonPhotoField(context,
+                            title: App.selfAttested,
+                            onPressed: _getPhoto7,
+                            errorName: "Please select self attested",
+                            fileName: file7,
+                            imageName: image7
+                        ),
+                        SizedBox(height: 10,)
                       ],
                     ),
                   ),
@@ -200,14 +137,115 @@ class UploadDocumentState extends State<UploadDocument> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        width: Utils.getDeviceWidth(context),
-        margin: EdgeInsets.only(left: 20, right: 20, bottom: 15),
-        child: submitButton(),
-      ),
+      bottomNavigationBar:
+      commonButton(context,
+          onPressed: _validateInputs,
+          buttonName: App.submitButton),
     );
   }
-
+  _getPhoto1() async {
+    PickedFile pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        image1 = File(pickedFile.path);
+        file1 = image1.path.split('/').last;
+      });
+    }
+  }
+  _getPhoto2() async {
+    PickedFile pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        image2 = File(pickedFile.path);
+        file2 = image2.path.split('/').last;
+      });
+    }
+  }
+  _getPhoto3() async {
+    PickedFile pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        image3 = File(pickedFile.path);
+        file3 = image3.path.split('/').last;
+      });
+    }
+  }
+  _getPhoto4() async {
+    PickedFile pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        image4 = File(pickedFile.path);
+        file4 = image4.path.split('/').last;
+      });
+    }
+  }
+  _getPhoto5() async {
+    PickedFile pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        image5 = File(pickedFile.path);
+        file5 = image5.path.split('/').last;
+      });
+    }
+  }
+  _getPhoto6() async {
+    PickedFile pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        image6 = File(pickedFile.path);
+        file6 = image6.path.split('/').last;
+      });
+    }
+  }
+  _getPhoto7() async {
+    PickedFile pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        image7 = File(pickedFile.path);
+        file7 = image7.path.split('/').last;
+      });
+    }
+  }
+  void _validateInputs() {
+    if (_formKey.currentState.validate() && image1 != null && image2 != null && image3 != null && image4 != null && image5 != null && image6 != null && image7 != null) {
+      _formKey.currentState.save();
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => DashBoardScreen()));
+    } else {
+      setState(() {
+        _autoValidate = true;
+        Utils.showToast("Please select images");
+      });
+    }
+  }
   uploadDocumentText() {
     return Container(
       alignment: Alignment.topLeft,
@@ -219,408 +257,6 @@ class UploadDocumentState extends State<UploadDocument> {
             color: primaryColor,
             fontWeight: FontWeight.bold,
             fontFamily: App.font),
-      ),
-    );
-  }
-
-  photo1Field() {
-    return Column(
-      children: [
-        Container(
-          alignment: Alignment.topLeft,
-          margin: EdgeInsets.only(left: 15, top: 15, right: 15),
-          child: Text(
-            App.photo1,
-            style: TextStyle(
-                fontSize: 17, color: secondaryColor, fontFamily: App.font),
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.all(8.0),
-          height: 55,
-          margin: EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: secondaryColor),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              image1 != null
-                  ? Flexible(
-                      child: Text(
-                      file1,
-                      maxLines: 2,
-                      style:
-                          TextStyle(color: primaryColor, fontFamily: App.font),
-                    ))
-                  : Container(),
-              Container(
-                padding: EdgeInsets.only(left: 10),
-                child: RaisedButton(
-                  onPressed: _getPhoto1,
-                  child: Text(App.chooseFile),
-                ),
-              ),
-            ],
-          ),
-        ),
-        image1 != null ? Container():  Text(
-          "Please select image",
-          style: TextStyle(
-            color: red,
-            fontFamily: App.font,
-          ),
-        ),
-      ],
-    );
-  }
-
-  photo2Field() {
-    return Column(
-      children: [
-        Container(
-          alignment: Alignment.topLeft,
-          margin: EdgeInsets.only(left: 15, top: 15, right: 15),
-          child: Text(
-            App.photo2,
-            style: TextStyle(
-                fontSize: 17, color: secondaryColor, fontFamily: App.font),
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.all(8.0),
-          height: 55,
-          margin: EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: secondaryColor),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              image2 != null
-                  ? Flexible(
-                      child: Text(
-                      file2,
-                      maxLines: 2,
-                      style:
-                          TextStyle(color: primaryColor, fontFamily: App.font),
-                    ))
-                  : Container(),
-              Container(
-                padding: EdgeInsets.only(left: 10),
-                child: RaisedButton(
-                  onPressed: _getPhoto2,
-                  child: Text(App.chooseFile),
-                ),
-              ),
-            ],
-          ),
-        ),
-        image2 != null ? Container():  Text(
-          "Please select image",
-          style: TextStyle(
-            color: red,
-            fontFamily: App.font,
-          ),
-        ),
-      ],
-    );
-  }
-
-  aadharFrontField() {
-    return Column(
-      children: [
-        Container(
-          alignment: Alignment.topLeft,
-          margin: EdgeInsets.only(left: 15, top: 15, right: 15),
-          child: Text(
-            App.aadharFront,
-            style: TextStyle(
-                fontSize: 17, color: secondaryColor, fontFamily: App.font),
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.all(8.0),
-          height: 55,
-          margin: EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: secondaryColor),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              image3 != null
-                  ? Flexible(
-                      child: Text(
-                      file3,
-                      maxLines: 2,
-                      style:
-                          TextStyle(color: primaryColor, fontFamily: App.font),
-                    ))
-                  : Container(),
-              Container(
-                padding: EdgeInsets.only(left: 10),
-                child: RaisedButton(
-                  onPressed: _getPhoto3,
-                  child: Text(App.chooseFile),
-                ),
-              ),
-            ],
-          ),
-        ),
-        image3 != null ? Container():  Text(
-          "Please select aadhar front image",
-          style: TextStyle(
-            color: red,
-            fontFamily: App.font,
-          ),
-        ),
-      ],
-    );
-  }
-
-  aadharBackField() {
-    return Column(
-      children: [
-        Container(
-          alignment: Alignment.topLeft,
-          margin: EdgeInsets.only(left: 15, top: 15, right: 15),
-          child: Text(
-            App.aadharback,
-            style: TextStyle(
-                fontSize: 17, color: secondaryColor, fontFamily: App.font),
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.all(8.0),
-          height: 55,
-          margin: EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: secondaryColor),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              image4 != null
-                  ? Flexible(
-                      child: Text(
-                      file4,
-                      maxLines: 2,
-                      style:
-                          TextStyle(color: primaryColor, fontFamily: App.font),
-                    ))
-                  : Container(),
-              Container(
-                padding: EdgeInsets.only(left: 10),
-                child: RaisedButton(
-                  onPressed: _getPhoto4,
-                  child: Text(App.chooseFile),
-                ),
-              ),
-            ],
-          ),
-        ),
-        image4 != null ? Container():  Text(
-          "Please select aadhar back image",
-          style: TextStyle(
-            color: red,
-            fontFamily: App.font,
-          ),
-        ),
-      ],
-    );
-  }
-
-  panField() {
-    return Column(
-      children: [
-        Container(
-          alignment: Alignment.topLeft,
-          margin: EdgeInsets.only(left: 15, top: 15, right: 15),
-          child: Text(
-            App.panCard,
-            style: TextStyle(
-                fontSize: 17, color: secondaryColor, fontFamily: App.font),
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.all(8.0),
-          height: 55,
-          margin: EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: secondaryColor),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              image5 != null
-                  ? Flexible(
-                      child: Text(
-                      file5,
-                      maxLines: 2,
-                      style:
-                          TextStyle(color: primaryColor, fontFamily: App.font),
-                    ))
-                  : Container(),
-              Container(
-                padding: EdgeInsets.only(left: 10),
-                child: RaisedButton(
-                  onPressed: _getPhoto5,
-                  child: Text(App.chooseFile),
-                ),
-              ),
-            ],
-          ),
-        ),
-        image5 != null ? Container():  Text(
-          "Please select PAN card image",
-          style: TextStyle(
-            color: red,
-            fontFamily: App.font,
-          ),
-        ),
-      ],
-    );
-  }
-
-  chequeField() {
-    return Column(
-      children: [
-        Container(
-          alignment: Alignment.topLeft,
-          margin: EdgeInsets.only(left: 15, top: 15, right: 15),
-          child: Text(
-            App.cancelledCheque,
-            style: TextStyle(
-                fontSize: 17, color: secondaryColor, fontFamily: App.font),
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.all(8.0),
-          height: 55,
-          margin: EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: secondaryColor),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              image6 != null
-                  ? Flexible(
-                      child: Text(
-                      file6,
-                      maxLines: 2,
-                      style:
-                          TextStyle(color: primaryColor, fontFamily: App.font),
-                    ))
-                  : Container(),
-              Container(
-                padding: EdgeInsets.only(left: 10),
-                child: RaisedButton(
-                  onPressed: _getPhoto6,
-                  child: Text(App.chooseFile),
-                ),
-              ),
-            ],
-          ),
-        ),
-        image6 != null ? Container():  Text(
-          "Please select cancel check image",
-          style: TextStyle(
-            color: red,
-            fontFamily: App.font,
-          ),
-        ),
-      ],
-    );
-  }
-
-  selfField() {
-    return Column(
-      children: [
-        Container(
-          alignment: Alignment.topLeft,
-          margin: EdgeInsets.only(left: 15, top: 15, right: 15),
-          child: Text(
-            App.selfAttested,
-            style: TextStyle(
-                fontSize: 17, color: secondaryColor, fontFamily: App.font),
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.all(8.0),
-          height: 55,
-          margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: secondaryColor),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              image7 != null
-                  ? Flexible(
-                      child: Text(
-                      file7,
-                      maxLines: 2,
-                      style:
-                          TextStyle(color: primaryColor, fontFamily: App.font),
-                    ))
-                  : Container(),
-              Container(
-                padding: EdgeInsets.only(left: 10),
-                child: RaisedButton(
-                  onPressed: _getPhoto7,
-                  child: Text(App.chooseFile),
-                ),
-              ),
-            ],
-          ),
-        ),
-        image7 != null ? Container():  Text(
-          "Please select self attested image",
-          style: TextStyle(
-            color: red,
-            fontFamily: App.font,
-          ),
-        ),
-      ],
-    );
-  }
-
-  submitButton() {
-    return InkWell(
-      onTap: () {
-       _validateInputs();
-      },
-      child: Container(
-        alignment: Alignment.center,
-        height: 50,
-        width: Utils.getDeviceWidth(context) / 2.5,
-        decoration: BoxDecoration(
-          color: primaryColor,
-          borderRadius: BorderRadius.all(
-              Radius.circular(30) //         <--- border radius here
-              ),
-        ),
-        child: Text(
-          App.submitButton,
-          style:
-              TextStyle(color: white, fontFamily: App.font, fontSize: 20),
-        ),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/header.dart';
 import 'package:ollapro_partner/common/utils.dart';
@@ -177,7 +178,10 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: nextButton(),
+      bottomNavigationBar:  // resend button
+      commonButton(context,
+          onPressed: _validateInputs,
+          buttonName: App.nextButton),
     );
   }
 
@@ -367,28 +371,4 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
     );
   }
 
-  nextButton() {
-    return InkWell(
-      onTap: () {
-        _validateInputs();
-      },
-      child: Container(
-        alignment: Alignment.center,
-        margin: EdgeInsets.only(top:10,left: 20, right: 20,bottom: 15),
-        height: 50,
-        width: Utils.getDeviceWidth(context),
-        decoration: BoxDecoration(
-          color: primaryColor,
-          borderRadius: BorderRadius.all(
-              Radius.circular(30) //         <--- border radius here
-              ),
-        ),
-        child: Text(
-          App.nextButton,
-          style:
-              TextStyle(color: white, fontFamily: App.font, fontSize: 20),
-        ),
-      ),
-    );
-  }
 }

@@ -1,7 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'app.dart';
 
-Widget commonTextField({context,TextEditingController controller,String title,String hintText,TextInputType textInputType,prefixIcon,suffixIcon,validation,bool obscureText}){
+Widget commonTextField(
+    {context,
+    TextEditingController controller,
+    String title,
+    String hintText,
+    TextInputType textInputType,
+    prefixIcon,
+    suffixIcon,
+    validation,
+    bool obscureText}) {
   return Column(
     children: [
       Container(
@@ -18,8 +29,8 @@ Widget commonTextField({context,TextEditingController controller,String title,St
         margin: EdgeInsets.only(left: 15, right: 15),
         child: TextFormField(
           controller: controller,
-         validator: validation,
-         obscureText: obscureText ?? false,
+          validator: validation,
+          obscureText: obscureText ?? false,
           decoration: InputDecoration(
             disabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
@@ -41,8 +52,67 @@ Widget commonTextField({context,TextEditingController controller,String title,St
   );
 }
 
+Widget commonPhotoField(context,
+    {VoidCallback onPressed, File imageName, String fileName, String title,String errorName}) {
+  return Column(
+    children: [
+      Container(
+        alignment: Alignment.topLeft,
+        margin: EdgeInsets.only(left: 15, top: 15, right: 15),
+        child: Text(
+          title,
+          style: TextStyle(
+              fontSize: 17, color: secondaryColor, fontFamily: App.font),
+        ),
+      ),
+      Container(
+        padding: EdgeInsets.all(8.0),
+        height: 55,
+        margin: EdgeInsets.only(left: 15, right: 15),
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(color: secondaryColor),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            imageName != null
+                ? Flexible(
+                    child: Text(
+                    fileName,
+                    maxLines: 2,
+                    style: TextStyle(color: primaryColor, fontFamily: App.font),
+                  ))
+                : Container(),
+            Container(
+              padding: EdgeInsets.only(left: 10),
+              child: RaisedButton(
+                onPressed: onPressed,
+                child: Text(App.chooseFile),
+              ),
+            ),
+          ],
+        ),
+      ),
+      imageName != null
+          ? Container()
+          : Container(
+              margin: EdgeInsets.only(left: 15),
+              alignment: Alignment.topLeft,
+              child: Text(
+                errorName,
+                style: TextStyle(
+                  color: red,
+                  fontFamily: App.font,
+                ),
+              ),
+            ),
+    ],
+  );
+}
 
-appBarKYC(context,route) {
+appBarKYC(context, route) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
@@ -52,7 +122,11 @@ appBarKYC(context,route) {
             alignment: Alignment.topLeft,
             margin: EdgeInsets.only(left: 12, top: 10),
             child: InkWell(
-              child: Image.asset(App.backButtonLogo,height: 50,width: 50,),
+              child: Image.asset(
+                App.backButtonLogo,
+                height: 50,
+                width: 50,
+              ),
               onTap: () {
                 Navigator.pop(context);
               },
@@ -75,7 +149,7 @@ appBarKYC(context,route) {
         margin: EdgeInsets.only(right: 15, top: 10),
         alignment: Alignment.center,
         child: InkWell(
-          onTap: (){
+          onTap: () {
             Navigator.push(context, route);
           },
           child: Text(
@@ -89,7 +163,7 @@ appBarKYC(context,route) {
   );
 }
 
-appBarDash(context,String title) {
+appBarDash(context, String title) {
   return Container(
     margin: EdgeInsets.only(left: 10, top: 20),
     child: Row(
@@ -112,9 +186,9 @@ appBarDash(context,String title) {
             Container(
               margin: EdgeInsets.only(left: 10),
               child: Text(
-               title,
-                style: TextStyle(
-                    color: white, fontFamily: App.font, fontSize: 20),
+                title,
+                style:
+                    TextStyle(color: white, fontFamily: App.font, fontSize: 20),
               ),
             ),
           ],
