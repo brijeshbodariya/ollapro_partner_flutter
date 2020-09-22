@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/common/validation.dart';
@@ -146,36 +147,16 @@ class AddTenantScreenState extends State<AddTenantScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: submitButton(),
+      bottomNavigationBar: Container(
+        margin: EdgeInsets.only(top: 10),
+        child: commonButton(context,
+          onPressed: _validateInputs,
+          buttonName: App.submitButton,
+        ),
+      ),
     );
   }
-  submitButton() {
-    return Padding(
-        padding: EdgeInsets.only(bottom: 10, top: 10),
-        child: InkWell(
-          onTap: () {
-            _validateInputs();
-            /* Navigator.push(context, MaterialPageRoute(builder: (context)=> AddLandLordScreen()));*/
-          },
-          child: Container(
-            margin: EdgeInsets.only(left: 10, right: 10,bottom: 10),
-            alignment: Alignment.center,
-            height: 50,
-            width: Utils.getDeviceWidth(context) / 2.5,
-            decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.all(
-                  Radius.circular(30) //         <--- border radius here
-              ),
-            ),
-            child: Text(
-              App.submitButton,
-              style:
-              TextStyle(color: white, fontFamily: App.font, fontSize: 20),
-            ),
-          ),
-        ));
-  }
+
   appBar() {
     return Container(
       margin: EdgeInsets.only(left: 10, top: 20),

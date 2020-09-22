@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/model/customPopUp.dart';
@@ -74,50 +75,16 @@ String _selection;
           ),
         ),
       ),
-      bottomNavigationBar: submitButton(),
+      bottomNavigationBar:  iconButton(context,
+          buttonName: App.addNewLandLordButton,
+          imageName:App.addButton,
+          onPressed: (){
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AddLandLordScreen()));
+          }),
     );
   }
 
-  submitButton() {
-    return Padding(
-        padding: EdgeInsets.only(bottom: 10, top: 10),
-        child: InkWell(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> AddLandLordScreen()));
-          },
-          child: Container(
-            margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-            alignment: Alignment.center,
-            height: 50,
-            width: Utils.getDeviceWidth(context) / 2.5,
-            decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.all(
-                  Radius.circular(30) //         <--- border radius here
-                  ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  App.addButton,
-                  color: white,
-                  height: 16,
-                  width: 16,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  App.addNewLandLordButton,
-                  style: TextStyle(
-                      color: white, fontFamily: App.font, fontSize: 20),
-                ),
-              ],
-            ),
-          ),
-        ));
-  }
   listLandLord() {
     return  Container(
       margin: EdgeInsets.only(top: 10),

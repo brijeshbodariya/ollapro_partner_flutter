@@ -99,8 +99,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                   content: Text('Are you sure you want to exit?'),
                   actions: <Widget>[
                     FlatButton(
-                      child:
-                          Text('No', style: TextStyle(fontFamily: App.font)),
+                      child: Text('No', style: TextStyle(fontFamily: App.font)),
                       onPressed: () {
                         Navigator.of(context).pop(false);
                       },
@@ -154,7 +153,6 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                         ),
                       ),
                       Container(
-                        // height: Utils.getDeviceHeight(context),
                         width: MediaQuery.of(context).size.width,
                         color: grey1,
                         child: Column(
@@ -172,9 +170,6 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                               height: 6,
                             ),
                             nonVerifiedTenantColumn(),
-                            SizedBox(
-                              height: 6,
-                            ),
                             rewardBasketImage(),
                           ],
                         ),
@@ -185,7 +180,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                     padding: EdgeInsets.only(top: 120),
                     child: userImage(),
                   )
-                // userImage()
+                  // userImage()
                 ],
               )
             ],
@@ -205,7 +200,6 @@ class DashBoardScreenState extends State<DashBoardScreen> {
             image: new DecorationImage(
                 fit: BoxFit.fill, image: AssetImage(App.userImage))));
   }
-
   propertyColumn() {
     return Container(
       decoration: BoxDecoration(
@@ -320,7 +314,6 @@ class DashBoardScreenState extends State<DashBoardScreen> {
       ),
     );
   }
-
   listProperySelectColumn() {
     return Container(
       decoration: BoxDecoration(
@@ -351,7 +344,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                   Text(
                     App.property,
                     style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 13,
                         fontFamily: App.font,
                         color: primaryColor),
                   )
@@ -365,7 +358,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                   MaterialPageRoute(builder: (context) => LandLordScreen()));
             },
             child: Container(
-              margin: EdgeInsets.only(top: 20, bottom: 20, left: 10),
+              margin: EdgeInsets.only(top: 20, bottom: 20),
               child: Column(
                 children: [
                   Container(
@@ -394,7 +387,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                   MaterialPageRoute(builder: (context) => TenantScreen()));
             },
             child: Container(
-              margin: EdgeInsets.only(top: 20, bottom: 20, left: 10),
+              margin: EdgeInsets.only(top: 20, bottom: 20),
               child: Column(
                 children: [
                   Container(
@@ -425,7 +418,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                       builder: (context) => RewardBasketScreen()));
             },
             child: Container(
-              margin: EdgeInsets.only(top: 20, bottom: 20, left: 10),
+              margin: EdgeInsets.only(top: 20, bottom: 20,right: 10),
               child: Column(
                 children: [
                   Container(
@@ -452,7 +445,6 @@ class DashBoardScreenState extends State<DashBoardScreen> {
       ),
     );
   }
-
   listPropertyColumn() {
     return Container(
       height: 240,
@@ -500,7 +492,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                 itemCount: list.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    width: Utils.getDeviceWidth(context) / 1.5,
+                    width: Utils.getDeviceWidth(context) / 1.25,
                     margin: EdgeInsets.only(
                         top: 20, bottom: 10, left: 10, right: 10),
                     decoration: new BoxDecoration(
@@ -517,7 +509,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Container(
-                            margin: EdgeInsets.only(left: 10, bottom: 0),
+                            margin: EdgeInsets.only(left: 10, bottom: 5),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.end,
@@ -567,7 +559,6 @@ class DashBoardScreenState extends State<DashBoardScreen> {
       ),
     );
   }
-
   nonVerifiedTenantColumn() {
     return Container(
       color: white,
@@ -639,7 +630,6 @@ class DashBoardScreenState extends State<DashBoardScreen> {
       ),
     );
   }
-
   rewardBasketImage() {
     return Container(
       child: Image.asset(

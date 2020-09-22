@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/common/validation.dart';
@@ -154,7 +155,13 @@ class AddLandLordScreenState extends State<AddLandLordScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: submitButton(),
+      bottomNavigationBar: Container(
+        margin: EdgeInsets.only(top: 10),
+        child: commonButton(context,
+          onPressed: _validateInputs,
+          buttonName: App.submitButton,
+        ),
+      ),
     );
   }
 

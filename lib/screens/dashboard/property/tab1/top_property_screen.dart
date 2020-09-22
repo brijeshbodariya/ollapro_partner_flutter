@@ -41,7 +41,6 @@ class TopPropertyScreenState extends State<TopPropertyScreen> {
               itemBuilder: (context, index) {
                 return Container(
                   height: 200,
-
                   width: Utils.getDeviceWidth(context),
                   margin: EdgeInsets.only(
                       top: 20, bottom: 10, left: 10, right: 10),
@@ -59,7 +58,7 @@ class TopPropertyScreenState extends State<TopPropertyScreen> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Container(
-                          margin: EdgeInsets.only(left: 10, bottom: 0),
+                          margin: EdgeInsets.only(left: 10, bottom: 5),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.end,

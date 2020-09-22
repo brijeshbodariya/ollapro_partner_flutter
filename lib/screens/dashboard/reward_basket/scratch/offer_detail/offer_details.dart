@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/screens/dashboard/reward_basket/scratch/offer_detail/offer_details_view_model.dart';
@@ -27,7 +28,7 @@ class OfferDetailsScreenState extends State<OfferDetailsScreen> {
               Container(
                 height: Utils.getDeviceHeight(context),
                 width: Utils.getDeviceWidth(context),
-                margin: EdgeInsets.only(top: 55),
+                margin: EdgeInsets.only(top: 60),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(25),
@@ -69,34 +70,15 @@ class OfferDetailsScreenState extends State<OfferDetailsScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: claimButton(),
+      bottomNavigationBar: Container(
+        margin: EdgeInsets.only(top: 10),
+        child: commonButton(context,
+          buttonName: App.claimNowButton,
+        ),
+      ),
     );
   }
 
-  claimButton() {
-    return Padding(
-        padding: EdgeInsets.only(bottom: 10, top: 10),
-        child: InkWell(
-          onTap: () {},
-          child: Container(
-            margin: EdgeInsets.only(left: 10, right: 10,bottom: 10),
-            alignment: Alignment.center,
-            height: 50,
-            width: Utils.getDeviceWidth(context) / 2.5,
-            decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.all(
-                  Radius.circular(30) //         <--- border radius here
-                  ),
-            ),
-            child: Text(
-              App.claimNowButton,
-              style:
-                  TextStyle(color: white, fontFamily: App.font, fontSize: 20),
-            ),
-          ),
-        ));
-  }
 
   giftName() {
     return Container(

@@ -41,7 +41,7 @@ class ScratchScreenState extends State<ScratchScreen> {
               Container(
                 height: Utils.getDeviceHeight(context),
                 width: Utils.getDeviceWidth(context),
-                margin: EdgeInsets.only(top: 55),
+                margin: EdgeInsets.only(top: 60),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(25),
