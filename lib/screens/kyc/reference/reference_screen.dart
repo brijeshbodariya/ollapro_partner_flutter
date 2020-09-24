@@ -8,7 +8,6 @@ import 'package:ollapro_partner/common/validation.dart';
 import 'package:ollapro_partner/screens/kyc/reference/reference_view_model.dart';
 import 'package:ollapro_partner/screens/kyc/upload_document/uploaddocument.dart';
 
-import '../../../common/app.dart';
 
 class ReferenceScreen extends StatefulWidget {
   @override

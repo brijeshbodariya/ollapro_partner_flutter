@@ -3,13 +3,11 @@ import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/header.dart';
+import 'package:ollapro_partner/common/state_city_json.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/common/validation.dart';
 import 'package:ollapro_partner/screens/kyc/contact_detail/contact_detail_screen_view_model.dart';
 import 'package:ollapro_partner/screens/kyc/identify_detail/identify_detail_screen.dart';
-
-import '../../../common/state_city_json.dart';
-import '../../../common/utils.dart';
 
 class ContactDetailScreen extends StatefulWidget {
   @override

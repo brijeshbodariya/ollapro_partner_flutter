@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/common_button.dart';
@@ -9,7 +8,6 @@ import 'package:ollapro_partner/screens/login/login_screen.dart';
 import 'package:ollapro_partner/screens/otp/otp_screen.dart';
 import 'package:ollapro_partner/screens/register/register_screen_view_model.dart';
 
-import '../../common/app.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override

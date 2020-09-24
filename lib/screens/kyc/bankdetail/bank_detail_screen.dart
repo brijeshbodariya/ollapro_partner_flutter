@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
-import 'package:ollapro_partner/common/dropdown.dart';
 import 'package:ollapro_partner/common/header.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/common/validation.dart';
 import 'package:ollapro_partner/screens/kyc/reference/reference_screen.dart';
-
 import 'bank_detail_view_model.dart';
 
 class BankDetailScreen extends StatefulWidget {

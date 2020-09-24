@@ -4,7 +4,6 @@ import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/model/transactions.dart';
-import 'package:ollapro_partner/screens/dashboard/reward_basket/scratch/offer_detail/offer_details.dart';
 import 'package:ollapro_partner/screens/dashboard/reward_basket/scratch/scratch_screen.dart';
 import 'package:ollapro_partner/screens/dashboard/reward_basket/transfer_screen/transfer_screen.dart';
 

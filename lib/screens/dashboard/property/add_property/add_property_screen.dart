@@ -5,9 +5,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
+import 'package:ollapro_partner/common/state_city_json.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/common/validation.dart';
-import '../../../../common/state_city_json.dart';
 import 'add_property_screen_view_model.dart';
 
 //model are name and image
