@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_appbar.dart';
 import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/utils.dart';
@@ -25,7 +26,14 @@ class AddLandLordScreenState extends State<AddLandLordScreen>
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
   Validation validation;
-
+  final FocusNode f1 = FocusNode();
+  final FocusNode f2 = FocusNode();
+  final FocusNode f3 = FocusNode();
+  final FocusNode f4 = FocusNode();
+  final FocusNode f5 = FocusNode();
+  final FocusNode f6 = FocusNode();
+  final FocusNode f7 = FocusNode();
+  final FocusNode f8 = FocusNode();
   AnimationController _controller;
   Animation<double> _animation;
 
@@ -98,6 +106,12 @@ class AddLandLordScreenState extends State<AddLandLordScreen>
                               validation: validation.validateFirstName,
                               controller: fNameController,
                               hintText: "Enter First Name",
+                              focusNode: f1,
+                              textInputAction: TextInputAction.next,
+                              onFieldChanged: (String term){
+                                App.fieldFocusChange(context, f1, f2);
+                                return ;
+                              },
                               textInputType: TextInputType.text),
                           SizedBox(
                             height: 10,
@@ -116,6 +130,12 @@ class AddLandLordScreenState extends State<AddLandLordScreen>
                                       validation: validation.validateMiddleName,
                                       controller: mNameController,
                                       hintText: "Enter Middle Name",
+                                      focusNode: f2,
+                                      textInputAction: TextInputAction.next,
+                                      onFieldChanged: (String term){
+                                        App.fieldFocusChange(context, f2, f3);
+                                        return ;
+                                      },
                                       textInputType: TextInputType.text),
                                 ),
                                 //lastname
@@ -126,6 +146,12 @@ class AddLandLordScreenState extends State<AddLandLordScreen>
                                       validation: validation.validateLastName,
                                       controller: lNameController,
                                       hintText: "Enter last Name",
+                                      textInputAction: TextInputAction.next,
+                                      focusNode: f3,
+                                      onFieldChanged: (String term){
+                                        App.fieldFocusChange(context, f3, f4);
+                                        return ;
+                                      },
                                       textInputType: TextInputType.text),
                                 ),
                               ],
@@ -140,6 +166,12 @@ class AddLandLordScreenState extends State<AddLandLordScreen>
                               validation: validation.validateEmail,
                               controller: emailController,
                               hintText: "Enter Email",
+                              textInputAction: TextInputAction.next,
+                              focusNode: f4,
+                              onFieldChanged: (String term){
+                                App.fieldFocusChange(context, f4, f5);
+                                return ;
+                              },
                               textInputType: TextInputType.emailAddress),
                           SizedBox(height: 10),
                           //phone number
@@ -147,7 +179,13 @@ class AddLandLordScreenState extends State<AddLandLordScreen>
                               title: App.mobileNumber,
                               validation: validation.validatePhone,
                               controller: phoneController,
-                              hintText: "Enter Phone NUmber",
+                              hintText: "Enter Phone Number",
+                              textInputAction: TextInputAction.next,
+                              focusNode: f5,
+                              onFieldChanged: (String term){
+                                App.fieldFocusChange(context, f5, f6);
+                                return ;
+                              },
                               textInputType: TextInputType.phone),
                           SizedBox(height: 10),
                           //aadhar card
@@ -155,7 +193,13 @@ class AddLandLordScreenState extends State<AddLandLordScreen>
                               title: App.aadhar,
                               validation: validation.validateAadhar,
                               controller: aadharController,
-                              hintText: "Enter Aadhar NUmber",
+                              hintText: "Enter Aadhar Number",
+                              textInputAction: TextInputAction.next,
+                              focusNode: f6,
+                              onFieldChanged: (String term){
+                                App.fieldFocusChange(context, f6, f7);
+                                return ;
+                              },
                               textInputType: TextInputType.phone),
                           SizedBox(
                             height: 10,
@@ -166,6 +210,12 @@ class AddLandLordScreenState extends State<AddLandLordScreen>
                               controller: add1Controller,
                               validation: validation.validateAddress1Name,
                               hintText: "Enter Address 1",
+                              focusNode: f7,
+                              textInputAction: TextInputAction.next,
+                              onFieldChanged: (String term){
+                                App.fieldFocusChange(context, f7, f8);
+                                return ;
+                              },
                               textInputType: TextInputType.text),
                           add2Field(),
                         ],
@@ -189,32 +239,7 @@ class AddLandLordScreenState extends State<AddLandLordScreen>
     );
   }
 
-  submitButton() {
-    return Padding(
-        padding: EdgeInsets.only(bottom: 10, top: 10),
-        child: InkWell(
-          onTap: () {
-            _validateInputs();
-          },
-          child: Container(
-            margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-            alignment: Alignment.center,
-            height: 50,
-            width: Utils.getDeviceWidth(context) / 2.5,
-            decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.all(
-                  Radius.circular(30) //         <--- border radius here
-                  ),
-            ),
-            child: Text(
-              App.submitButton,
-              style:
-                  TextStyle(color: white, fontFamily: App.font, fontSize: 20),
-            ),
-          ),
-        ));
-  }
+
 
   add2Field() {
     return Container(
@@ -237,7 +262,8 @@ class AddLandLordScreenState extends State<AddLandLordScreen>
           ),
         ),
         keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.next,
+        focusNode: f8,
+        textInputAction: TextInputAction.done,
       ),
     );
   }

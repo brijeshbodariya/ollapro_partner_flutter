@@ -26,6 +26,12 @@ class RegisterScreenState extends State<RegisterScreen> {
   RegisterScreenViewModel model;
   bool _autoValidate = false;
   Validation validation;
+  final FocusNode f1 = FocusNode();
+  final FocusNode f2 = FocusNode();
+  final FocusNode f3 = FocusNode();
+  final FocusNode f4 = FocusNode();
+  final FocusNode f5 = FocusNode();
+
 
   void _reRegisterPassword() {
     setState(() {
@@ -67,6 +73,12 @@ class RegisterScreenState extends State<RegisterScreen> {
                         title: App.fullName,
                         validation: validation.validateFullName,
                         controller: fullNameController,
+                        textInputAction: TextInputAction.next,
+                        focusNode: f1,
+                        onFieldChanged: (String term){
+                          App.fieldFocusChange(context, f1, f2);
+                          return ;
+                        },
                         hintText: "Enter Full Name",
                         prefixIcon: Image.asset(
                           App.personLogo,
@@ -80,6 +92,12 @@ class RegisterScreenState extends State<RegisterScreen> {
                         validation: validation.validateEmail,
                         controller: emailController,
                         hintText: "Enter Email",
+                        textInputAction: TextInputAction.next,
+                        focusNode: f2,
+                        onFieldChanged: (String term){
+                          App.fieldFocusChange(context, f2, f3);
+                          return ;
+                        },
                         prefixIcon: Image.asset(
                           App.emailLogo,
                           height: 20,
@@ -91,7 +109,13 @@ class RegisterScreenState extends State<RegisterScreen> {
                         title: App.mobileNumber,
                         validation: validation.validatePhone,
                         controller: phoneController,
-                        hintText: "Enter Phone NUmber",
+                        hintText: "Enter Phone Number",
+                        textInputAction: TextInputAction.next,
+                        focusNode: f3,
+                        onFieldChanged: (String term){
+                          App.fieldFocusChange(context, f3, f4);
+                          return ;
+                        },
                         prefixIcon: Image.asset(
                           App.mobileLogo,
                           height: 20,
@@ -105,6 +129,13 @@ class RegisterScreenState extends State<RegisterScreen> {
                       controller: passwordController,
                       obscureText: _obscureText1,
                       hintText: "Enter Password",
+                      textInputAction: TextInputAction.next,
+                      focusNode: f4,
+                      onFieldChanged: (String term){
+                        App.fieldFocusChange(context, f4, f5);
+                        return ;
+                      },
+
                       prefixIcon: Image.asset(
                         App.passwordLogo,
                         height: 20,
@@ -129,6 +160,8 @@ class RegisterScreenState extends State<RegisterScreen> {
                       controller: confirmPasswordController,
                       obscureText: _obscureText2,
                       hintText: "Enter Confirm Password",
+                      textInputAction: TextInputAction.done,
+                      focusNode: f5,
                       prefixIcon: Image.asset(
                         App.passwordLogo,
                         height: 20,

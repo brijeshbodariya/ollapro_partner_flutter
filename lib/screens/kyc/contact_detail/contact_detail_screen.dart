@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_appbar.dart';
 import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/header.dart';
@@ -32,6 +33,15 @@ class ContactDetailScreenState extends State<ContactDetailScreen>  {
   List<String> _city = ["Choose a city"];
   String _selectedState = "Choose a state";
   String _selectedCity = "Choose a city";
+
+  final FocusNode f1 = FocusNode();
+  final FocusNode f2 = FocusNode();
+  final FocusNode f3 = FocusNode();
+  final FocusNode f4 = FocusNode();
+  final FocusNode f5 = FocusNode();
+  final FocusNode f6 = FocusNode();
+  final FocusNode f7 = FocusNode();
+  final FocusNode f8 = FocusNode();
 
   @override
   void initState() {
@@ -70,6 +80,12 @@ class ContactDetailScreenState extends State<ContactDetailScreen>  {
                             validation: validation.validatePhone,
                             controller: phoneController,
                             hintText: "Enter Phone NUmber",
+                            focusNode: f1,
+                            textInputAction: TextInputAction.next,
+                            onFieldChanged: (String term){
+                              App.fieldFocusChange(context, f1, f2);
+                              return ;
+                            },
                             textInputType: TextInputType.phone),
                         SizedBox(
                           height: 10,
@@ -79,7 +95,13 @@ class ContactDetailScreenState extends State<ContactDetailScreen>  {
                             title: App.altMobileNumber,
                             validation: validation.validateAltPhone,
                             controller: altPhoneController,
-                            hintText: "Enter Alternate Phone NUmber",
+                            hintText: "Enter Alternate Phone Number",
+                            focusNode: f2,
+                            textInputAction: TextInputAction.next,
+                            onFieldChanged: (String term){
+                              App.fieldFocusChange(context, f2, f3);
+                              return ;
+                            },
                             textInputType: TextInputType.phone),
                         SizedBox(
                           height: 10,
@@ -90,6 +112,12 @@ class ContactDetailScreenState extends State<ContactDetailScreen>  {
                             validation: validation.validateEmail,
                             controller: emailController,
                             hintText: "Enter Email",
+                            textInputAction: TextInputAction.next,
+                            focusNode: f3,
+                            onFieldChanged: (String term){
+                              App.fieldFocusChange(context, f3, f4);
+                              return ;
+                            },
                             textInputType: TextInputType.emailAddress),
                         SizedBox(
                           height: 10,
@@ -100,6 +128,12 @@ class ContactDetailScreenState extends State<ContactDetailScreen>  {
                             controller: add1Controller,
                             validation: validation.validateAddress1Name,
                             hintText: "Enter Address 1",
+                            textInputAction: TextInputAction.next,
+                            focusNode: f4,
+                            onFieldChanged: (String term){
+                              App.fieldFocusChange(context, f4, f5);
+                              return ;
+                            },
                             textInputType: TextInputType.text),
                         add2Field(),
                         add3Field(),
@@ -127,7 +161,13 @@ class ContactDetailScreenState extends State<ContactDetailScreen>  {
                                     title: App.exactPlace,
                                     validation: validation.validatePlace,
                                     controller: placeController,
+                                    textInputAction: TextInputAction.next,
                                     hintText: "Enter Exact place",
+                                    focusNode: f7,
+                                    onFieldChanged: (String term){
+                                      App.fieldFocusChange(context, f7, f8);
+                                      return ;
+                                    },
                                     textInputType: TextInputType.text),
                               ),
                               //lastname
@@ -137,6 +177,8 @@ class ContactDetailScreenState extends State<ContactDetailScreen>  {
                                     title: App.pinCode,
                                     validation: validation.validatePinCode,
                                     controller: pinCodeController,
+                                    textInputAction: TextInputAction.done,
+                                    focusNode: f8,
                                     hintText: "Enter pincode",
                                     textInputType: TextInputType.phone),
                               ),
@@ -211,7 +253,12 @@ class ContactDetailScreenState extends State<ContactDetailScreen>  {
       child: TextFormField(
         style: TextStyle(color: primaryColor, fontFamily: App.font),
         controller: add2Controller,
+        focusNode: f5,
+        onFieldSubmitted: (String term){
+          App.fieldFocusChange(context, f5, f6);
+        },
         validator: validation.validateAddress2Name,
+        textInputAction: TextInputAction.next,
         decoration: InputDecoration(
           disabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
@@ -225,7 +272,6 @@ class ContactDetailScreenState extends State<ContactDetailScreen>  {
           ),
         ),
         keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.next,
       ),
     );
   }
@@ -237,6 +283,11 @@ class ContactDetailScreenState extends State<ContactDetailScreen>  {
       child: TextFormField(
         style: TextStyle(color: primaryColor, fontFamily: App.font),
         controller: add3Controller,
+        textInputAction: TextInputAction.next,
+        focusNode: f6,
+        onFieldSubmitted: (String term){
+          App.fieldFocusChange(context, f6, f7);
+        },
         validator: validation.validateAddress3Name,
         decoration: InputDecoration(
           disabledBorder: OutlineInputBorder(
@@ -251,7 +302,6 @@ class ContactDetailScreenState extends State<ContactDetailScreen>  {
           ),
         ),
         keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.next,
       ),
     );
   }

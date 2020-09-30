@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
-import 'package:ollapro_partner/common/common_widgets.dart';
+import 'package:ollapro_partner/common/common_appbar.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/model/transactions.dart';
 import 'package:ollapro_partner/screens/dashboard/reward_basket/history_screen/history_screen.dart';

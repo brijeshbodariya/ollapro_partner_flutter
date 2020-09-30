@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_appbar.dart';
 import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/header.dart';
@@ -22,6 +23,9 @@ class IdentifyDetailScreenState extends State<IdentifyDetailScreen> {
   IdentifyDetailScreenViewModel model;
   bool _autoValidate = false;
   Validation validation;
+  final FocusNode f1 = FocusNode();
+  final FocusNode f2 = FocusNode();
+  final FocusNode f3 = FocusNode();
 
 
 
@@ -51,6 +55,12 @@ class IdentifyDetailScreenState extends State<IdentifyDetailScreen> {
                             title: App.aadhar,
                             validation: validation.validateAadhar,
                             controller: aadharController,
+                            focusNode: f1,
+                            textInputAction: TextInputAction.next,
+                            onFieldChanged: (String term){
+                              App.fieldFocusChange(context, f1, f2);
+                              return ;
+                            },
                             hintText: "Enter Aadhar Number",
                             textInputType: TextInputType.phone
                         ),
@@ -61,6 +71,12 @@ class IdentifyDetailScreenState extends State<IdentifyDetailScreen> {
                             validation: validation.validatePAN,
                             controller: panController,
                             hintText: "Enter PAN Number",
+                            focusNode: f2,
+                            textInputAction: TextInputAction.next,
+                            onFieldChanged: (String term){
+                              App.fieldFocusChange(context, f2, f3);
+                              return ;
+                            },
                             textInputType: TextInputType.text
                         ),SizedBox(height: 10,),
                         //gstin
@@ -68,6 +84,7 @@ class IdentifyDetailScreenState extends State<IdentifyDetailScreen> {
                             title: App.gst,
                             validation: validation.validateGST,
                             controller: gstController,
+                            focusNode: f3,
                             hintText: "Enter GSTIN Number",
                             textInputType: TextInputType.text
                         ),

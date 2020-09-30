@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_appbar.dart';
 import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/utils.dart';
@@ -26,6 +27,14 @@ class AddTenantScreenState extends State<AddTenantScreen>  with SingleTickerProv
   Validation validation;
   AnimationController _controller;
   Animation<double> _animation;
+  final FocusNode f1 = FocusNode();
+  final FocusNode f2 = FocusNode();
+  final FocusNode f3 = FocusNode();
+  final FocusNode f4 = FocusNode();
+  final FocusNode f5 = FocusNode();
+  final FocusNode f6 = FocusNode();
+  final FocusNode f7 = FocusNode();
+  final FocusNode f8 = FocusNode();
   @override
   void initState() {
     _controller = AnimationController(
@@ -43,19 +52,6 @@ class AddTenantScreenState extends State<AddTenantScreen>  with SingleTickerProv
   }
 
 
-  void _validateInputs() {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
-      Utils.showToast("Success");
-      /* Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ContactDetailScreen()));*/
-    } else {
-      setState(() {
-        _autoValidate = true;
-        Utils.showToast("Please enter details");
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +89,12 @@ class AddTenantScreenState extends State<AddTenantScreen>  with SingleTickerProv
                               validation: validation.validateFirstName,
                               controller: fNameController,
                               hintText: "Enter First Name",
+                              focusNode: f1,
+                              textInputAction: TextInputAction.next,
+                              onFieldChanged: (String term){
+                                App.fieldFocusChange(context, f1, f2);
+                                return ;
+                              },
                               textInputType: TextInputType.text),
                           SizedBox(height: 10,),
                           Container(
@@ -109,6 +111,12 @@ class AddTenantScreenState extends State<AddTenantScreen>  with SingleTickerProv
                                       validation: validation.validateMiddleName,
                                       controller: mNameController,
                                       hintText: "Enter Middle Name",
+                                      focusNode: f2,
+                                      textInputAction: TextInputAction.next,
+                                      onFieldChanged: (String term){
+                                        App.fieldFocusChange(context, f2, f3);
+                                        return ;
+                                      },
                                       textInputType: TextInputType.text),
                                 ),
                                 //lastname
@@ -119,6 +127,12 @@ class AddTenantScreenState extends State<AddTenantScreen>  with SingleTickerProv
                                       validation: validation.validateLastName,
                                       controller: lNameController,
                                       hintText: "Enter last Name",
+                                      textInputAction: TextInputAction.next,
+                                      focusNode: f3,
+                                      onFieldChanged: (String term){
+                                        App.fieldFocusChange(context, f3, f4);
+                                        return ;
+                                      },
                                       textInputType: TextInputType.text),
                                 ),
                               ],
@@ -131,6 +145,12 @@ class AddTenantScreenState extends State<AddTenantScreen>  with SingleTickerProv
                               validation: validation.validateEmail,
                               controller: emailController,
                               hintText: "Enter Email",
+                              textInputAction: TextInputAction.next,
+                              focusNode: f4,
+                              onFieldChanged: (String term){
+                                App.fieldFocusChange(context, f4, f5);
+                                return ;
+                              },
                               textInputType: TextInputType.emailAddress
                           ),
                           SizedBox(height: 10),
@@ -139,7 +159,13 @@ class AddTenantScreenState extends State<AddTenantScreen>  with SingleTickerProv
                               title: App.mobileNumber,
                               validation: validation.validatePhone,
                               controller: phoneController,
-                              hintText: "Enter Phone NUmber",
+                              hintText: "Enter Phone Number",
+                              textInputAction: TextInputAction.next,
+                              focusNode: f5,
+                              onFieldChanged: (String term){
+                                App.fieldFocusChange(context, f5, f6);
+                                return ;
+                              },
                               textInputType: TextInputType.phone),
                           SizedBox(height: 10),
                           //aadhar card
@@ -147,7 +173,13 @@ class AddTenantScreenState extends State<AddTenantScreen>  with SingleTickerProv
                               title: App.aadhar,
                               validation: validation.validateAadhar,
                               controller: aadharController,
-                              hintText: "Enter Aadhar NUmber",
+                              hintText: "Enter Aadhar Number",
+                              textInputAction: TextInputAction.next,
+                              focusNode: f6,
+                              onFieldChanged: (String term){
+                                App.fieldFocusChange(context, f6, f7);
+                                return ;
+                              },
                               textInputType: TextInputType.phone
                           ),SizedBox(height: 10,),
                           // address
@@ -156,6 +188,12 @@ class AddTenantScreenState extends State<AddTenantScreen>  with SingleTickerProv
                               controller: add1Controller,
                               validation: validation.validateAddress1Name,
                               hintText: "Enter Address 1",
+                              focusNode: f7,
+                              textInputAction: TextInputAction.next,
+                              onFieldChanged: (String term){
+                                App.fieldFocusChange(context, f7, f8);
+                                return ;
+                              },
                               textInputType: TextInputType.text),
                           add2Field(),
                         ],
@@ -178,311 +216,18 @@ class AddTenantScreenState extends State<AddTenantScreen>  with SingleTickerProv
     );
   }
 
-  appBar() {
-    return Container(
-      margin: EdgeInsets.only(left: 10, top: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Image.asset(
-                    App.arrowBack,
-                    color: white,
-                    height: 25,
-                    width: 25,
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 10),
-                child: Text(
-                  App.addTenantTitle,
-                  style: TextStyle(
-                      color: white, fontFamily: App.font, fontSize: 20),
-                ),
-              ),
-            ],
-          ),
-          Container(
-              margin: EdgeInsets.only(right: 10),
-              child: GestureDetector(
-                onTap: () {},
-                child: Image.asset(
-                  App.notificationLogo,
-                  height: 25,
-                  width: 25,
-                ),
-              )),
-        ],
-      ),
-    );
-  }
-  firstNameText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 20),
-      child: Text(
-        App.fName,
-        style: TextStyle(
-            fontSize: 17, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-  firstNameFeild() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        controller: fNameController,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Enter First Name here",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-  middleName() {
-    return Container(
-      width: Utils.getDeviceWidth(context) / 2,
-      child: Column(
-        children: [
-          Container(
-            alignment: Alignment.topLeft,
-            margin: EdgeInsets.only(left: 15, top: 10),
-            child: Text(
-              App.mName,
-              style: TextStyle(
-                  fontSize: 17, color: secondaryColor, fontFamily: App.font),
-            ),
-          ),
-          Container(
-            alignment: Alignment.topLeft,
-            margin: EdgeInsets.only(left: 15, right: 15),
-            child: TextFormField(
-              controller: mNameController,
-              decoration: InputDecoration(
-                disabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: secondaryColor,
-                  ),
-                ),
-                hintText: "Enter Middle Name here",
-                hintStyle: TextStyle(
-                  color: secondaryColor,
-                  fontFamily: App.font,
-                ),
-              ),
-              keyboardType: TextInputType.text,
-              textInputAction: TextInputAction.next,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-  lastName() {
-    return Container(
-      width: Utils.getDeviceWidth(context) / 2,
-      child: Column(
-        children: [
-          Container(
-            alignment: Alignment.topLeft,
-            margin: EdgeInsets.only(left: 15, top: 10),
-            child: Text(
-              App.lName,
-              style: TextStyle(
-                  fontSize: 17, color: secondaryColor, fontFamily: App.font),
-            ),
-          ),
-          Container(
-            alignment: Alignment.topLeft,
-            margin: EdgeInsets.only(left: 15, right: 15),
-            child: TextFormField(
-              controller: lNameController,
-              decoration: InputDecoration(
-                disabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: secondaryColor,
-                  ),
-                ),
-                hintText: "Enter Last Name here",
-                hintStyle: TextStyle(
-                  color: secondaryColor,
-                  fontFamily: App.font,
-                ),
-              ),
-              keyboardType: TextInputType.text,
-              textInputAction: TextInputAction.next,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-  emailText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15),
-      child: Text(
-        App.emailAddress,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-  emailField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        controller: emailController,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          prefixIcon: Image.asset(
-            App.emailLogo,
-            height: 20,
-            width: 20,
-          ),
-          hintText: "Enter Email address",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.emailAddress,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-  phoneText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15),
-      child: Text(
-        App.mobileNumber,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-  phoneField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        controller: phoneController,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          prefixIcon: Image.asset(
-            App.mobileLogo,
-            height: 20,
-            width: 20,
-          ),
-          hintText: "Enter Mobile Number",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.phone,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-  aadharText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 20),
-      child: Text(
-        App.aadhar,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-  aadharField() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        style: TextStyle(color: primaryColor,fontFamily: App.font),
-        controller: aadharController,
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Enter Aadhar Number",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.phone,
-        textInputAction: TextInputAction.next,
-      ),
-    );
-  }
-  commText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, top: 15),
-      child: Text(
-        App.address,
-        style: TextStyle(
-            fontSize: 16, color: secondaryColor, fontFamily: App.font),
-      ),
-    );
-  }
-  add1Field() {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 15, right: 15),
-      child: TextFormField(
-        controller: add1Controller,
-        style: TextStyle(color: primaryColor,fontFamily: App.font),
-        decoration: InputDecoration(
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: secondaryColor,
-            ),
-          ),
-          hintText: "Enter Address1",
-          hintStyle: TextStyle(
-            color: secondaryColor,
-            fontFamily: App.font,
-          ),
-        ),
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.next,
-      ),
-    );
+  void _validateInputs() {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      Utils.showToast("Success");
+      /* Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ContactDetailScreen()));*/
+    } else {
+      setState(() {
+        _autoValidate = true;
+        Utils.showToast("Please enter details");
+      });
+    }
   }
   add2Field() {
     return Container(
@@ -505,7 +250,8 @@ class AddTenantScreenState extends State<AddTenantScreen>  with SingleTickerProv
           ),
         ),
         keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.next,
+        focusNode: f8,
+        textInputAction: TextInputAction.done,
       ),
     );
   }

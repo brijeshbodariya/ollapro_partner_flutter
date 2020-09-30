@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_appbar.dart';
 import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/header.dart';
@@ -83,7 +84,7 @@ class UploadDocumentState extends State<UploadDocument> {
                         ),
                         //aadhar back
                         commonPhotoField(context,
-                            title: App.aadharback,
+                            title: App.aadharBack,
                             onPressed: _getPhoto4,
                             errorName: "Please select aadhar back",
                             fileName: file4,

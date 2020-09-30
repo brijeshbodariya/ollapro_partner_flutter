@@ -69,7 +69,7 @@ class App {
   static const photo2 = "Photo 2";
   static const chooseFile = "Choose File";
   static const aadharFront = "Aadhar Front";
-  static const aadharback = "Aadhar Back";
+  static const aadharBack = "Aadhar Back";
   static const panCard = "PAN Card";
   static const cancelledCheque = "Cancelled Cheque";
   static const selfAttested = "Self Attested Declaration";
@@ -117,11 +117,6 @@ class App {
   static const offerDetailTitle = "Offer Details";
   static const claimNowButton = "CLAIM NOW";
 
-
-
-
-
-
   //images
   static const splashBg = "assets/splashbg.png";
   static const splashLogo = "assets/splashlogo.png";
@@ -167,6 +162,15 @@ class App {
   static const laptopWinnerLogo = "assets/laptop@3x.png";
   static const phoneLogo = "assets/mobile@2x.png";
   static const scratchLogo = "assets/bg@2x.png";
+
+
+
+  //focus node
+  static fieldFocusChange(
+      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
+    currentFocus.unfocus();
+    FocusScope.of(context).requestFocus(nextFocus);
+  }
 }
 
 //Colors

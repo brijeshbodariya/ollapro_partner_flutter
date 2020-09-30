@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_appbar.dart';
 import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/header.dart';
@@ -26,6 +27,11 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen>   {
   TextEditingController dobController = TextEditingController();
   TextEditingController mNameController = TextEditingController();
   TextEditingController fatherNameController = TextEditingController();
+  final FocusNode f1 = FocusNode();
+  final FocusNode f2 = FocusNode();
+  final FocusNode f3 = FocusNode();
+  final FocusNode f4 = FocusNode();
+  final FocusNode f5 = FocusNode();
 
   DateTime _dateTime;
   String pickedDate;
@@ -68,6 +74,12 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen>   {
                             title: App.fName,
                             validation: validation.validateFirstName,
                             controller: fNameController,
+                            focusNode: f1,
+                            textInputAction: TextInputAction.next,
+                            onFieldChanged: (String term){
+                              App.fieldFocusChange(context, f1, f2);
+                              return ;
+                            },
                             hintText: "Enter First Name",
                             textInputType: TextInputType.text),
                         Container(
@@ -83,6 +95,12 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen>   {
                                     title: App.mName,
                                     validation: validation.validateMiddleName,
                                     controller: mNameController,
+                                    focusNode: f2,
+                                    textInputAction: TextInputAction.next,
+                                    onFieldChanged: (String term){
+                                      App.fieldFocusChange(context, f2, f3);
+                                      return ;
+                                    },
                                     hintText: "Enter Middle Name",
                                     textInputType: TextInputType.text),
                               ),
@@ -92,6 +110,12 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen>   {
                                 child: commonTextField(
                                     title: App.lName,
                                     validation: validation.validateLastName,
+                                    focusNode: f3,
+                                    onFieldChanged: (String term){
+                                      App.fieldFocusChange(context, f3, f4);
+                                      return ;
+                                    },
+                                    textInputAction: TextInputAction.next,
                                     controller: lNameController,
                                     hintText: "Enter last Name",
                                     textInputType: TextInputType.text),
@@ -113,6 +137,8 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen>   {
                             title: App.fatherName,
                             validation: validation.validateFatherName,
                             controller: fatherNameController,
+                            focusNode: f5,
+                            textInputAction: TextInputAction.done,
                             hintText: "Enter father's Name",
                             textInputType: TextInputType.text),
                         SizedBox(
@@ -251,6 +277,11 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen>   {
           margin: EdgeInsets.only(left: 15, right: 15),
           child: TextFormField(
             controller: dobController,
+            textInputAction: TextInputAction.next,
+            focusNode: f4,
+            onFieldSubmitted: (String term){
+              App.fieldFocusChange(context, f4, f5);
+            },
             validator: validation.validateDob,
             onTap: () {
               openDatePicker();

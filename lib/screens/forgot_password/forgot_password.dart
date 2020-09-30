@@ -42,6 +42,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> with SingleT
                     title: App.mobileNumber,
                     validation: validation.validatePhone,
                     controller: phoneController,
+                    textInputAction: TextInputAction.done,
                     hintText: "Enter Phone NUmber",
                     prefixIcon: Image.asset(
                       App.mobileLogo,

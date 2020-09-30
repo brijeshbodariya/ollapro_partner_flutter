@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_appbar.dart';
 import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/state_city_json.dart';
@@ -23,7 +24,8 @@ class AddPropertyScreen extends StatefulWidget {
   AddPropertyScreenState createState() => AddPropertyScreenState();
 }
 
-class AddPropertyScreenState extends State<AddPropertyScreen> with SingleTickerProviderStateMixin{
+class AddPropertyScreenState extends State<AddPropertyScreen>
+    with SingleTickerProviderStateMixin {
   List<Model> list = List();
   TextEditingController pincodeController = TextEditingController();
   TextEditingController placeController = TextEditingController();
@@ -37,27 +39,19 @@ class AddPropertyScreenState extends State<AddPropertyScreen> with SingleTickerP
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
   Validation validation;
-
+  final FocusNode f1 = FocusNode();
+  final FocusNode f2 = FocusNode();
+  final FocusNode f3 = FocusNode();
+  final FocusNode f4 = FocusNode();
+  final FocusNode f5 = FocusNode();
+  final FocusNode f6 = FocusNode();
   AnimationController _controller;
   Animation<double> _animation;
-
 
   @override
   dispose() {
     _controller.dispose();
     super.dispose();
-  }
-
-  void _validateInputs() {
-      if (_formKey.currentState.validate() && image1 != null) {
-        _formKey.currentState.save();
-        Utils.showToast("Success");
-      } else {
-        setState(() {
-          _autoValidate = true;
-          Utils.showToast("Enter details properly");
-        });
-      }
   }
 
   List<String> _states = ["Choose a state"];
@@ -74,74 +68,6 @@ class AddPropertyScreenState extends State<AddPropertyScreen> with SingleTickerP
   String file2 = "Select photo2";
   String file3 = "Select photo3";
   String file4 = "Select photo4";
-
-  void _onSelectedState(String value) {
-    setState(() {
-      _selectedCity = "Choose ..";
-      _city = ["Choose .."];
-      _selectedState = value;
-      _city = List.from(_city)..addAll(repo.getLocalByState(value));
-    });
-  }
-
-  void _onSelectedCity(String value) {
-    setState(() => _selectedCity = value);
-  }
-
-  _getPhoto1() async {
-    PickedFile pickedFile = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        image1 = File(pickedFile.path);
-      });
-    }
-  }
-
-  _getPhoto2() async {
-    PickedFile pickedFile = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        image2 = File(pickedFile.path);
-        file2 = image2.path.split('/').last;
-      });
-    }
-  }
-
-  _getPhoto3() async {
-    PickedFile pickedFile = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        image3 = File(pickedFile.path);
-        file3 = image3.path.split('/').last;
-      });
-    }
-  }
-
-  _getPhoto4() async {
-    PickedFile pickedFile = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        image4 = File(pickedFile.path);
-        file4 = image4.path.split('/').last;
-      });
-    }
-  }
 
   @override
   void initState() {
@@ -212,6 +138,12 @@ class AddPropertyScreenState extends State<AddPropertyScreen> with SingleTickerP
                               validation: validation.validatePinCode,
                               controller: pincodeController,
                               hintText: "Enter Pincode",
+                              focusNode: f1,
+                              textInputAction: TextInputAction.next,
+                              onFieldChanged: (String term) {
+                                App.fieldFocusChange(context, f1, f2);
+                                return;
+                              },
                               textInputType: TextInputType.phone),
                           SizedBox(
                             height: 10,
@@ -224,6 +156,12 @@ class AddPropertyScreenState extends State<AddPropertyScreen> with SingleTickerP
                               validation: validation.validatePlace,
                               controller: placeController,
                               hintText: "Enter Place here",
+                              focusNode: f2,
+                              textInputAction: TextInputAction.next,
+                              onFieldChanged: (String term){
+                                App.fieldFocusChange(context, f2, f3);
+                                return ;
+                              },
                               textInputType: TextInputType.text),
                           SizedBox(
                             height: 10,
@@ -234,6 +172,11 @@ class AddPropertyScreenState extends State<AddPropertyScreen> with SingleTickerP
                               controller: add1Controller,
                               validation: validation.validateAddress1Name,
                               hintText: "Enter Address 1",
+                              focusNode: f3,
+                              onFieldChanged: (String term){
+                                App.fieldFocusChange(context, f3, f4);
+                                return ;
+                              },
                               textInputType: TextInputType.text),
                           add2Field(),
                           SizedBox(
@@ -245,6 +188,12 @@ class AddPropertyScreenState extends State<AddPropertyScreen> with SingleTickerP
                               validation: validation.validateAddress1Name,
                               controller: landMarkController,
                               hintText: "Enter LandMark",
+                              textInputAction: TextInputAction.next,
+                              focusNode: f5,
+                              onFieldChanged: (String term){
+                                App.fieldFocusChange(context, f5, f6);
+                                return ;
+                              },
                               textInputType: TextInputType.text),
                           SizedBox(height: 10),
                           Container(
@@ -283,6 +232,8 @@ class AddPropertyScreenState extends State<AddPropertyScreen> with SingleTickerP
                               title: App.propertyTitleText,
                               validation: validation.validateProperty,
                               controller: propertyController,
+                              focusNode: f6,
+                              textInputAction: TextInputAction.done,
                               hintText: "Enter Property",
                               textInputType: TextInputType.phone),
                           SizedBox(height: 10),
@@ -297,16 +248,96 @@ class AddPropertyScreenState extends State<AddPropertyScreen> with SingleTickerP
           ),
         ),
       ),
-      bottomNavigationBar:Container(
+      bottomNavigationBar: Container(
         margin: EdgeInsets.only(top: 10),
-        child: commonButton(context,
-        onPressed: _validateInputs,
-        buttonName: App.submitButton,
+        child: commonButton(
+          context,
+          onPressed: _validateInputs,
+          buttonName: App.submitButton,
         ),
       ),
     );
   }
 
+  void _validateInputs() {
+    if (_formKey.currentState.validate() && image1 != null) {
+      _formKey.currentState.save();
+      Utils.showToast("Success");
+    } else {
+      setState(() {
+        _autoValidate = true;
+        Utils.showToast("Enter details properly");
+      });
+    }
+  }
+
+  void _onSelectedState(String value) {
+    setState(() {
+      _selectedCity = "Choose ..";
+      _city = ["Choose .."];
+      _selectedState = value;
+      _city = List.from(_city)..addAll(repo.getLocalByState(value));
+    });
+  }
+
+  void _onSelectedCity(String value) {
+    setState(() => _selectedCity = value);
+  }
+
+  _getPhoto1() async {
+    PickedFile pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        image1 = File(pickedFile.path);
+      });
+    }
+  }
+
+  _getPhoto2() async {
+    PickedFile pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        image2 = File(pickedFile.path);
+        file2 = image2.path.split('/').last;
+      });
+    }
+  }
+
+  _getPhoto3() async {
+    PickedFile pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        image3 = File(pickedFile.path);
+        file3 = image3.path.split('/').last;
+      });
+    }
+  }
+
+  _getPhoto4() async {
+    PickedFile pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        image4 = File(pickedFile.path);
+        file4 = image4.path.split('/').last;
+      });
+    }
+  }
 
   add2Field() {
     return Container(
@@ -315,6 +346,10 @@ class AddPropertyScreenState extends State<AddPropertyScreen> with SingleTickerP
       child: TextFormField(
         style: TextStyle(color: primaryColor, fontFamily: App.font),
         controller: add2Controller,
+        focusNode: f4,
+        onFieldSubmitted: (String term){
+          App.fieldFocusChange(context, f4, f5);
+        },
         validator: validation.validateAddress2Name,
         decoration: InputDecoration(
           disabledBorder: OutlineInputBorder(
@@ -515,13 +550,18 @@ class AddPropertyScreenState extends State<AddPropertyScreen> with SingleTickerP
                         ),
                 ],
               ),
-              image1 != null || image2 != null || image3 != null || image4 != null ? Container(): Text(
-                "Please select images",
-                style: TextStyle(
-                  color: red,
-                  fontFamily: App.font,
-                ),
-              ),
+              image1 != null ||
+                      image2 != null ||
+                      image3 != null ||
+                      image4 != null
+                  ? Container()
+                  : Text(
+                      "Please select images",
+                      style: TextStyle(
+                        color: red,
+                        fontFamily: App.font,
+                      ),
+                    ),
             ],
           ),
         )

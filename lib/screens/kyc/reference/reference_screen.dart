@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_appbar.dart';
 import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/header.dart';
@@ -25,7 +26,12 @@ class ReferenceScreenState extends State<ReferenceScreen>   {
   TextEditingController phone1Controller = TextEditingController(text: "+91");
   bool _autoValidate = false;
   Validation validation;
-
+  final FocusNode f1 = FocusNode();
+  final FocusNode f2 = FocusNode();
+  final FocusNode f3 = FocusNode();
+  final FocusNode f4 = FocusNode();
+  final FocusNode f5 = FocusNode();
+  final FocusNode f6 = FocusNode();
 
 
   @override
@@ -59,6 +65,12 @@ class ReferenceScreenState extends State<ReferenceScreen>   {
                                   validation: validation.validateName,
                                   controller: nameController,
                                   hintText: "Enter Name",
+                                  focusNode: f1,
+                                  textInputAction: TextInputAction.next,
+                                  onFieldChanged: (String term){
+                                    App.fieldFocusChange(context, f1, f2);
+                                    return ;
+                                  },
                                   textInputType: TextInputType.text
                               ),
                               SizedBox(height: 10),
@@ -68,6 +80,12 @@ class ReferenceScreenState extends State<ReferenceScreen>   {
                                   validation: validation.validatePlace,
                                   controller: placeController,
                                   hintText: "Enter Place",
+                                  focusNode: f2,
+                                  textInputAction: TextInputAction.next,
+                                  onFieldChanged: (String term){
+                                    App.fieldFocusChange(context, f2, f3);
+                                    return ;
+                                  },
                                   textInputType: TextInputType.text
                               ),SizedBox(height: 10),
                               // reference1 mobile number
@@ -76,6 +94,12 @@ class ReferenceScreenState extends State<ReferenceScreen>   {
                                   validation: validation.validatePhone,
                                   controller: phoneController,
                                   hintText: "Enter Mobile Number",
+                                  textInputAction: TextInputAction.next,
+                                  focusNode: f3,
+                                  onFieldChanged: (String term){
+                                    App.fieldFocusChange(context, f3, f4);
+                                    return ;
+                                  },
                                   textInputType: TextInputType.phone
                               ),SizedBox(height: 10),
                             ],
@@ -92,6 +116,12 @@ class ReferenceScreenState extends State<ReferenceScreen>   {
                                   validation: validation.validateName,
                                   controller: name1Controller,
                                   hintText: "Enter Name",
+                                  textInputAction: TextInputAction.next,
+                                  focusNode: f4,
+                                  onFieldChanged: (String term){
+                                    App.fieldFocusChange(context, f4, f5);
+                                    return ;
+                                  },
                                   textInputType: TextInputType.text
                               ),SizedBox(height: 10),
                               // reference2 place
@@ -100,6 +130,12 @@ class ReferenceScreenState extends State<ReferenceScreen>   {
                                   validation: validation.validatePlace,
                                   controller: place1Controller,
                                   hintText: "Enter Place",
+                                  textInputAction: TextInputAction.next,
+                                  focusNode: f5,
+                                  onFieldChanged: (String term){
+                                    App.fieldFocusChange(context, f5, f6);
+                                    return ;
+                                  },
                                   textInputType: TextInputType.text
                               ),SizedBox(height: 10),
                               // reference2 mobile number
@@ -108,6 +144,8 @@ class ReferenceScreenState extends State<ReferenceScreen>   {
                                   validation: validation.validatePhone,
                                   controller: phone1Controller,
                                   hintText: "Enter Mobile Number",
+                                  textInputAction: TextInputAction.done,
+                                  focusNode: f6,
                                   textInputType: TextInputType.phone
                               ),SizedBox(height: 10),
                             ],

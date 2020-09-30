@@ -23,6 +23,8 @@ class LoginScreenState extends State<LoginScreen> with SingleTickerProviderState
   bool checkBox = false;
   bool _autoValidate = false;
   Validation validation;
+  final FocusNode f1 = FocusNode();
+  final FocusNode f2 = FocusNode();
 
   void _loginPassword() {
     setState(() {
@@ -65,6 +67,12 @@ class LoginScreenState extends State<LoginScreen> with SingleTickerProviderState
                     commonTextField(
                         validation: validation.validatePhone,
                         title: App.mobileNumber,
+                        focusNode: f1,
+                        textInputAction: TextInputAction.next,
+                        onFieldChanged: (String term) {
+                           App.fieldFocusChange(context, f1, f2);
+                           return;
+                        },
                         controller: phoneController,
                         hintText: "Enter Phone NUmber",
                         prefixIcon: Image.asset(
@@ -79,8 +87,10 @@ class LoginScreenState extends State<LoginScreen> with SingleTickerProviderState
                     //password
                     commonTextField(
                       title: App.password,
+                      textInputAction: TextInputAction.done,
                       validation: validation.validatePassword,
                       controller: passwordController,
+                      focusNode: f2,
                       obscureText: _obscureText,
                       hintText: "Enter Password",
                       prefixIcon: Image.asset(

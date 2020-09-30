@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ollapro_partner/common/app.dart';
+import 'package:ollapro_partner/common/common_appbar.dart';
 import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/header.dart';
@@ -24,6 +25,12 @@ class BankDetailScreenState extends State<BankDetailScreen> {
   String selectedAccount;
   bool _autoValidate = false;
   Validation validation;
+  final FocusNode f1 = FocusNode();
+  final FocusNode f2 = FocusNode();
+  final FocusNode f3 = FocusNode();
+  final FocusNode f4 = FocusNode();
+  final FocusNode f5 = FocusNode();
+
 
 
 
@@ -53,6 +60,11 @@ class BankDetailScreenState extends State<BankDetailScreen> {
                             validation: validation.validateBankName,
                             controller: bankNameController,
                             hintText: "Enter Bank name",
+                            focusNode: f1,
+                            onFieldChanged: (String term){
+                              App.fieldFocusChange(context, f1, f2);
+                              return ;
+                            },
                             textInputType: TextInputType.text
                         ),
                         SizedBox(height: 10),
@@ -62,6 +74,11 @@ class BankDetailScreenState extends State<BankDetailScreen> {
                             validation: validation.validateAccount,
                             controller: accountController,
                             hintText: "Enter Account Number",
+                            focusNode: f2,
+                            onFieldChanged: (String term){
+                              App.fieldFocusChange(context, f2, f3);
+                              return ;
+                            },
                             textInputType: TextInputType.phone
                         ),SizedBox(height: 10),
                         //account number
@@ -70,6 +87,11 @@ class BankDetailScreenState extends State<BankDetailScreen> {
                             validation: validation.validateReAccount,
                             controller: account1Controller,
                             hintText: "Re enter Account Number",
+                            focusNode: f3,
+                            onFieldChanged: (String term){
+                              App.fieldFocusChange(context, f3, f4);
+                              return ;
+                            },
                             textInputType: TextInputType.phone
                         ),SizedBox(height: 10),
                         //account holder name
@@ -78,6 +100,11 @@ class BankDetailScreenState extends State<BankDetailScreen> {
                             validation: validation.validateAccountHolderName,
                             controller: nameController,
                             hintText: "Account holder name",
+                            focusNode: f4,
+                            onFieldChanged: (String term){
+                              App.fieldFocusChange(context, f4, f5);
+                              return ;
+                            },
                             textInputType: TextInputType.text
                         ),SizedBox(height: 10),
                         accountTypeField(),
@@ -87,6 +114,7 @@ class BankDetailScreenState extends State<BankDetailScreen> {
                             validation: validation.validateIFSC,
                             controller: ifscController,
                             hintText: "Enter IFSC code",
+                            focusNode: f5,
                             textInputType: TextInputType.text
                         )
                       ],
