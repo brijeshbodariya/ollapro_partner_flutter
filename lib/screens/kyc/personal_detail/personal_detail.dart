@@ -19,7 +19,7 @@ class PersonalDetailScreen extends StatefulWidget {
   PersonalDetailScreenState createState() => PersonalDetailScreenState();
 }
 
-class PersonalDetailScreenState extends State<PersonalDetailScreen> {
+class PersonalDetailScreenState extends State<PersonalDetailScreen>   {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController fNameController = TextEditingController();
   TextEditingController lNameController = TextEditingController();
@@ -29,7 +29,6 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
 
   DateTime _dateTime;
   String pickedDate;
-  String dateFormatted;
   String dateCheck = "Select Date";
   bool _autoValidate = false;
   Validation validation;
@@ -39,42 +38,6 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
 
   PersonalDetailScreenViewModel model;
 
-  openDatePicker() {
-    DateTime currentDate = DateTime.now();
-    print(currentDate);
-    showDatePicker(
-            context: context,
-            initialDate: _dateTime == null ? DateTime.now() : _dateTime,
-            firstDate: DateTime(1950),
-            lastDate: DateTime(2022))
-        .then((getDate) {
-      setState(() {
-        if (getDate != null) {
-          var formatter = DateFormat('dd-MM-yyyy');
-          _dateTime = getDate;
-          pickedDate = formatter.format(_dateTime);
-          setState(() {
-            dobController.text = pickedDate;
-          });
-        } else {
-          print("Current date to before date not selected.");
-        }
-      });
-    });
-  }
-
-  void _validateInputs() {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => ContactDetailScreen()));
-    } else {
-      setState(() {
-        _autoValidate = true;
-        Utils.showToast("Please enter details");
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -184,6 +147,43 @@ class PersonalDetailScreenState extends State<PersonalDetailScreen> {
           buttonName: App.nextButton),
     );
   }
+  openDatePicker() {
+    DateTime currentDate = DateTime.now();
+    print(currentDate);
+    showDatePicker(
+        context: context,
+        initialDate: _dateTime == null ? DateTime.now() : _dateTime,
+        firstDate: DateTime(1950),
+        lastDate: DateTime(2022))
+        .then((getDate) {
+      setState(() {
+        if (getDate != null) {
+          var formatter = DateFormat('dd-MM-yyyy');
+          _dateTime = getDate;
+          pickedDate = formatter.format(_dateTime);
+          setState(() {
+            dobController.text = pickedDate;
+          });
+        } else {
+          print("Current date to before date not selected.");
+        }
+      });
+    });
+  }
+
+  void _validateInputs() {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => ContactDetailScreen()));
+    } else {
+      setState(() {
+        _autoValidate = true;
+        Utils.showToast("Please enter details");
+      });
+    }
+  }
+
 
   personalDetailText() {
     return Container(

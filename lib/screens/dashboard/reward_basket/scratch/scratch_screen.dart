@@ -11,18 +11,34 @@ class ScratchScreen extends StatefulWidget {
   ScratchScreenState createState() => ScratchScreenState();
 }
 
-class ScratchScreenState extends State<ScratchScreen> {
+class ScratchScreenState extends State<ScratchScreen>
+    with SingleTickerProviderStateMixin {
   ScratchScreenViewModel model;
   List<GridClaimReward> grid = List();
+  AnimationController _controller;
+  Animation<double> _animation;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _controller = AnimationController(
+        duration: const Duration(milliseconds: 1200), vsync: this);
+    _animation =
+        CurvedAnimation(parent: _controller, curve: Curves.bounceInOut);
+
+    _controller.forward();
+    super.initState();
     grid.add(GridClaimReward(App.laptopLogo, "RP - 40000"));
+    grid.add(GridClaimReward(App.phoneLogo, "RP - 36000"));
     grid.add(GridClaimReward(App.phoneLogo, "RP - 40000"));
-    grid.add(GridClaimReward(App.phoneLogo, "RP - 40000"));
-    grid.add(GridClaimReward(App.laptopLogo, "RP - 40000"));
+    grid.add(GridClaimReward(App.laptopLogo, "RP - 24000"));
+  }
+
+  @override
+  dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -30,14 +46,13 @@ class ScratchScreenState extends State<ScratchScreen> {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = ScratchScreenViewModel(this));
 
-
     return Scaffold(
       body: SafeArea(
         child: Container(
           color: primaryColor,
           child: Stack(
             children: [
-              appBarDash(context, App.claimRedeemTitle),
+              appBarReward(context, App.claimRedeemTitle),
               Container(
                 height: Utils.getDeviceHeight(context),
                 width: Utils.getDeviceWidth(context),
@@ -62,55 +77,58 @@ class ScratchScreenState extends State<ScratchScreen> {
                               fontFamily: App.font),
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(top: 20, left: 10, right: 10),
-                        child: GridView.count(
-                          scrollDirection: Axis.vertical,
-                          physics: NeverScrollableScrollPhysics(),
-                          childAspectRatio: 9.5/10,
-                          controller:
-                              new ScrollController(keepScrollOffset: false),
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 10.0,
-                          mainAxisSpacing: 10.0,
-                          shrinkWrap: true,
-                          children: List.generate(grid.length, (index) {
-                            return InkWell(
-                              onTap: () {
-                                getClickedReward(index);
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                    image: DecorationImage(
-                                        image: AssetImage(App.scratchLogo),
-                                        fit: BoxFit.cover)),
-                                child: Column(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: EdgeInsets.only(top: 30),
-                                      alignment: Alignment.center,
-                                      child: Image.asset(
-                                        grid[index].image,
-                                        height: 100,
-                                        width: 100,
+                      ScaleTransition(
+                        scale: _animation,
+                        child: Container(
+                          margin: EdgeInsets.only(top: 20, left: 10, right: 10),
+                          child: GridView.count(
+                            scrollDirection: Axis.vertical,
+                            physics: NeverScrollableScrollPhysics(),
+                            childAspectRatio: 9.5 / 10,
+                            controller:
+                                new ScrollController(keepScrollOffset: false),
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 10.0,
+                            mainAxisSpacing: 10.0,
+                            shrinkWrap: true,
+                            children: List.generate(grid.length, (index) {
+                              return InkWell(
+                                onTap: () {
+                                  getClickedReward(index);
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      image: DecorationImage(
+                                          image: AssetImage(App.scratchLogo),
+                                          fit: BoxFit.cover)),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Container(
+                                        margin: EdgeInsets.only(top: 30),
+                                        alignment: Alignment.center,
+                                        child: Image.asset(
+                                          grid[index].image,
+                                          height: 100,
+                                          width: 100,
+                                        ),
                                       ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(top: 10),
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        grid[index].price,
-                                        style: TextStyle(
-                                            color: white, fontSize: 25),
+                                      Container(
+                                        margin: EdgeInsets.only(top: 10),
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          grid[index].price,
+                                          style: TextStyle(
+                                              color: white, fontSize: 25),
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          }),
+                              );
+                            }),
+                          ),
                         ),
                       ),
                     ],

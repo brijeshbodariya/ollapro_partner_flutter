@@ -132,6 +132,7 @@ appBarKYC(context, route) {
               },
             ),
           ),
+          SizedBox(width: 10,),
           Container(
             margin: EdgeInsets.only(left: 10, top: 10),
             alignment: Alignment.center,
@@ -179,10 +180,11 @@ appBarDash(context, String title) {
               child: Image.asset(
                 App.arrowBack,
                 color: white,
-                height: 25,
-                width: 25,
+                height: 20,
+                width: 20,
               ),
             ),
+            SizedBox(width: 10,),
             Container(
               margin: EdgeInsets.only(left: 10),
               child: Text(
@@ -203,6 +205,35 @@ appBarDash(context, String title) {
                 width: 25,
               ),
             )),
+      ],
+    ),
+  );
+}
+appBarReward(context, String title) {
+  return Container(
+    margin: EdgeInsets.only(left: 10, top: 20),
+    child: Row(
+     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Image.asset(
+            App.arrowBack,
+            color: white,
+            height: 20,
+            width: 20,
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(left: 10),
+          child: Text(
+            title,
+            style:
+            TextStyle(color: white, fontFamily: App.font, fontSize: 20),
+          ),
+        ),
       ],
     ),
   );

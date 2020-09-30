@@ -4,10 +4,12 @@ import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/model/transactions.dart';
+import 'package:ollapro_partner/screens/dashboard/reward_basket/history_screen/history_screen.dart';
 import 'package:ollapro_partner/screens/dashboard/reward_basket/scratch/scratch_screen.dart';
 import 'package:ollapro_partner/screens/dashboard/reward_basket/transfer_screen/transfer_screen.dart';
 
 import 'reward_basket_screen_view_model.dart';
+import 'view_reward_screen/view_reward_screen.dart';
 import 'view_screen/view_screen.dart';
 
 class RewardBasketScreen extends StatefulWidget {
@@ -15,14 +17,30 @@ class RewardBasketScreen extends StatefulWidget {
   RewardBasketScreenState createState() => RewardBasketScreenState();
 }
 
-class RewardBasketScreenState extends State<RewardBasketScreen> {
+class RewardBasketScreenState extends State<RewardBasketScreen>
+    with SingleTickerProviderStateMixin {
   List<Transactions> list = List();
   RewardBasketViewModel model;
+  AnimationController animation;
+  Animation<double> _fadeInFadeOut;
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    animation.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    animation = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 1500),
+    );
+    _fadeInFadeOut = Tween<double>(begin: 0.0, end: 1).animate(animation);
+    animation.forward();
+    animation.addStatusListener((status) {});
     list.add(Transactions(
         App.transactionLogo, "Tx.IDHJ4542AD", "27/08/2020", "ASHJ5652"));
     list.add(Transactions(
@@ -41,7 +59,7 @@ class RewardBasketScreenState extends State<RewardBasketScreen> {
           color: primaryColor,
           child: Stack(
             children: [
-              appBarDash(context, App.rewardBasket),
+              appBarReward(context, App.rewardBasket),
               Container(
                 height: Utils.getDeviceHeight(context),
                 width: Utils.getDeviceWidth(context),
@@ -52,26 +70,29 @@ class RewardBasketScreenState extends State<RewardBasketScreen> {
                         topRight: Radius.circular(25)),
                     color: white),
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      blackCard(),
-                      yellowCard(),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        App.tranHistory,
-                        style: TextStyle(
-                            color: primaryColor,
-                            fontSize: 20,
-                            fontFamily: App.font,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      transactionsDetails(),
-                    ],
+                  child: FadeTransition(
+                    opacity: _fadeInFadeOut,
+                    child: Column(
+                      children: [
+                        blackCard(),
+                        yellowCard(),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          App.tranHistory,
+                          style: TextStyle(
+                              color: primaryColor,
+                              fontSize: 20,
+                              fontFamily: App.font,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        transactionsDetails(),
+                      ],
+                    ),
                   ),
                 ),
               )
@@ -234,7 +255,12 @@ class RewardBasketScreenState extends State<RewardBasketScreen> {
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(color: white)),
                   child: FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ViewRewardScreen()));
+                    },
                     child: Text(
                       App.view,
                       style: TextStyle(
@@ -250,10 +276,10 @@ class RewardBasketScreenState extends State<RewardBasketScreen> {
                       border: Border.all(color: white)),
                   child: FlatButton(
                     onPressed: () {
-                     /* Navigator.push(
+                      Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => OfferDetailsScreen()));*/
+                              builder: (context) => HistoryScreen()));
                     },
                     child: Text(
                       App.history,

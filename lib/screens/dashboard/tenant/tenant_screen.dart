@@ -13,12 +13,28 @@ class TenantScreen extends StatefulWidget {
   TenantScreenState createState() => TenantScreenState();
 }
 
-class TenantScreenState extends State<TenantScreen> {
+class TenantScreenState extends State<TenantScreen> with SingleTickerProviderStateMixin{
   TenantScreenViewModel model;
   List<NewLandLord> list = List();
+  AnimationController animation;
+  Animation<double> _fadeInFadeOut;
+
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    animation.dispose();
+    super.dispose();
+  }
+  @override
   void initState() {
+    animation = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 1500),
+    );
+    _fadeInFadeOut = Tween<double>(begin: 0.0, end: 1).animate(animation);
+    animation.forward();
+    animation.addStatusListener((status) {});
     // TODO: implement initState
     list.add(NewLandLord(App.tenantUSer, "Pawan Singh", "Civil Lines, Jaipur",
         "+91 1111111111"));
@@ -43,6 +59,7 @@ class TenantScreenState extends State<TenantScreen> {
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = TenantScreenViewModel(this));
+    animation.forward();
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -60,10 +77,13 @@ class TenantScreenState extends State<TenantScreen> {
                         topRight: Radius.circular(25)),
                     color: white),
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      listTenant(),
-                    ],
+                  child: FadeTransition(
+                    opacity: _fadeInFadeOut,
+                    child: Column(
+                      children: [
+                        listTenant(),
+                      ],
+                    ),
                   ),
                 ),
               )

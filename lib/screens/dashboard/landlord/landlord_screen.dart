@@ -14,13 +14,30 @@ class LandLordScreen extends StatefulWidget {
   LandLordScreenState createState() => LandLordScreenState();
 }
 
-class LandLordScreenState extends State<LandLordScreen> {
+class LandLordScreenState extends State<LandLordScreen>
+    with SingleTickerProviderStateMixin {
   LandLordScreenViewModel model;
-String _selection;
+  String _selection;
   List<NewLandLord> list = List();
+  AnimationController animation;
+  Animation<double> _fadeInFadeOut;
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    animation.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
+    animation = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 1500),
+    );
+    _fadeInFadeOut = Tween<double>(begin: 0.0, end: 1).animate(animation);
+    animation.forward();
+    animation.addStatusListener((status) {});
     // TODO: implement initState
     list.add(NewLandLord(App.tenantUSer, "Pawan Singh", "Civil Lines, Jaipur",
         "+91 1111111111"));
@@ -45,6 +62,7 @@ String _selection;
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = LandLordScreenViewModel(this));
+    animation.forward();
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -52,45 +70,45 @@ String _selection;
           child: Stack(
             children: [
               appBarDash(context, App.landlordTitle),
-             Container(
-               height: Utils.getDeviceHeight(context),
-               width: Utils.getDeviceWidth(context),
-               margin: EdgeInsets.only(top: 60),
-               decoration: BoxDecoration(
-                   borderRadius: BorderRadius.only(
-                       topLeft: Radius.circular(25),
-                       topRight: Radius.circular(25)),
-                   color: white),
-               child: SingleChildScrollView(
-                 child: Column(
-                   children: [
-                     listLandLord(),
-                   ],
-                 ),
-               ),
-             )
-
+              Container(
+                height: Utils.getDeviceHeight(context),
+                width: Utils.getDeviceWidth(context),
+                margin: EdgeInsets.only(top: 60),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25)),
+                    color: white),
+                child: SingleChildScrollView(
+                  child: FadeTransition(
+                    opacity: _fadeInFadeOut,
+                    child: Column(
+                      children: [
+                        listLandLord(),
+                      ],
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
         ),
       ),
-      bottomNavigationBar:  iconButton(context,
+      bottomNavigationBar: iconButton(context,
           buttonName: App.addNewLandLordButton,
-          imageName:App.addButton,
-          onPressed: (){
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => AddLandLordScreen()));
-          }),
+          imageName: App.addButton, onPressed: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => AddLandLordScreen()));
+      }),
     );
   }
 
   listLandLord() {
-    return  Container(
+    return Container(
       margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25),
-              topRight: Radius.circular(25)),
+              topLeft: Radius.circular(25), topRight: Radius.circular(25)),
           color: white),
       child: ListView.builder(
           shrinkWrap: true,
@@ -103,7 +121,7 @@ String _selection;
                 borderRadius: BorderRadius.circular(5),
                 color: grey1,
               ),
-              margin: EdgeInsets.only(left: 10,right: 10,top: 10),
+              margin: EdgeInsets.only(left: 10, right: 10, top: 10),
               height: 140,
               width: Utils.getDeviceWidth(context),
               child: Column(
@@ -142,7 +160,7 @@ String _selection;
                                     fontWeight: FontWeight.bold),
                               ),
                               Container(
-                                margin: const EdgeInsets.only(top:5.0),
+                                margin: const EdgeInsets.only(top: 5.0),
                                 child: Text(
                                   list[index].category,
                                   style: TextStyle(
@@ -153,7 +171,7 @@ String _selection;
                                 ),
                               ),
                               Container(
-                                margin: const EdgeInsets.only(top:5.0),
+                                margin: const EdgeInsets.only(top: 5.0),
                                 child: Text(
                                   list[index].phone,
                                   style: TextStyle(
@@ -171,8 +189,7 @@ String _selection;
                         children: [
                           Align(
                             alignment: Alignment.topRight,
-                            child:
-                            PopupMenuButton<String>(
+                            child: PopupMenuButton<String>(
                               onSelected: choiceAction,
                               itemBuilder: (BuildContext context) {
                                 return CustomPopUp.choices.map((String choice) {
@@ -204,7 +221,9 @@ String _selection;
                           child: Text(
                             'Edit Profile',
                             style: TextStyle(
-                                color: secondaryColor, fontFamily: App.font,fontWeight: FontWeight.bold),
+                                color: secondaryColor,
+                                fontFamily: App.font,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                         Container(
@@ -217,7 +236,9 @@ String _selection;
                           child: Text(
                             'View Profile',
                             style: TextStyle(
-                                color: secondaryColor, fontFamily: App.font,fontWeight: FontWeight.bold),
+                                color: secondaryColor,
+                                fontFamily: App.font,
+                                fontWeight: FontWeight.bold),
                           ),
                         )
                       ],
@@ -230,4 +251,3 @@ String _selection;
     );
   }
 }
-

@@ -14,7 +14,7 @@ class ContactDetailScreen extends StatefulWidget {
   ContactDetailScreenState createState() => ContactDetailScreenState();
 }
 
-class ContactDetailScreenState extends State<ContactDetailScreen> {
+class ContactDetailScreenState extends State<ContactDetailScreen>  {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController phoneController = TextEditingController(text: "+91");
   TextEditingController altPhoneController = TextEditingController(text: "+91");
@@ -36,8 +36,11 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
   @override
   void initState() {
     _states = List.from(_states)..addAll(repo.getStates());
+
     super.initState();
   }
+
+
 
   @override
   Widget build(BuildContext context) {

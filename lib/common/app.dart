@@ -87,6 +87,8 @@ class App {
   static const addNewTenantButton = "ADD NEW TENANT";
   static const addNewLandLordTitle = "Add New LandLord";
   static const addPropertyTitle = "Add New Property";
+  static const addNewPropertyTitle = "New Property List";
+  static const viewRewardTitle = "View Payouts";
   static const landmark = "Landmark(if any)";
   static const district = "District";
   static const propertyTitleText = "Property Title";

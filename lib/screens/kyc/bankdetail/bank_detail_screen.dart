@@ -25,20 +25,8 @@ class BankDetailScreenState extends State<BankDetailScreen> {
   bool _autoValidate = false;
   Validation validation;
 
-  void _validateInputs() {
-      if (_formKey.currentState.validate()) {
-        _formKey.currentState.save();
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ReferenceScreen()));
-      } else {
-        setState(() {
-          _autoValidate = true;
-          Utils.showToast("Please enter details");
-        });
-      }
-  }
+
+
   @override
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
@@ -126,6 +114,20 @@ class BankDetailScreenState extends State<BankDetailScreen> {
           buttonName2: App.nextButton,
           onPressed:_validateInputs ),
     );
+  }
+  void _validateInputs() {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ReferenceScreen()));
+    } else {
+      setState(() {
+        _autoValidate = true;
+        Utils.showToast("Please enter details");
+      });
+    }
   }
   bankDetailText() {
     return Container(

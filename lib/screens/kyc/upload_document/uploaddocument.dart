@@ -36,6 +36,7 @@ class UploadDocumentState extends State<UploadDocument> {
   Validation validation;
 
 
+
   @override
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
@@ -56,7 +57,6 @@ class UploadDocumentState extends State<UploadDocument> {
                     margin: EdgeInsets.only(top: 160),
                     child: Column(
                       children: [
-
                         //photo 1
                         commonPhotoField(context,
                         title: App.photo1,

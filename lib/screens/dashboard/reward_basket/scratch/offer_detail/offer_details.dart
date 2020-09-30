@@ -10,8 +10,31 @@ class OfferDetailsScreen extends StatefulWidget {
   OfferDetailsScreenState createState() => OfferDetailsScreenState();
 }
 
-class OfferDetailsScreenState extends State<OfferDetailsScreen> {
+class OfferDetailsScreenState extends State<OfferDetailsScreen>
+    with SingleTickerProviderStateMixin {
   OfferDetailScreenViewModel model;
+  AnimationController animation;
+  Animation<double> _fadeInFadeOut;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    animation = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 1500),
+    );
+    _fadeInFadeOut = Tween<double>(begin: 0.0, end: 1).animate(animation);
+    animation.forward();
+    animation.addStatusListener((status) {});
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    animation.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +46,7 @@ class OfferDetailsScreenState extends State<OfferDetailsScreen> {
           color: primaryColor,
           child: Stack(
             children: [
-              appBarDash(context, App.offerDetailTitle),
+              appBarReward(context, App.offerDetailTitle),
               Container(
                 height: Utils.getDeviceHeight(context),
                 width: Utils.getDeviceWidth(context),
@@ -34,34 +57,37 @@ class OfferDetailsScreenState extends State<OfferDetailsScreen> {
                         topRight: Radius.circular(25)),
                     color: white),
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20)),
-                        child: Image.asset(
-                          App.laptopWinnerLogo,
-                          height: Utils.getDeviceHeight(context) / 2.5,
-                          fit: BoxFit.cover,
-                          width: Utils.getDeviceWidth(context),
+                  child: FadeTransition(
+                    opacity: _fadeInFadeOut,
+                    child: Column(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20)),
+                          child: Image.asset(
+                            App.laptopWinnerLogo,
+                            height: Utils.getDeviceHeight(context) / 2.5,
+                            fit: BoxFit.cover,
+                            width: Utils.getDeviceWidth(context),
+                          ),
                         ),
-                      ),
-                      giftName(),
-                      giftDivideLine(),
-                      Container(
-                        margin: EdgeInsets.only(left: 10, top: 15),
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          App.offerDetailTitle,
-                          style: TextStyle(
-                              color: primaryColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),
+                        giftName(),
+                        giftDivideLine(),
+                        Container(
+                          margin: EdgeInsets.only(left: 10, top: 15),
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            App.offerDetailTitle,
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
+                          ),
                         ),
-                      ),
-                      giftDetails(),
-                    ],
+                        giftDetails(),
+                      ],
+                    ),
                   ),
                 ),
               )
@@ -71,13 +97,13 @@ class OfferDetailsScreenState extends State<OfferDetailsScreen> {
       ),
       bottomNavigationBar: Container(
         margin: EdgeInsets.only(top: 10),
-        child: commonButton(context,
+        child: commonButton(
+          context,
           buttonName: App.claimNowButton,
         ),
       ),
     );
   }
-
 
   giftName() {
     return Container(
@@ -156,7 +182,7 @@ class OfferDetailsScreenState extends State<OfferDetailsScreen> {
 
   giftDetails() {
     return Container(
-      margin: EdgeInsets.only(left: 10,top: 10),
+      margin: EdgeInsets.only(left: 10, top: 10),
       alignment: Alignment.topLeft,
       child: Column(
         children: [
@@ -169,29 +195,9 @@ class OfferDetailsScreenState extends State<OfferDetailsScreen> {
                 width: 20,
                 child: Image.asset(App.dotLogo),
               ),
-              SizedBox(width: 8,),
-              Flexible(
-                child: Text(
-                  "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups",
-                  textAlign: TextAlign.left,
-                  maxLines: 4,
-                    textDirection: TextDirection.ltr,
-                  style: TextStyle(
-                      color: primaryColor, fontSize: 15, fontFamily: App.font),
-                ),
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 20,
-                width: 20,
-                child: Image.asset(App.dotLogo),
+              SizedBox(
+                width: 8,
               ),
-              SizedBox(width: 8,),
               Flexible(
                 child: Text(
                   "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups",
@@ -213,7 +219,33 @@ class OfferDetailsScreenState extends State<OfferDetailsScreen> {
                 width: 20,
                 child: Image.asset(App.dotLogo),
               ),
-              SizedBox(width: 8,),
+              SizedBox(
+                width: 8,
+              ),
+              Flexible(
+                child: Text(
+                  "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups",
+                  textAlign: TextAlign.left,
+                  maxLines: 4,
+                  textDirection: TextDirection.ltr,
+                  style: TextStyle(
+                      color: primaryColor, fontSize: 15, fontFamily: App.font),
+                ),
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 20,
+                width: 20,
+                child: Image.asset(App.dotLogo),
+              ),
+              SizedBox(
+                width: 8,
+              ),
               Flexible(
                 child: Text(
                   "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups",

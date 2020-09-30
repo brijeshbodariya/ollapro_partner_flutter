@@ -11,7 +11,8 @@ class AddLandLordScreen extends StatefulWidget {
   AddLandLordScreenState createState() => AddLandLordScreenState();
 }
 
-class AddLandLordScreenState extends State<AddLandLordScreen> {
+class AddLandLordScreenState extends State<AddLandLordScreen>
+    with SingleTickerProviderStateMixin {
   AddLandLordScreenViewModel model;
   TextEditingController fNameController = TextEditingController();
   TextEditingController lNameController = TextEditingController();
@@ -25,18 +26,38 @@ class AddLandLordScreenState extends State<AddLandLordScreen> {
   bool _autoValidate = false;
   Validation validation;
 
+  AnimationController _controller;
+  Animation<double> _animation;
+
+  @override
+  void initState() {
+    _controller = AnimationController(
+        duration: const Duration(milliseconds: 1500), vsync: this, value: 0.1);
+    _animation =
+        CurvedAnimation(parent: _controller, curve: Curves.bounceInOut);
+
+    _controller.forward();
+    super.initState();
+  }
+
+  @override
+  dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   void _validateInputs() {
-      if (_formKey.currentState.validate()) {
-        _formKey.currentState.save();
-        Utils.showToast("Success");
-        /* Navigator.push(context,
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      Utils.showToast("Success");
+      /* Navigator.push(context,
             MaterialPageRoute(builder: (context) => ContactDetailScreen()));*/
-      } else {
-        setState(() {
-          _autoValidate = true;
-          Utils.showToast("Please enter details");
-        });
-      }
+    } else {
+      setState(() {
+        _autoValidate = true;
+        Utils.showToast("Please enter details");
+      });
+    }
   }
 
   @override
@@ -54,7 +75,7 @@ class AddLandLordScreenState extends State<AddLandLordScreen> {
               Container(
                 height: Utils.getDeviceHeight(context),
                 width: Utils.getDeviceWidth(context),
-                margin: EdgeInsets.only(top: 55),
+                margin: EdgeInsets.only(top: 60),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(25),
@@ -64,88 +85,91 @@ class AddLandLordScreenState extends State<AddLandLordScreen> {
                   child: Form(
                     key: _formKey,
                     autovalidate: _autoValidate,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        //firstName
-                        commonTextField(
-                            title: App.fName,
-                            validation: validation.validateFirstName,
-                            controller: fNameController,
-                            hintText: "Enter First Name",
-                            textInputType: TextInputType.text),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 10),
-                          width: Utils.getDeviceWidth(context),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              //middle name
-                              Expanded(
-                                flex: 1,
-                                child: commonTextField(
-                                    title: App.mName,
-                                    validation: validation.validateMiddleName,
-                                    controller: mNameController,
-                                    hintText: "Enter Middle Name",
-                                    textInputType: TextInputType.text),
-                              ),
-                              //lastname
-                              Expanded(
-                                flex: 1,
-                                child: commonTextField(
-                                    title: App.lName,
-                                    validation: validation.validateLastName,
-                                    controller: lNameController,
-                                    hintText: "Enter last Name",
-                                    textInputType: TextInputType.text),
-                              ),
-                            ],
+                    child: ScaleTransition(
+                      scale: _animation,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 10,
                           ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        //email
-                        commonTextField(
-                            title: App.emailAddress,
-                            validation: validation.validateEmail,
-                            controller: emailController,
-                            hintText: "Enter Email",
-                            textInputType: TextInputType.emailAddress),
-                        SizedBox(height: 10),
-                        //phone number
-                        commonTextField(
-                            title: App.mobileNumber,
-                            validation: validation.validatePhone,
-                            controller: phoneController,
-                            hintText: "Enter Phone NUmber",
-                            textInputType: TextInputType.phone),
-                        SizedBox(height: 10),
-                        //aadhar card
-                        commonTextField(
-                            title: App.aadhar,
-                            validation: validation.validateAadhar,
-                            controller: aadharController,
-                            hintText: "Enter Aadhar NUmber",
-                            textInputType: TextInputType.phone),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        // address
-                        commonTextField(
-                            title: App.communicationAddress,
-                            controller: add1Controller,
-                            validation: validation.validateAddress1Name,
-                            hintText: "Enter Address 1",
-                            textInputType: TextInputType.text),
-                        add2Field(),
-                      ],
+                          //firstName
+                          commonTextField(
+                              title: App.fName,
+                              validation: validation.validateFirstName,
+                              controller: fNameController,
+                              hintText: "Enter First Name",
+                              textInputType: TextInputType.text),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 10),
+                            width: Utils.getDeviceWidth(context),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                //middle name
+                                Expanded(
+                                  flex: 1,
+                                  child: commonTextField(
+                                      title: App.mName,
+                                      validation: validation.validateMiddleName,
+                                      controller: mNameController,
+                                      hintText: "Enter Middle Name",
+                                      textInputType: TextInputType.text),
+                                ),
+                                //lastname
+                                Expanded(
+                                  flex: 1,
+                                  child: commonTextField(
+                                      title: App.lName,
+                                      validation: validation.validateLastName,
+                                      controller: lNameController,
+                                      hintText: "Enter last Name",
+                                      textInputType: TextInputType.text),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          //email
+                          commonTextField(
+                              title: App.emailAddress,
+                              validation: validation.validateEmail,
+                              controller: emailController,
+                              hintText: "Enter Email",
+                              textInputType: TextInputType.emailAddress),
+                          SizedBox(height: 10),
+                          //phone number
+                          commonTextField(
+                              title: App.mobileNumber,
+                              validation: validation.validatePhone,
+                              controller: phoneController,
+                              hintText: "Enter Phone NUmber",
+                              textInputType: TextInputType.phone),
+                          SizedBox(height: 10),
+                          //aadhar card
+                          commonTextField(
+                              title: App.aadhar,
+                              validation: validation.validateAadhar,
+                              controller: aadharController,
+                              hintText: "Enter Aadhar NUmber",
+                              textInputType: TextInputType.phone),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          // address
+                          commonTextField(
+                              title: App.communicationAddress,
+                              controller: add1Controller,
+                              validation: validation.validateAddress1Name,
+                              hintText: "Enter Address 1",
+                              textInputType: TextInputType.text),
+                          add2Field(),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -156,7 +180,8 @@ class AddLandLordScreenState extends State<AddLandLordScreen> {
       ),
       bottomNavigationBar: Container(
         margin: EdgeInsets.only(top: 10),
-        child: commonButton(context,
+        child: commonButton(
+          context,
           onPressed: _validateInputs,
           buttonName: App.submitButton,
         ),
@@ -172,7 +197,7 @@ class AddLandLordScreenState extends State<AddLandLordScreen> {
             _validateInputs();
           },
           child: Container(
-            margin: EdgeInsets.only(left: 10, right: 10,bottom: 10),
+            margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
             alignment: Alignment.center,
             height: 50,
             width: Utils.getDeviceWidth(context) / 2.5,

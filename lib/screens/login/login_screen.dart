@@ -14,7 +14,7 @@ class LoginScreen extends StatefulWidget {
   LoginScreenState createState() => LoginScreenState();
 }
 
-class LoginScreenState extends State<LoginScreen> {
+class LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController phoneController = TextEditingController(text: "+91");
   TextEditingController passwordController = TextEditingController();
@@ -29,6 +29,8 @@ class LoginScreenState extends State<LoginScreen> {
       _obscureText = !_obscureText;
     });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +101,6 @@ class LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     rememberPassword(),
-
                     //login button
                     commonButton(context,
                     onPressed:  _validateInputs,

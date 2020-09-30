@@ -14,7 +14,7 @@ class ReferenceScreen extends StatefulWidget {
   ReferenceScreenState createState() => ReferenceScreenState();
 }
 
-class ReferenceScreenState extends State<ReferenceScreen> {
+class ReferenceScreenState extends State<ReferenceScreen>   {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   ReferenceViewModel model;
   TextEditingController nameController = TextEditingController();
@@ -26,19 +26,8 @@ class ReferenceScreenState extends State<ReferenceScreen> {
   bool _autoValidate = false;
   Validation validation;
 
-  void _validateInputs() {
-      if (_formKey.currentState.validate()) {
-        _formKey.currentState.save();
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => UploadDocument()));
-      } else {
-        setState(() {
-          _autoValidate = true;
-          Utils.showToast("Please enter details");
-        });
 
-    }
-  }
+
   @override
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
@@ -149,6 +138,19 @@ class ReferenceScreenState extends State<ReferenceScreen> {
           buttonName2: App.nextButton,
           onPressed:_validateInputs ),
       );
+  }
+  void _validateInputs() {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => UploadDocument()));
+    } else {
+      setState(() {
+        _autoValidate = true;
+        Utils.showToast("Please enter details");
+      });
+
+    }
   }
   referenceDetailText() {
     return Container(

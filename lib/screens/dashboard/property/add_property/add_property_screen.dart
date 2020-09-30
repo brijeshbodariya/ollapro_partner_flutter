@@ -23,7 +23,7 @@ class AddPropertyScreen extends StatefulWidget {
   AddPropertyScreenState createState() => AddPropertyScreenState();
 }
 
-class AddPropertyScreenState extends State<AddPropertyScreen> {
+class AddPropertyScreenState extends State<AddPropertyScreen> with SingleTickerProviderStateMixin{
   List<Model> list = List();
   TextEditingController pincodeController = TextEditingController();
   TextEditingController placeController = TextEditingController();
@@ -37,6 +37,16 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
   Validation validation;
+
+  AnimationController _controller;
+  Animation<double> _animation;
+
+
+  @override
+  dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   void _validateInputs() {
       if (_formKey.currentState.validate() && image1 != null) {
@@ -135,6 +145,12 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
 
   @override
   void initState() {
+    _controller = AnimationController(
+        duration: const Duration(milliseconds: 1500), vsync: this, value: 0.1);
+    _animation =
+        CurvedAnimation(parent: _controller, curve: Curves.bounceInOut);
+
+    _controller.forward();
     _states = List.from(_states)..addAll(repo.getStates());
     setState(() {
       list.add(Model(App.checkedButtonLogo, App.residential));
@@ -162,7 +178,7 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
               Container(
                 height: Utils.getDeviceHeight(context),
                 width: Utils.getDeviceWidth(context),
-                margin: EdgeInsets.only(top: 55),
+                margin: EdgeInsets.only(top: 60),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(25),
@@ -172,104 +188,107 @@ class AddPropertyScreenState extends State<AddPropertyScreen> {
                   child: Form(
                     key: _formKey,
                     autovalidate: _autoValidate,
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 10, top: 15),
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            App.location,
-                            style: TextStyle(
-                                color: primaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18),
+                    child: ScaleTransition(
+                      scale: _animation,
+                      child: Column(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(left: 10, top: 15),
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              App.location,
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        //pincode
-                        commonTextField(
-                            title: App.pinCode,
-                            validation: validation.validatePinCode,
-                            controller: pincodeController,
-                            hintText: "Enter Pincode",
-                            textInputType: TextInputType.phone),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        stateSelect(),
-                        citySelect(),
-                        //place
-                        commonTextField(
-                            title: App.place,
-                            validation: validation.validatePlace,
-                            controller: placeController,
-                            hintText: "Enter Place here",
-                            textInputType: TextInputType.text),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        //communication address
-                        commonTextField(
-                            title: App.communicationAddress,
-                            controller: add1Controller,
-                            validation: validation.validateAddress1Name,
-                            hintText: "Enter Address 1",
-                            textInputType: TextInputType.text),
-                        add2Field(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        //landmark if any
-                        commonTextField(
-                            title: App.landmark,
-                            validation: validation.validateAddress1Name,
-                            controller: landMarkController,
-                            hintText: "Enter LandMark",
-                            textInputType: TextInputType.text),
-                        SizedBox(height: 10),
-                        Container(
-                          margin: EdgeInsets.only(left: 10, top: 15),
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            App.typeOfAcc,
-                            style: TextStyle(
-                                color: primaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18),
+                          SizedBox(
+                            height: 10,
                           ),
-                        ),
-                        Container(
-                          alignment: Alignment.topLeft,
-                          margin: EdgeInsets.only(left: 15, top: 15),
-                          child: Text(
-                            App.selectType,
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: secondaryColor,
-                                fontFamily: App.font),
+                          //pincode
+                          commonTextField(
+                              title: App.pinCode,
+                              validation: validation.validatePinCode,
+                              controller: pincodeController,
+                              hintText: "Enter Pincode",
+                              textInputType: TextInputType.phone),
+                          SizedBox(
+                            height: 10,
                           ),
-                        ),
-                        //check box
-                        ListView.builder(
-                            itemCount: list.length,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return typeOfAcc(index);
-                            }),
-                        SizedBox(height: 10),
-                        //property title
-                        commonTextField(
-                            title: App.propertyTitleText,
-                            validation: validation.validateProperty,
-                            controller: propertyController,
-                            hintText: "Enter Property",
-                            textInputType: TextInputType.phone),
-                        SizedBox(height: 10),
-                        uploadPicture(),
-                      ],
+                          stateSelect(),
+                          citySelect(),
+                          //place
+                          commonTextField(
+                              title: App.place,
+                              validation: validation.validatePlace,
+                              controller: placeController,
+                              hintText: "Enter Place here",
+                              textInputType: TextInputType.text),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          //communication address
+                          commonTextField(
+                              title: App.communicationAddress,
+                              controller: add1Controller,
+                              validation: validation.validateAddress1Name,
+                              hintText: "Enter Address 1",
+                              textInputType: TextInputType.text),
+                          add2Field(),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          //landmark if any
+                          commonTextField(
+                              title: App.landmark,
+                              validation: validation.validateAddress1Name,
+                              controller: landMarkController,
+                              hintText: "Enter LandMark",
+                              textInputType: TextInputType.text),
+                          SizedBox(height: 10),
+                          Container(
+                            margin: EdgeInsets.only(left: 10, top: 15),
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              App.typeOfAcc,
+                              style: TextStyle(
+                                  color: primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.topLeft,
+                            margin: EdgeInsets.only(left: 15, top: 15),
+                            child: Text(
+                              App.selectType,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: secondaryColor,
+                                  fontFamily: App.font),
+                            ),
+                          ),
+                          //check box
+                          ListView.builder(
+                              itemCount: list.length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return typeOfAcc(index);
+                              }),
+                          SizedBox(height: 10),
+                          //property title
+                          commonTextField(
+                              title: App.propertyTitleText,
+                              validation: validation.validateProperty,
+                              controller: propertyController,
+                              hintText: "Enter Property",
+                              textInputType: TextInputType.phone),
+                          SizedBox(height: 10),
+                          uploadPicture(),
+                        ],
+                      ),
                     ),
                   ),
                 ),

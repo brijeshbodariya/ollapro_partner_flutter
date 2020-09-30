@@ -3,16 +3,16 @@ import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/model/transactions.dart';
-import 'package:ollapro_partner/screens/dashboard/reward_basket/view_screen/view_screen_view_model.dart';
+import 'package:ollapro_partner/screens/dashboard/reward_basket/view_reward_screen/view_reward_screen_view_model.dart';
 
-class ViewScreen extends StatefulWidget {
+class ViewRewardScreen extends StatefulWidget {
   @override
-  ViewScreenState createState() => ViewScreenState();
+  ViewRewardScreenState createState() => ViewRewardScreenState();
 }
 
-class ViewScreenState extends State<ViewScreen>
+class ViewRewardScreenState extends State<ViewRewardScreen>
     with SingleTickerProviderStateMixin {
-  ViewScreenViewModel model;
+  ViewRewardScreenViewModel model;
   List<Transactions> list = List();
   AnimationController animation;
   Animation<double> _fadeInFadeOut;
@@ -48,14 +48,14 @@ class ViewScreenState extends State<ViewScreen>
   @override
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
-    model ?? (model = ViewScreenViewModel(this));
+    model ?? (model = ViewRewardScreenViewModel(this));
     return Scaffold(
       body: SafeArea(
         child: Container(
           color: primaryColor,
           child: Stack(
             children: [
-              appBarDash(context, App.view),
+              appBarReward(context, App.viewRewardTitle),
               Container(
                 height: Utils.getDeviceHeight(context),
                 width: Utils.getDeviceWidth(context),
@@ -70,7 +70,7 @@ class ViewScreenState extends State<ViewScreen>
                     opacity: _fadeInFadeOut,
                     child: Column(
                       children: [
-                        blackCard(),
+                        yellowCard(),
                         SizedBox(
                           height: 20,
                         ),
@@ -128,7 +128,7 @@ class ViewScreenState extends State<ViewScreen>
     );
   }
 
-  blackCard() {
+  yellowCard() {
     return Container(
       width: Utils.getDeviceWidth(context),
       height: 150,
@@ -136,7 +136,7 @@ class ViewScreenState extends State<ViewScreen>
       decoration: new BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         image: DecorationImage(
-          image: AssetImage(App.blackCard),
+          image: AssetImage(App.yellowCard),
           fit: BoxFit.cover,
         ),
       ),

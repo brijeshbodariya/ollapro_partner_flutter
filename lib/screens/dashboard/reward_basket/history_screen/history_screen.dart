@@ -3,16 +3,17 @@ import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/common_widgets.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/model/transactions.dart';
-import 'package:ollapro_partner/screens/dashboard/reward_basket/view_screen/view_screen_view_model.dart';
 
-class ViewScreen extends StatefulWidget {
+import 'history_screen_view_model.dart';
+
+class HistoryScreen extends StatefulWidget {
   @override
-  ViewScreenState createState() => ViewScreenState();
+  HistoryScreenState createState() => HistoryScreenState();
 }
 
-class ViewScreenState extends State<ViewScreen>
+class HistoryScreenState extends State<HistoryScreen>
     with SingleTickerProviderStateMixin {
-  ViewScreenViewModel model;
+  HistoryScreenViewModel model;
   List<Transactions> list = List();
   AnimationController animation;
   Animation<double> _fadeInFadeOut;
@@ -48,128 +49,35 @@ class ViewScreenState extends State<ViewScreen>
   @override
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
-    model ?? (model = ViewScreenViewModel(this));
+    model ?? (model = HistoryScreenViewModel(this));
     return Scaffold(
       body: SafeArea(
         child: Container(
           color: primaryColor,
           child: Stack(
             children: [
-              appBarDash(context, App.view),
+              appBarReward(context, App.history),
               Container(
-                height: Utils.getDeviceHeight(context),
-                width: Utils.getDeviceWidth(context),
-                margin: EdgeInsets.only(top: 60),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25)),
-                    color: white),
-                child: SingleChildScrollView(
-                  child: FadeTransition(
-                    opacity: _fadeInFadeOut,
-                    child: Column(
-                      children: [
-                        blackCard(),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          App.tranHistory,
-                          style: TextStyle(
-                              color: primaryColor,
-                              fontSize: 20,
-                              fontFamily: App.font,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        transactionsDetails(),
-                      ],
+                  height: Utils.getDeviceHeight(context),
+                  width: Utils.getDeviceWidth(context),
+                  margin: EdgeInsets.only(top: 60),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25),
+                          topRight: Radius.circular(25)),
+                      color: white),
+                  child: SingleChildScrollView(
+                    child: FadeTransition(
+                      opacity: _fadeInFadeOut,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 15),
+                        child: transactionsDetails(),
+                      ),
                     ),
-                  ),
-                ),
-              ),
+                  ))
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  appBar() {
-    return Container(
-      height: 50,
-      margin: EdgeInsets.only(left: 10),
-      child: Row(
-        children: [
-          InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Image.asset(
-              App.arrowBack,
-              color: white,
-              height: 25,
-              width: 25,
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 10),
-            child: Text(
-              App.view,
-              style:
-                  TextStyle(color: white, fontFamily: App.font, fontSize: 20),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  blackCard() {
-    return Container(
-      width: Utils.getDeviceWidth(context),
-      height: 150,
-      margin: EdgeInsets.only(top: 30, left: 10, right: 10),
-      decoration: new BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        image: DecorationImage(
-          image: AssetImage(App.blackCard),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Column(
-        children: [
-          Container(
-              margin: EdgeInsets.only(top: 20),
-              child: Text(
-                App.payout,
-                style:
-                    TextStyle(color: white, fontSize: 18, fontFamily: App.font),
-              )),
-          Container(
-              margin: EdgeInsets.only(top: 10),
-              child: Text(
-                App.balance,
-                style: TextStyle(
-                    color: white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: App.font),
-              )),
-          Container(
-              margin: EdgeInsets.only(top: 20),
-              child: Text(
-                "10000.01",
-                style: TextStyle(
-                    color: white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: App.font),
-              )),
-        ],
       ),
     );
   }

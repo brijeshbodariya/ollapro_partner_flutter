@@ -6,6 +6,7 @@ import 'package:ollapro_partner/model/newPropertiesList.dart';
 import 'package:ollapro_partner/model/nonVerifiedTenant.dart';
 import 'package:ollapro_partner/screens/dashboard/dashboard_screen_view_model.dart';
 import 'package:ollapro_partner/screens/dashboard/landlord/landlord_screen.dart';
+import 'package:ollapro_partner/screens/dashboard/new_list_properties_sell_all/new_list_property_screen.dart';
 import 'package:ollapro_partner/screens/dashboard/property/tab_property_screen.dart';
 import 'package:ollapro_partner/screens/dashboard/reward_basket/reward_basket_screen.dart';
 import 'package:ollapro_partner/screens/dashboard/tenant/tenant_screen.dart';
@@ -15,14 +16,28 @@ class DashBoardScreen extends StatefulWidget {
   DashBoardScreenState createState() => DashBoardScreenState();
 }
 
-class DashBoardScreenState extends State<DashBoardScreen> {
+class DashBoardScreenState extends State<DashBoardScreen>
+    with SingleTickerProviderStateMixin {
   DashBoardScreenViewModel model;
   List<NewPropertyList> list = List();
   List<NonVerifiedTenant> list1 = List();
 
+  AnimationController _controller;
+  Animation<double> _animation;
+
   @override
   void initState() {
     // TODO: implement initState
+    _controller = AnimationController(
+        duration: const Duration(milliseconds: 3000),
+        vsync: this,
+        value: 0,
+        lowerBound: 0,
+        upperBound: 1);
+    _animation =
+        CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn);
+
+    _controller.forward();
 
     //new properties list
     list.add(NewPropertyList(
@@ -49,9 +64,16 @@ class DashBoardScreenState extends State<DashBoardScreen> {
   }
 
   @override
+  dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     print("runtimeType -> " + runtimeType.toString());
     model ?? (model = DashBoardScreenViewModel(this));
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -115,74 +137,79 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                   ],
                 );
               });
-
           return value == true;
         },
         child: SafeArea(
-          child: ListView(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            children: [
-              Stack(
-                alignment: Alignment.topCenter,
-                children: [
-                  Column(
-                    children: [
-                      Container(
-                        height: 180,
-                        child: Stack(
-                          children: [
-                            Image.asset(
-                              App.dashBoardBg,
-                              fit: BoxFit.fitWidth,
-                              width: MediaQuery.of(context).size.width,
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: 10),
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Saurabh Kumar",
-                                style: TextStyle(
-                                    color: white,
-                                    fontFamily: App.font,
-                                    fontSize: 20),
+          child: FadeTransition(
+            opacity: _animation,
+            child: ListView(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              children: [
+                Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    Column(
+                      children: [
+                        Container(
+                          height: 180,
+                          child: Stack(
+                            children: [
+                              Image.asset(
+                                App.dashBoardBg,
+                                fit: BoxFit.fitWidth,
+                                width: MediaQuery.of(context).size.width,
                               ),
-                            ),
-                          ],
+                              Container(
+                                margin: EdgeInsets.only(top: 10),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "Saurabh Kumar",
+                                  style: TextStyle(
+                                      color: white,
+                                      fontFamily: App.font,
+                                      fontSize: 20),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        color: grey1,
-                        child: Column(
-                          children: [
-                            propertyColumn(),
-                            SizedBox(
-                              height: 6,
-                            ),
-                            listProperySelectColumn(),
-                            SizedBox(
-                              height: 6,
-                            ),
-                            listPropertyColumn(),
-                            SizedBox(
-                              height: 6,
-                            ),
-                            nonVerifiedTenantColumn(),
-                            rewardBasketImage(),
-                          ],
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          color: grey1,
+                          child: Column(
+                            children: [
+                              propertyColumn(),
+                              SizedBox(
+                                height: 6,
+                              ),
+                              listProperySelectColumn(),
+                              SizedBox(
+                                height: 6,
+                              ),
+                              listPropertyColumn(),
+                              SizedBox(
+                                height: 6,
+                              ),
+                              nonVerifiedTenantColumn(),
+                              SizedBox(
+                                height: 6,
+                              ),
+                              rewardBasketImage(),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 120),
-                    child: userImage(),
-                  )
-                  // userImage()
-                ],
-              )
-            ],
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 120),
+                      child: userImage(),
+                    )
+                    // userImage()
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -199,6 +226,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
             image: new DecorationImage(
                 fit: BoxFit.fill, image: AssetImage(App.userImage))));
   }
+
   propertyColumn() {
     return Container(
       decoration: BoxDecoration(
@@ -313,6 +341,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
       ),
     );
   }
+
   listProperySelectColumn() {
     return Container(
       decoration: BoxDecoration(
@@ -417,7 +446,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                       builder: (context) => RewardBasketScreen()));
             },
             child: Container(
-              margin: EdgeInsets.only(top: 20, bottom: 20,right: 10),
+              margin: EdgeInsets.only(top: 20, bottom: 20, right: 10),
               child: Column(
                 children: [
                   Container(
@@ -444,6 +473,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
       ),
     );
   }
+
   listPropertyColumn() {
     return Container(
       height: 240,
@@ -467,7 +497,13 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                 Row(
                   children: [
                     InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      NewListPropertyScreen()));
+                        },
                         child: Text(
                           App.seeAll,
                           style: TextStyle(
@@ -558,6 +594,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
       ),
     );
   }
+
   nonVerifiedTenantColumn() {
     return Container(
       color: white,
@@ -629,8 +666,13 @@ class DashBoardScreenState extends State<DashBoardScreen> {
       ),
     );
   }
+
   rewardBasketImage() {
-    return Container(
+    return InkWell(
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => RewardBasketScreen()));
+      },
       child: Image.asset(
         App.bannerDashLogo,
         height: 150,
