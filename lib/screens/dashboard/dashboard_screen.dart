@@ -5,14 +5,18 @@ import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/model/newPropertiesList.dart';
 import 'package:ollapro_partner/model/nonVerifiedTenant.dart';
 import 'package:ollapro_partner/screens/dashboard/dashboard_screen_view_model.dart';
+import 'package:ollapro_partner/screens/dashboard/drawer/change_password/chnage_password_screen.dart';
+import 'package:ollapro_partner/screens/dashboard/drawer/help_support/help_support_screen.dart';
+import 'package:ollapro_partner/screens/dashboard/drawer/refer_earn/refer_earn_screen.dart';
+import 'package:ollapro_partner/screens/dashboard/drawer/setting/setting_screen.dart';
 import 'package:ollapro_partner/screens/dashboard/landlord/landlord_screen.dart';
 import 'package:ollapro_partner/screens/dashboard/new_list_properties_sell_all/new_list_property_screen.dart';
 import 'package:ollapro_partner/screens/dashboard/notification/notification_screen.dart';
 import 'package:ollapro_partner/screens/dashboard/property/tab_property_screen.dart';
+import 'package:ollapro_partner/screens/dashboard/property_detail/property_detail_screen.dart';
 import 'package:ollapro_partner/screens/dashboard/reward_basket/reward_basket_screen.dart';
 import 'package:ollapro_partner/screens/dashboard/tenant/tenant_screen.dart';
-
-import 'drawer/profile_screen.dart';
+import 'drawer/my_profile/my_profile_screen.dart';
 import 'non_verified_tenant_sellall/non_verfied_tenant_sellall_screen.dart';
 
 class DashBoardScreen extends StatefulWidget {
@@ -89,7 +93,7 @@ class DashBoardScreenState extends State<DashBoardScreen>
         ),
         leading: Container(
           child: InkWell(
-            onTap: (){
+            onTap: () {
               _scaffoldKey.currentState.openDrawer();
             },
             child: Image.asset(
@@ -102,9 +106,7 @@ class DashBoardScreenState extends State<DashBoardScreen>
           Container(
             margin: EdgeInsets.only(right: 15),
             child: InkWell(
-              onTap: () {
-
-              },
+              onTap: () {},
               child: Image.asset(
                 App.shareLogo,
                 height: 20,
@@ -116,7 +118,10 @@ class DashBoardScreenState extends State<DashBoardScreen>
               margin: EdgeInsets.only(right: 15),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> NotificationScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NotificationScreen()));
                 },
                 child: Image.asset(
                   App.notificationLogo,
@@ -201,11 +206,11 @@ class DashBoardScreenState extends State<DashBoardScreen>
                               SizedBox(
                                 height: 6,
                               ),
-                              listProperySelectColumn(),
+                              listProperty(),
                               SizedBox(
                                 height: 6,
                               ),
-                              newListPropertyColumn(),
+                              newListProperty(),
                               SizedBox(
                                 height: 6,
                               ),
@@ -233,6 +238,7 @@ class DashBoardScreenState extends State<DashBoardScreen>
       ),
     );
   }
+
   getDrawer() {
     return ListView(
       children: [
@@ -241,12 +247,10 @@ class DashBoardScreenState extends State<DashBoardScreen>
             Container(
               width: MediaQuery.of(context).size.width,
               decoration: new BoxDecoration(
-                color: yellow
-                  // image: new DecorationImage(
-                  //   image: new AssetImage(App.userImage),
-                  //   fit: BoxFit.fill,
-                  // )
-              ),
+                  image: new DecorationImage(
+                image: new AssetImage(App.bgDrawerLogo),
+                fit: BoxFit.fill,
+              )),
               child: Column(
                 children: [
                   Container(
@@ -257,13 +261,17 @@ class DashBoardScreenState extends State<DashBoardScreen>
                           border: Border.all(color: yellow, width: 3),
                           shape: BoxShape.circle,
                           image: new DecorationImage(
-                              fit: BoxFit.fill, image: AssetImage(App.userImage)))),
+                              fit: BoxFit.fill,
+                              image: AssetImage(App.userImage)))),
                   Container(
                     margin: EdgeInsets.only(top: 10),
                     child: Text(
                       'Saurabh Kumar',
                       style: TextStyle(
-                          fontFamily: App.font, fontSize: 17, color: white,fontWeight: FontWeight.bold),
+                          fontFamily: App.font,
+                          fontSize: 17,
+                          color: white,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                   Container(
@@ -284,54 +292,86 @@ class DashBoardScreenState extends State<DashBoardScreen>
             App.dashboardDrawer,
             style: TextStyle(
               fontFamily: App.font,
-              fontSize: 15,
+              fontSize: 16,
             ),
           ),
-          leading: Icon(Icons.restaurant_menu),
-         // leading:  Image.asset(App.userImage,height: 20,width: 20,),
+          leading: Image.asset(
+            App.dashboardDrawerLogo,
+            height: 20,
+            width: 20,
+          ),
           trailing: Wrap(
             spacing: 12, // space between two icons
             children: <Widget>[
-              Image.asset(App.rightSideArrowLogo,color: secondaryColor,),
+              Image.asset(
+                App.rightSideArrowLogo,
+                height: 15,
+                width: 15,
+              ),
             ],
           ),
           onTap: () {
-           /* Navigator.push(context, MaterialPageRoute(
+            /* Navigator.push(context, MaterialPageRoute(
                 builder: (context)=> ProfileScreen()
             ));*/
           },
         ),
-       Divider(),
+        Container(
+          color: grey,
+          height: 1,
+          margin: EdgeInsets.only(left: 70, right: 20),
+        ),
         ListTile(
           title: Text(
             App.myProfileDrawer,
             style: TextStyle(
               fontFamily: App.font,
-              fontSize: 15,
+              fontSize: 16,
             ),
           ),
-          leading: Icon(Icons.calendar_today),
+          leading: Image.asset(
+            App.profileDrawerLogo,
+            height: 20,
+            width: 20,
+          ),
           trailing: Wrap(
             spacing: 12, // space between two icons
             children: <Widget>[
-              Image.asset(App.rightSideArrowLogo,color: secondaryColor,),
+              Image.asset(
+                App.rightSideArrowLogo,
+                height: 15,
+                width: 15,
+              ),
             ],
           ),
           onTap: () {
-           Navigator.push(context, MaterialPageRoute(builder: (context)=> MyProfileScreen()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => MyProfileScreen()));
           },
         ),
-        Divider(),
+        Container(
+          color: grey,
+          height: 1,
+          margin: EdgeInsets.only(left: 70, right: 20),
+        ),
         ListTile(
           title: Text(
             App.aboutDrawer,
-            style: TextStyle(fontFamily: App.font, fontSize: 15),
+            style: TextStyle(fontFamily: App.font, fontSize: 16),
           ),
-          leading: Icon(Icons.label_outline),
+          leading: Image.asset(
+            App.aboutDrawerLogo,
+            height: 20,
+            width: 20,
+          ),
           trailing: Wrap(
             spacing: 12, // space between two icons
             children: <Widget>[
-              Image.asset(App.rightSideArrowLogo,color: secondaryColor,),
+              Image.asset(
+                App.rightSideArrowLogo,
+                height: 15,
+                width: 15,
+              ),
             ],
           ),
           onTap: () {
@@ -340,85 +380,149 @@ class DashBoardScreenState extends State<DashBoardScreen>
             // ));
           },
         ),
-        Divider(),
+        Container(
+          color: grey,
+          height: 1,
+          margin: EdgeInsets.only(left: 70, right: 20),
+        ),
         ListTile(
           title: Text(
-            App.shareDrawer,
-            style: TextStyle(fontFamily: App.font, fontSize: 15),
+            App.referDrawer,
+            style: TextStyle(fontFamily: App.font, fontSize: 16),
           ),
-          leading: Icon(Icons.share),
+          leading: Image.asset(
+            App.referDrawerLogo,
+            height: 20,
+            width: 20,
+          ),
           trailing: Wrap(
             spacing: 12, // space between two icons
             children: <Widget>[
-              Image.asset(App.rightSideArrowLogo,color: secondaryColor,),
+              Image.asset(
+                App.rightSideArrowLogo,
+                height: 15,
+                width: 15,
+              ),
             ],
           ),
           onTap: () {
-            // showAlertDialog(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ReferEarnScreen()));
           },
         ),
-        Divider(),
+        Container(
+          color: grey,
+          height: 1,
+          margin: EdgeInsets.only(left: 70, right: 20),
+        ),
         ListTile(
           title: Text(
             App.settingDrawer,
-            style: TextStyle(fontFamily: App.font, fontSize: 15),
+            style: TextStyle(fontFamily: App.font, fontSize: 16),
           ),
-          leading: Icon(Icons.settings),
+          leading: Image.asset(
+            App.settingDrawerLogo,
+            height: 20,
+            width: 20,
+          ),
           trailing: Wrap(
             spacing: 12, // space between two icons
             children: <Widget>[
-              Image.asset(App.rightSideArrowLogo,color: secondaryColor,),
+              Image.asset(
+                App.rightSideArrowLogo,
+                height: 15,
+                width: 15,
+              ),
             ],
           ),
           onTap: () {
-            // showAlertDialog(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SettingScreen()));
           },
         ),
-        Divider(),
+        Container(
+          color: grey,
+          height: 1,
+          margin: EdgeInsets.only(left: 70, right: 20),
+        ),
         ListTile(
           title: Text(
             App.shareDrawer,
-            style: TextStyle(fontFamily: App.font, fontSize: 15),
+            style: TextStyle(fontFamily: App.font, fontSize: 16),
           ),
-          leading: Icon(Icons.share),
+          leading: Image.asset(
+            App.shareAppDrawerLogo,
+            height: 20,
+            width: 20,
+          ),
           trailing: Wrap(
             spacing: 12, // space between two icons
             children: <Widget>[
-              Image.asset(App.rightSideArrowLogo,color: secondaryColor,),
+              Image.asset(
+                App.rightSideArrowLogo,
+                height: 15,
+                width: 15,
+              ),
             ],
           ),
           onTap: () {
             // showAlertDialog(context);
           },
         ),
-        Divider(),
+        Container(
+          color: grey,
+          height: 1,
+          margin: EdgeInsets.only(left: 70, right: 20),
+        ),
         ListTile(
           title: Text(
             App.helpDrawer,
-            style: TextStyle(fontFamily: App.font, fontSize: 15),
+            style: TextStyle(fontFamily: App.font, fontSize: 16),
           ),
-          leading: Icon(Icons.share),
+          leading: Image.asset(
+            App.supportDrawerLogo,
+            height: 20,
+            width: 20,
+          ),
           trailing: Wrap(
             spacing: 12, // space between two icons
             children: <Widget>[
-              Image.asset(App.rightSideArrowLogo,color: secondaryColor,),
+              Image.asset(
+                App.rightSideArrowLogo,
+                height: 15,
+                width: 15,
+              ),
             ],
           ),
           onTap: () {
-            // showAlertDialog(context);
+            Navigator.push(context, MaterialPageRoute(
+                builder: (context)=> HelpSupportScreen()
+            ));
           },
         ),
-        Divider(),
+        Container(
+          color: grey,
+          height: 1,
+          margin: EdgeInsets.only(left: 70, right: 20),
+        ),
         ListTile(
           title: Text(
             App.logoutDrawer,
-            style: TextStyle(fontFamily: App.font, fontSize: 15),
+            style: TextStyle(fontFamily: App.font, fontSize: 16),
           ),
-          leading: Icon(Icons.share),
+          leading: Image.asset(
+            App.logoutDrawerLogo,
+            height: 20,
+            width: 20,
+          ),
           trailing: Wrap(
             spacing: 12, // space between two icons
             children: <Widget>[
-              Image.asset(App.rightSideArrowLogo,color: secondaryColor,),
+              Image.asset(
+                App.rightSideArrowLogo,
+                height: 15,
+                width: 15,
+              ),
             ],
           ),
           onTap: () {
@@ -439,7 +543,6 @@ class DashBoardScreenState extends State<DashBoardScreen>
             image: new DecorationImage(
                 fit: BoxFit.fill, image: AssetImage(App.userImage))));
   }
-
   propertyColumn() {
     return Container(
       decoration: BoxDecoration(
@@ -554,8 +657,7 @@ class DashBoardScreenState extends State<DashBoardScreen>
       ),
     );
   }
-
-  listProperySelectColumn() {
+  listProperty() {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -686,8 +788,7 @@ class DashBoardScreenState extends State<DashBoardScreen>
       ),
     );
   }
-
-  newListPropertyColumn() {
+  newListProperty() {
     return Container(
       height: 240,
       width: Utils.getDeviceWidth(context),
@@ -739,65 +840,70 @@ class DashBoardScreenState extends State<DashBoardScreen>
                 scrollDirection: Axis.horizontal,
                 itemCount: list.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    width: Utils.getDeviceWidth(context) / 1.25,
-                    margin: EdgeInsets.only(
-                        top: 20, bottom: 10, left: 10, right: 10),
-                    decoration: new BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        image: AssetImage(list[index].image),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
+                  return InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> PropertyDetailScreen()));
+                    },
                     child: Container(
-                      color: Colors.black.withOpacity(0.20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(left: 10, bottom: 5),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  list[index].name,
-                                  style: TextStyle(
-                                      color: white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                      fontFamily: App.font),
-                                ),
-                                Text(
-                                  list[index].name1,
-                                  style: TextStyle(
-                                      color: white,
-                                      fontSize: 15,
-                                      fontFamily: App.font),
-                                ),
-                              ],
+                      width: Utils.getDeviceWidth(context) / 1.25,
+                      margin: EdgeInsets.only(
+                          top: 20, bottom: 10, left: 10, right: 10),
+                      decoration: new BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: AssetImage(list[index].image),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      child: Container(
+                        color: Colors.black.withOpacity(0.20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(left: 10, bottom: 5),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    list[index].name,
+                                    style: TextStyle(
+                                        color: white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                        fontFamily: App.font),
+                                  ),
+                                  Text(
+                                    list[index].name1,
+                                    style: TextStyle(
+                                        color: white,
+                                        fontSize: 15,
+                                        fontFamily: App.font),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          Container(
-                            height: 25,
-                            width: 70,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: yellow,
-                            ),
-                            margin: EdgeInsets.only(right: 10, bottom: 10),
-                            child: Text(
-                              list[index].buttonName,
-                              style: TextStyle(
-                                  color: white,
-                                  fontSize: 12,
-                                  fontFamily: App.font),
-                            ),
-                          )
-                        ],
+                            Container(
+                              height: 25,
+                              width: 70,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: yellow,
+                              ),
+                              margin: EdgeInsets.only(right: 10, bottom: 10),
+                              child: Text(
+                                list[index].buttonName,
+                                style: TextStyle(
+                                    color: white,
+                                    fontSize: 12,
+                                    fontFamily: App.font),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   );
@@ -807,7 +913,6 @@ class DashBoardScreenState extends State<DashBoardScreen>
       ),
     );
   }
-
   nonVerifiedTenantColumn() {
     return Container(
       color: white,
@@ -830,7 +935,11 @@ class DashBoardScreenState extends State<DashBoardScreen>
                   children: [
                     InkWell(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> NonVerifiedTenantSellAllScreen()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      NonVerifiedTenantSellAllScreen()));
                         },
                         child: Text(
                           App.seeAll,
@@ -881,7 +990,6 @@ class DashBoardScreenState extends State<DashBoardScreen>
       ),
     );
   }
-
   rewardBasketImage() {
     return InkWell(
       onTap: () {

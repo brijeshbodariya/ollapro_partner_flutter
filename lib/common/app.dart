@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class App {
@@ -129,7 +128,9 @@ class App {
   static const referDrawer = "Refer & Earn";
   static const settingDrawer = "Settings";
   static const shareDrawer = "Share App";
+  static const changePasswordDrawer = "Change Password";
   static const logoutDrawer = "Logout";
+  static const appVersionDrawer = "App Version";
 
   //images
   static const splashBg = "assets/splashbg.png";
@@ -179,6 +180,32 @@ class App {
   static const editLogo = "assets/edit.png";
   static const scratchLogo = "assets/bg@2x.png";
   static const rightSideArrowLogo = "assets/right-arrow@2x.png";
+  static const yellowBg = "assets/yellowbg.png";
+  static const logoutDrawerLogo = "assets/logout@2x.png";
+  static const supportDrawerLogo = "assets/support@2x.png";
+  static const shareAppDrawerLogo = "assets/share-app@2x.png";
+  static const settingDrawerLogo = "assets/setting@2x.png";
+  static const referDrawerLogo = "assets/refer@2x.png";
+  static const profileDrawerLogo = "assets/profile@2x.png";
+  static const aboutDrawerLogo = "assets/about@2x.png";
+  static const bgDrawerLogo = "assets/bg@3x.png";
+  static const dashboardDrawerLogo = "assets/dashboard@2x.png";
+  static const supportBgLogo = "assets/supportBg.png";
+  static const supportEmailLogo = "assets/supportEmail.png";
+  static const supportCallLogo = "assets/supportCall.png";
+  static const fbLogo = "assets/facebook.png";
+  static const instagramLogo = "assets/instagram.png";
+  static const twitterLogo = "assets/tweet.png";
+  static const friendsLogo = "assets/referfriend.png";
+  static const whatAppLogo = "assets/wp.png";
+  static const home1 = "assets/home1.png";
+  static const home2 = "assets/home2.png";
+  static const idLogo = "assets/id@2x.png";
+  static const idSmallLogo = "assets/id.png";
+  static const locationLogo = "assets/location@2x.png";
+  static const locationSmallLogo = "assets/location.png";
+  static const pinLogo = "assets/pin@2x.png";
+  static const starLogo = "assets/star@2x.png";
 
 
 
@@ -195,7 +222,9 @@ final Color primaryColor = Color(0xFF000000);
 final Color secondaryColor = Color(0xFF868d92);
 final Color yellow = Color(0xFFe59607);
 final Color white = Color(0xFFf3f3f3);
+final Color whiteMain = Color(0xFFffffff);
 final Color red = Colors.red;
+final Color whiteColor = Colors.white;
 final Color grey = Colors.grey.shade300;
 final Color grey1 = Colors.grey.shade400;
 final Color green = Colors.green;

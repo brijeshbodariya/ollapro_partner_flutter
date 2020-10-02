@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'app.dart';
+import 'utils.dart';
 
 Widget commonTextField(
     {context,
@@ -117,58 +118,57 @@ Widget commonPhotoField(context,
     ],
   );
 }
-Widget commonTextWithTextField({
+Widget commonTextWithTextField(context,{
   TextEditingController controller,
   String title,
   prefixIcon,
   suffixIcon,
   validation,
-  String hintText,
-  TextInputType textInputType,
+  VoidCallback onFieldChanged(String term),
+  FocusNode focusNode, TextInputType textInputType, String hintText,
 }) {
-  return Column(
-    children: [
-      Container(
-        alignment: Alignment.topLeft,
-        padding: EdgeInsets.only(top: 20, left: 10),
-        child: Text(
-          title,
-          style: TextStyle(color: primaryColor, fontFamily: App.font, fontSize: 15),
+  return Container(
+    width: Utils.getDeviceWidth(context),
+    color: white,
+    child: Column(
+      children: [
+        Container(
+          alignment: Alignment.topLeft,
+          padding: EdgeInsets.only(left:10, top: 20),
+          child: Text(
+            title,
+            style: TextStyle(color: primaryColor, fontFamily: App.font, fontSize: 15),
+          ),
         ),
-      ),
-      Container(
-        padding: EdgeInsets.only(left: 5, right: 5,top: 3),
-        child: TextFormField(
-          cursorColor: grey,
-          style: TextStyle(color: primaryColor, fontFamily: App.font),
-          controller: controller,
-          validator: validation,
-          decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              errorStyle: TextStyle(color: red, fontFamily: App.font),
-              hintStyle: TextStyle(color: grey, fontFamily: App.font),
-              prefixIcon: prefixIcon,
-              suffixIcon: suffixIcon,
-              focusColor: grey,
-              focusedBorder:
-              OutlineInputBorder(borderSide: BorderSide(color: grey)),
-              errorBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: red,
+        Container(
+          padding: EdgeInsets.only(top: 3),
+          child: TextFormField(
+            cursorColor: grey,
+            style: TextStyle(color: primaryColor, fontFamily: App.font),
+            controller: controller,
+            validator: validation,
+            onFieldSubmitted:  onFieldChanged,
+            decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: white
+                  )
                 ),
-              ),
-              focusedErrorBorder:
-              OutlineInputBorder(borderSide: BorderSide(color: red)),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: grey,
+                disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: white,
+                  ),
                 ),
-              ),
-              hintText: hintText),
-          keyboardType: textInputType,
-        ),
-      )
-    ],
+                errorStyle: TextStyle(color: red, fontFamily: App.font),
+                hintStyle: TextStyle(color: grey1, fontFamily: App.font),
+                prefixIcon: prefixIcon,
+                suffixIcon: suffixIcon,
+                hintText: hintText),
+            keyboardType: textInputType,
+          ),
+        )
+      ],
+    ),
   );
 }
 

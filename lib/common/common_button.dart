@@ -126,3 +126,29 @@ Widget iconButton(context,
         ),
       ));
 }
+
+Widget getButton(String title,{ VoidCallback onPressed}){
+  return  InkWell(
+    onTap:onPressed,
+    child: Container(
+      height: 60,
+      margin: EdgeInsets.only(left: 10, right: 10,top: 20),
+      decoration: BoxDecoration(
+          color: white
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(left: 10),
+            child: Text(title,style: TextStyle(fontFamily: App.font,fontSize: 17, color: primaryColor),),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 10),
+            child: Image.asset(App.rightSideArrowLogo,color: primaryColor,height: 15,width: 15,),
+          )
+        ],
+      ),
+    ),
+  );
+}

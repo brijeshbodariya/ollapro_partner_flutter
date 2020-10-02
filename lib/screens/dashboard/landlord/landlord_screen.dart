@@ -6,7 +6,9 @@ import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/model/customPopUp.dart';
 import 'package:ollapro_partner/model/newlandlord.dart';
 import 'package:ollapro_partner/screens/dashboard/landlord/addlandlord/addlandlord_screen.dart';
+import 'package:ollapro_partner/screens/dashboard/landlord/landlord_view_profile/landlord_view_profile_screen.dart';
 
+import 'landlord_edit/landlord_edit_screen.dart';
 import 'landlord_screen_view_model.dart';
 
 class LandLordScreen extends StatefulWidget {
@@ -217,7 +219,9 @@ class LandLordScreenState extends State<LandLordScreen>
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> LandLordEditScreen()));
+                          },
                           child: Text(
                             'Edit Profile',
                             style: TextStyle(
@@ -232,7 +236,9 @@ class LandLordScreenState extends State<LandLordScreen>
                           color: secondaryColor,
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> LandLordViewProfileScreen()));
+                          },
                           child: Text(
                             'View Profile',
                             style: TextStyle(

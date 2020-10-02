@@ -108,7 +108,7 @@ class NonVerifiedTenantSellAllScreenState
                     },
                     child: Container(
                       margin: EdgeInsets.only(
-                          top: 20, left: 10, right: 10),
+                          top: 10, left: 10, right: 10),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: white,
@@ -144,7 +144,7 @@ class NonVerifiedTenantSellAllScreenState
                           Column(
                             children: <Widget>[
                               Container(
-                                margin: EdgeInsets.only(top: 25),
+                                margin: EdgeInsets.only(top: 20),
                                 alignment: Alignment.center,
                                 child: Image.asset(
                                   list1[index].image,
