@@ -117,4 +117,58 @@ Widget commonPhotoField(context,
     ],
   );
 }
+Widget commonTextWithTextField({
+  TextEditingController controller,
+  String title,
+  prefixIcon,
+  suffixIcon,
+  validation,
+  String hintText,
+  TextInputType textInputType,
+}) {
+  return Column(
+    children: [
+      Container(
+        alignment: Alignment.topLeft,
+        padding: EdgeInsets.only(top: 20, left: 10),
+        child: Text(
+          title,
+          style: TextStyle(color: primaryColor, fontFamily: App.font, fontSize: 15),
+        ),
+      ),
+      Container(
+        padding: EdgeInsets.only(left: 5, right: 5,top: 3),
+        child: TextFormField(
+          cursorColor: grey,
+          style: TextStyle(color: primaryColor, fontFamily: App.font),
+          controller: controller,
+          validator: validation,
+          decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              errorStyle: TextStyle(color: red, fontFamily: App.font),
+              hintStyle: TextStyle(color: grey, fontFamily: App.font),
+              prefixIcon: prefixIcon,
+              suffixIcon: suffixIcon,
+              focusColor: grey,
+              focusedBorder:
+              OutlineInputBorder(borderSide: BorderSide(color: grey)),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: red,
+                ),
+              ),
+              focusedErrorBorder:
+              OutlineInputBorder(borderSide: BorderSide(color: red)),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: grey,
+                ),
+              ),
+              hintText: hintText),
+          keyboardType: textInputType,
+        ),
+      )
+    ],
+  );
+}
 

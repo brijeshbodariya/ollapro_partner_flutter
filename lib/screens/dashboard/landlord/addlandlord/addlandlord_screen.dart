@@ -54,19 +54,7 @@ class AddLandLordScreenState extends State<AddLandLordScreen>
     super.dispose();
   }
 
-  void _validateInputs() {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
-      Utils.showToast("Success");
-      /* Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ContactDetailScreen()));*/
-    } else {
-      setState(() {
-        _autoValidate = true;
-        Utils.showToast("Please enter details");
-      });
-    }
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -238,7 +226,19 @@ class AddLandLordScreenState extends State<AddLandLordScreen>
       ),
     );
   }
-
+  void _validateInputs() {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      Utils.showToast("Success");
+      /* Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ContactDetailScreen()));*/
+    } else {
+      setState(() {
+        _autoValidate = true;
+        Utils.showToast("Please enter details");
+      });
+    }
+  }
 
 
   add2Field() {

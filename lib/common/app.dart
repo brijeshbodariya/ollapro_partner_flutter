@@ -116,12 +116,27 @@ class App {
   static const claimRedeemTitle = "CLAIM/REDEEM";
   static const offerDetailTitle = "Offer Details";
   static const claimNowButton = "CLAIM NOW";
+  static const nonVerifiedTenantTitle = "Non Verified Tenants";
+  static const notificationTitle = "Notifications";
+  static const clearAll = "ClearAll";
+  static const editProfile = "Edit Profile";
+
+  //drawer title
+  static const dashboardDrawer = "DashBoard";
+  static const myProfileDrawer = "My Profile";
+  static const aboutDrawer = "About";
+  static const helpDrawer = "Help & Support";
+  static const referDrawer = "Refer & Earn";
+  static const settingDrawer = "Settings";
+  static const shareDrawer = "Share App";
+  static const logoutDrawer = "Logout";
 
   //images
   static const splashBg = "assets/splashbg.png";
   static const splashLogo = "assets/splashlogo.png";
   static const loginBg = "assets/loginBg.png";
   static const visibility = "assets/view.png";
+  static const camera = "assets/camera@2x.png";
   static const backButtonLogo = "assets/back@2x.png";
   static const passwordLogo = "assets/password.png";
   static const checkedButtonLogo = "assets/checked@2x.png";
@@ -161,7 +176,9 @@ class App {
   static const dotLogo = "assets/dot@2x.png";
   static const laptopWinnerLogo = "assets/laptop@3x.png";
   static const phoneLogo = "assets/mobile@2x.png";
+  static const editLogo = "assets/edit.png";
   static const scratchLogo = "assets/bg@2x.png";
+  static const rightSideArrowLogo = "assets/right-arrow@2x.png";
 
 
 

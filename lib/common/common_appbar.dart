@@ -51,7 +51,7 @@ appBarKYC(context, route) {
     ],
   );
 }
-appBarDash(context, String title) {
+Widget appBarDash(context, String title,{VoidCallback onPressed }) {
   return Container(
     margin: EdgeInsets.only(left: 10, top: 20),
     child: Row(
@@ -85,7 +85,7 @@ appBarDash(context, String title) {
         Container(
             margin: EdgeInsets.only(right: 10),
             child: GestureDetector(
-              onTap: () {},
+              onTap: onPressed,
               child: Image.asset(
                 App.notificationLogo,
                 height: 25,
