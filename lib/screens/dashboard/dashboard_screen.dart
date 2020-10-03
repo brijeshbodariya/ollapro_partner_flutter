@@ -6,7 +6,6 @@ import 'package:ollapro_partner/model/newPropertiesList.dart';
 import 'package:ollapro_partner/model/nonVerifiedTenant.dart';
 import 'package:ollapro_partner/screens/dashboard/dashboard_screen_view_model.dart';
 import 'package:ollapro_partner/screens/dashboard/drawer/about/about_screen.dart';
-import 'package:ollapro_partner/screens/dashboard/drawer/change_password/chnage_password_screen.dart';
 import 'package:ollapro_partner/screens/dashboard/drawer/help_support/help_support_screen.dart';
 import 'package:ollapro_partner/screens/dashboard/drawer/refer_earn/refer_earn_screen.dart';
 import 'package:ollapro_partner/screens/dashboard/drawer/setting/setting_screen.dart';
@@ -549,7 +548,7 @@ class DashBoardScreenState extends State<DashBoardScreen>
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      content: Text("Are you sure want to Logout?"),
+      content: Text("Are you sure you want to Logout?"),
       actions: [
         cancelButton,
         continueButton,
