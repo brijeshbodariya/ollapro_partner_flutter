@@ -5,6 +5,8 @@ import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/model/newlandlord.dart';
 import 'package:ollapro_partner/model/customPopUp.dart';
+import 'package:ollapro_partner/screens/dashboard/landlord/landlord_edit/landlord_edit_screen.dart';
+import 'package:ollapro_partner/screens/dashboard/landlord/landlord_view_profile/landlord_view_profile_screen.dart';
 import 'package:ollapro_partner/screens/dashboard/tenant/tenant_screen_view_model.dart';
 import 'add_tenant/add_tenant_screen.dart';
 
@@ -235,7 +237,9 @@ class TenantScreenState extends State<TenantScreen> with SingleTickerProviderSta
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> LandLordEditScreen()));
+                          },
                           child: Text(
                             'Edit Profile',
                             style: TextStyle(
@@ -250,7 +254,9 @@ class TenantScreenState extends State<TenantScreen> with SingleTickerProviderSta
                           color: secondaryColor,
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> LandLordViewProfileScreen()));
+                          },
                           child: Text(
                             'View Profile',
                             style: TextStyle(

@@ -1,4 +1,4 @@
-import 'dart:convert';
+
 
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -24,15 +24,22 @@ class PropertyDetailScreenState extends State<PropertyDetailScreen> {
 
   BitmapDescriptor pinLocationIcon;
   Set<Marker> _markers = {};
-  Completer<GoogleMapController> _controller = Completer();
+  Completer<GoogleMapController> googleController = Completer();
   static LatLng _initialPosition;
   static LatLng _lastMapPosition = _initialPosition;
+  static const LatLng _center = const LatLng(45.521563, -122.677433);
+
+  void _onMapCreated(GoogleMapController controller) {
+    googleController.complete(controller);
+  }
+
 
   @override
   void initState() {
     super.initState();
     setCustomMapPin();
   }
+
 
   void setCustomMapPin() async {
     Position position =
@@ -41,6 +48,10 @@ class PropertyDetailScreenState extends State<PropertyDetailScreen> {
     pinLocationIcon = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 5), App.pinLogo);
     print(_initialPosition);
+  }
+
+  _onCameraMove(CameraPosition position) {
+    _lastMapPosition = position.target;
   }
 
   @override
@@ -89,8 +100,18 @@ class PropertyDetailScreenState extends State<PropertyDetailScreen> {
                       locationTitle(),
                       _initialPosition == null
                           ? Container(
-                        child: Center(child: Text("Loading Map",style: TextStyle(fontFamily: App.font,fontSize: 20,color: primaryColor),)),
-                      )
+                              margin: EdgeInsets.only(
+                                  left: 10, right: 10, top: 10, bottom: 20),
+                              height: Utils.getDeviceHeight(context) / 3,
+                              width: Utils.getDeviceWidth(context),
+                              child: GoogleMap(
+                                onMapCreated: _onMapCreated,
+                                initialCameraPosition: CameraPosition(
+                                  target: _center,
+                                  zoom: 11.0,
+                                ),
+                              ),
+                            )
                           : Container(
                               margin: EdgeInsets.only(
                                   left: 10, right: 10, top: 10, bottom: 20),
@@ -100,24 +121,35 @@ class PropertyDetailScreenState extends State<PropertyDetailScreen> {
                                   myLocationEnabled: false,
                                   compassEnabled: true,
                                   markers: _markers,
+                                onCameraMove: _onCameraMove,
                                   initialCameraPosition: CameraPosition(
                                     target: _initialPosition,
-                                    zoom: 14.4746,
+                                    zoom: 12,
                                   ),
                                   zoomGesturesEnabled: true,
-                                  onMapCreated:
-                                      (GoogleMapController controller) {
-                                    controller
-                                        .setMapStyle(MapsGoogle.mapStyles);
-                                    _controller.complete(controller);
+                                onMapCreated: (GoogleMapController controller){
+                                  googleController.complete(controller);
                                     setState(() {
                                       _markers.add(Marker(
-                                          markerId: MarkerId('<MARKER_ID>'),
-                                          position: _initialPosition,
-                                          icon: pinLocationIcon));
+                                        markerId: MarkerId('<MARKER_ID>'),
+                                                position: _initialPosition,
+                                                icon: pinLocationIcon
+                                      ));
                                     });
-                                  })),
-                    ],
+                                },
+                                  // onMapCreated:
+                                  //     (GoogleMapController controller) {
+                                  //   controller
+                                  //       .setMapStyle(MapsGoogle.mapStyles);
+                                  //   _controller.complete(controller);
+                                  //   setState(() {
+                                  //     _markers.add(Marker(
+                                  //         markerId: MarkerId('<MARKER_ID>'),
+                                  //         position: _initialPosition,
+                                  //         icon: pinLocationIcon));
+                                  //   });
+                                  // })),
+                              ))],
                   ),
                 ),
               ),
@@ -222,6 +254,7 @@ class PropertyDetailScreenState extends State<PropertyDetailScreen> {
       ],
     );
   }
+
   description() {
     return Column(
       children: [
@@ -250,6 +283,7 @@ class PropertyDetailScreenState extends State<PropertyDetailScreen> {
       ],
     );
   }
+
   locationTitle() {
     return Column(
       children: [

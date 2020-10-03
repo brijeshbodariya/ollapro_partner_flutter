@@ -4,6 +4,7 @@ import 'package:ollapro_partner/common/common_appbar.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/model/customPopUp.dart';
 import 'package:ollapro_partner/model/nonVerifiedTenant.dart';
+import 'package:ollapro_partner/screens/dashboard/non_verified_profile/non_verified_profile_screen.dart';
 
 import 'non_verfied_tenant_sellall_screen_view_model.dart';
 
@@ -104,7 +105,7 @@ class NonVerifiedTenantSellAllScreenState
               children: List.generate(list1.length, (index) {
                 return InkWell(
                     onTap: () {
-                      // getClickedReward(index);
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> NonVerifiedProfileScreen()));
                     },
                     child: Container(
                       margin: EdgeInsets.only(

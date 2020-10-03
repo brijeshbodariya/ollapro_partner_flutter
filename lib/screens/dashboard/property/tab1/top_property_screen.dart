@@ -3,6 +3,7 @@ import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/model/newPropertiesList.dart';
 import 'package:ollapro_partner/screens/dashboard/property/tab1/top_property_screen_view_model.dart';
+import 'package:ollapro_partner/screens/dashboard/property_detail/property_detail_screen.dart';
 
 class TopPropertyScreen extends StatefulWidget {
   @override
@@ -39,66 +40,72 @@ class TopPropertyScreenState extends State<TopPropertyScreen> {
               scrollDirection: Axis.vertical,
               itemCount: list.length,
               itemBuilder: (context, index) {
-                return Container(
-                  height: 200,
-                  width: Utils.getDeviceWidth(context),
-                  margin: EdgeInsets.only(
-                      top: 20, bottom: 10, left: 10, right: 10),
-                  decoration: new BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: AssetImage(list[index].image),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
+                return InkWell(
+
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> PropertyDetailScreen() ));
+                  },
                   child: Container(
-                    color: Colors.black.withOpacity(0.20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 10, bottom: 5),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                list[index].name,
-                                style: TextStyle(
-                                    color: white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                    fontFamily: App.font),
-                              ),
-                              Text(
-                                list[index].name1,
-                                style: TextStyle(
-                                    color: white,
-                                    fontSize: 15,
-                                    fontFamily: App.font),
-                              ),
-                            ],
+                    height: 200,
+                    width: Utils.getDeviceWidth(context),
+                    margin: EdgeInsets.only(
+                        top: 20, bottom: 10, left: 10, right: 10),
+                    decoration: new BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                        image: AssetImage(list[index].image),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    child: Container(
+                      color: Colors.black.withOpacity(0.20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(left: 10, bottom: 5),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  list[index].name,
+                                  style: TextStyle(
+                                      color: white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                      fontFamily: App.font),
+                                ),
+                                Text(
+                                  list[index].name1,
+                                  style: TextStyle(
+                                      color: white,
+                                      fontSize: 15,
+                                      fontFamily: App.font),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Container(
-                          height: 25,
-                          width: 80,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: yellow,
-                          ),
-                          margin: EdgeInsets.only(right: 10, bottom: 10),
-                          child: Text(
-                            list[index].buttonName,
-                            style: TextStyle(
-                                color: white,
-                                fontSize: 12,
-                                fontFamily: App.font),
-                          ),
-                        )
-                      ],
+                          Container(
+                            height: 25,
+                            width: 80,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: yellow,
+                            ),
+                            margin: EdgeInsets.only(right: 10, bottom: 10),
+                            child: Text(
+                              list[index].buttonName,
+                              style: TextStyle(
+                                  color: white,
+                                  fontSize: 12,
+                                  fontFamily: App.font),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 );

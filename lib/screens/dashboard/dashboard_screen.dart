@@ -549,7 +549,6 @@ class DashBoardScreenState extends State<DashBoardScreen>
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("You just clicked on Logout"),
       content: Text("Are you sure want to Logout?"),
       actions: [
         cancelButton,

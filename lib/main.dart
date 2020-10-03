@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_google_maps/flutter_google_maps.dart';
+ import 'package:flutter_google_maps/flutter_google_maps.dart';
 import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/screens/splash/splashscreen.dart';
 
 
-void main()async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
- // GoogleMap.init('AIzaSyBbRebrQXBFyRcSYWx2RfqEd769V6BlOgo');
+  GoogleMap.init('AIzaSyBbRebrQXBFyRcSYWx2RfqEd769V6BlOgo');
   runApp(MyApp());
 }
 
