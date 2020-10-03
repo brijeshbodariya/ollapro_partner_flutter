@@ -81,10 +81,18 @@ class NotificationScreenState extends State<NotificationScreen> {
                       color: whiteMain),
                   child: Container(
                     margin: EdgeInsets.only(top: 15),
-                    child: ListView.builder(
+                    child: ListView.separated(
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
                       itemCount: list.length,
+                      separatorBuilder: (context, index){
+                        return Container(
+                          height: 1,
+                          margin: EdgeInsets.only(left: 10,right: 10,top: 5),
+                          color: secondaryColor,
+                          width: Utils.getDeviceWidth(context),
+                        );
+                      },
                       itemBuilder: (context, index) {
                         return Container(
                           margin: EdgeInsets.only(top: 10,bottom: 5,left: 10),

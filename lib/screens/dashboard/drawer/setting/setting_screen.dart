@@ -3,6 +3,7 @@ import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/common_appbar.dart';
 import 'package:ollapro_partner/common/common_button.dart';
 import 'package:ollapro_partner/common/utils.dart';
+import 'package:ollapro_partner/screens/dashboard/drawer/app_version/app_version_screen.dart';
 import 'package:ollapro_partner/screens/dashboard/drawer/change_password/chnage_password_screen.dart';
 import 'package:ollapro_partner/screens/dashboard/drawer/my_profile/edit_profile_screen/edit_profile.dart';
 
@@ -49,7 +50,9 @@ class SettingScreenState extends State<SettingScreen> {
                     }),
 
                     //App version
-                    getButton(App.appVersionDrawer),
+                    getButton(App.appVersionDrawer, onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> AppVersionScreen()));
+                    }),
                   ],
                 ),
               )

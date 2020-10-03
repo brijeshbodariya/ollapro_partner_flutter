@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ollapro_partner/common/app.dart';
 import 'package:ollapro_partner/common/common_appbar.dart';
 import 'package:ollapro_partner/common/utils.dart';
+import 'dart:async';
 import 'property_details_screen_view_model.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
@@ -12,10 +17,39 @@ class PropertyDetailScreen extends StatefulWidget {
 
 class PropertyDetailScreenState extends State<PropertyDetailScreen> {
   PropertyDetailsScreenViewModel model;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  String _mapStyle;
+
+  // GlobalKey<GoogleMapStateBase> _key = GlobalKey<GoogleMapStateBase>();
+
+  BitmapDescriptor pinLocationIcon;
+  Set<Marker> _markers = {};
+  Completer<GoogleMapController> _controller = Completer();
+  static LatLng _initialPosition;
+  static LatLng _lastMapPosition = _initialPosition;
+
+  @override
+  void initState() {
+    super.initState();
+    setCustomMapPin();
+  }
+
+  void setCustomMapPin() async {
+    Position position =
+        await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    _initialPosition = LatLng(position.latitude, position.longitude);
+    pinLocationIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 5), App.pinLogo);
+    print(_initialPosition);
+  }
 
   @override
   Widget build(BuildContext context) {
+    print("runtimeType -> " + runtimeType.toString());
+    model ?? (model = PropertyDetailsScreenViewModel(this));
+
     return Scaffold(
+      key: _scaffoldKey,
       body: SafeArea(
         child: Container(
           color: primaryColor,
@@ -52,7 +86,37 @@ class PropertyDetailScreenState extends State<PropertyDetailScreen> {
                         width: Utils.getDeviceWidth(context),
                         color: secondaryColor,
                       ),
-                      location(),
+                      locationTitle(),
+                      _initialPosition == null
+                          ? Container(
+                        child: Center(child: Text("Loading Map",style: TextStyle(fontFamily: App.font,fontSize: 20,color: primaryColor),)),
+                      )
+                          : Container(
+                              margin: EdgeInsets.only(
+                                  left: 10, right: 10, top: 10, bottom: 20),
+                              height: Utils.getDeviceHeight(context) / 3,
+                              width: Utils.getDeviceWidth(context),
+                              child: GoogleMap(
+                                  myLocationEnabled: false,
+                                  compassEnabled: true,
+                                  markers: _markers,
+                                  initialCameraPosition: CameraPosition(
+                                    target: _initialPosition,
+                                    zoom: 14.4746,
+                                  ),
+                                  zoomGesturesEnabled: true,
+                                  onMapCreated:
+                                      (GoogleMapController controller) {
+                                    controller
+                                        .setMapStyle(MapsGoogle.mapStyles);
+                                    _controller.complete(controller);
+                                    setState(() {
+                                      _markers.add(Marker(
+                                          markerId: MarkerId('<MARKER_ID>'),
+                                          position: _initialPosition,
+                                          icon: pinLocationIcon));
+                                    });
+                                  })),
                     ],
                   ),
                 ),
@@ -76,11 +140,12 @@ class PropertyDetailScreenState extends State<PropertyDetailScreen> {
       ),
     );
   }
+
   startRatingCountShow(double startRating) {
     return Container(
       color: whiteMain,
-      child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,children: <Widget>[
+      child:
+          Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
         starRating(startRating),
         SizedBox(
           width: 10,
@@ -93,6 +158,7 @@ class PropertyDetailScreenState extends State<PropertyDetailScreen> {
       ]),
     );
   }
+
   starRating(item) {
     return Container(
       color: whiteMain,
@@ -112,7 +178,8 @@ class PropertyDetailScreenState extends State<PropertyDetailScreen> {
       ),
     );
   }
-  details(){
+
+  details() {
     return Column(
       children: [
         Container(
@@ -147,9 +214,7 @@ class PropertyDetailScreenState extends State<PropertyDetailScreen> {
               Text(
                 "Vaishali Nagar, Jaipur",
                 style: TextStyle(
-                    color: secondaryColor,
-                    fontFamily: App.font,
-                    fontSize: 18),
+                    color: secondaryColor, fontFamily: App.font, fontSize: 18),
               )
             ],
           ),
@@ -157,7 +222,7 @@ class PropertyDetailScreenState extends State<PropertyDetailScreen> {
       ],
     );
   }
-  description(){
+  description() {
     return Column(
       children: [
         Container(
@@ -174,20 +239,18 @@ class PropertyDetailScreenState extends State<PropertyDetailScreen> {
         ),
         Container(
           alignment: Alignment.topLeft,
-          margin: EdgeInsets.only(top: 10, left: 10,right: 10),
+          margin: EdgeInsets.only(top: 10, left: 10, right: 10),
           child: Text(
             "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
             style: TextStyle(
-                color: secondaryColor,
-                fontSize: 15,
-                fontFamily: App.font),
+                color: secondaryColor, fontSize: 15, fontFamily: App.font),
             textAlign: TextAlign.left,
           ),
         ),
       ],
     );
   }
-  location(){
+  locationTitle() {
     return Column(
       children: [
         Container(
@@ -205,4 +268,131 @@ class PropertyDetailScreenState extends State<PropertyDetailScreen> {
       ],
     );
   }
+}
+
+class MapsGoogle {
+  static String mapStyles = [
+    {
+      "elementType": "geometry",
+      "stylers": [
+        {"color": "#f5f5f5"}
+      ]
+    },
+    {
+      "elementType": "labels.icon",
+      "stylers": [
+        {"visibility": "off"}
+      ]
+    },
+    {
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {"color": "#616161"}
+      ]
+    },
+    {
+      "elementType": "labels.text.stroke",
+      "stylers": [
+        {"color": "#f5f5f5"}
+      ]
+    },
+    {
+      "featureType": "administrative.land_parcel",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {"color": "#bdbdbd"}
+      ]
+    },
+    {
+      "featureType": "poi",
+      "elementType": "geometry",
+      "stylers": [
+        {"color": "#eeeeee"}
+      ]
+    },
+    {
+      "featureType": "poi",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {"color": "#757575"}
+      ]
+    },
+    {
+      "featureType": "poi.park",
+      "elementType": "geometry",
+      "stylers": [
+        {"color": "#e5e5e5"}
+      ]
+    },
+    {
+      "featureType": "poi.park",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {"color": "#9e9e9e"}
+      ]
+    },
+    {
+      "featureType": "road",
+      "elementType": "geometry",
+      "stylers": [
+        {"color": "#ffffff"}
+      ]
+    },
+    {
+      "featureType": "road.arterial",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {"color": "#757575"}
+      ]
+    },
+    {
+      "featureType": "road.highway",
+      "elementType": "geometry",
+      "stylers": [
+        {"color": "#dadada"}
+      ]
+    },
+    {
+      "featureType": "road.highway",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {"color": "#616161"}
+      ]
+    },
+    {
+      "featureType": "road.local",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {"color": "#9e9e9e"}
+      ]
+    },
+    {
+      "featureType": "transit.line",
+      "elementType": "geometry",
+      "stylers": [
+        {"color": "#e5e5e5"}
+      ]
+    },
+    {
+      "featureType": "transit.station",
+      "elementType": "geometry",
+      "stylers": [
+        {"color": "#eeeeee"}
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "geometry",
+      "stylers": [
+        {"color": "#c9c9c9"}
+      ]
+    },
+    {
+      "featureType": "water",
+      "elementType": "labels.text.fill",
+      "stylers": [
+        {"color": "#9e9e9e"}
+      ]
+    }
+  ] as String;
 }

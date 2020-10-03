@@ -5,6 +5,7 @@ import 'package:ollapro_partner/common/utils.dart';
 import 'package:ollapro_partner/model/newPropertiesList.dart';
 import 'package:ollapro_partner/model/nonVerifiedTenant.dart';
 import 'package:ollapro_partner/screens/dashboard/dashboard_screen_view_model.dart';
+import 'package:ollapro_partner/screens/dashboard/drawer/about/about_screen.dart';
 import 'package:ollapro_partner/screens/dashboard/drawer/change_password/chnage_password_screen.dart';
 import 'package:ollapro_partner/screens/dashboard/drawer/help_support/help_support_screen.dart';
 import 'package:ollapro_partner/screens/dashboard/drawer/refer_earn/refer_earn_screen.dart';
@@ -311,9 +312,9 @@ class DashBoardScreenState extends State<DashBoardScreen>
             ],
           ),
           onTap: () {
-            /* Navigator.push(context, MaterialPageRoute(
-                builder: (context)=> ProfileScreen()
-            ));*/
+             Navigator.pushReplacement(context, MaterialPageRoute(
+                builder: (context)=> DashBoardScreen()
+            ));
           },
         ),
         Container(
@@ -375,9 +376,8 @@ class DashBoardScreenState extends State<DashBoardScreen>
             ],
           ),
           onTap: () {
-            // Navigator.push(context, MaterialPageRoute(
-            //     builder: (context)=> KycScreen()
-            // ));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AboutScreen()));
           },
         ),
         Container(
@@ -526,10 +526,43 @@ class DashBoardScreenState extends State<DashBoardScreen>
             ],
           ),
           onTap: () {
-            // showAlertDialog(context);
+             showAlertDialog(context);
           },
         ),
       ],
+    );
+  }
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("No"),
+      onPressed:  () {
+        Navigator.of(context).pop(false);
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: Text("Yes"),
+      onPressed:  () {
+        SystemNavigator.pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("You just clicked on Logout"),
+      content: Text("Are you sure want to Logout?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 
